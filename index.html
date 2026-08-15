@@ -55,7 +55,9 @@ button{
   margin:auto
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR
+========================= */
 
 .nav{
   height:72px;
@@ -152,7 +154,9 @@ button{
   background:#4c46e5
 }
 
-/* TICKER */
+/* =========================
+   TICKER
+========================= */
 
 .ticker{
   overflow:hidden;
@@ -187,7 +191,9 @@ button{
   }
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero{
   padding:88px 0 72px;
@@ -265,7 +271,9 @@ button{
   background:#f1f2f7
 }
 
-/* DEMO */
+/* =========================
+   DEMO
+========================= */
 
 .demo-wrap{
   margin:45px auto 0;
@@ -434,7 +442,9 @@ button{
   color:#b6b8c8
 }
 
-/* STATS */
+/* =========================
+   STATS
+========================= */
 
 .stats{
   display:grid;
@@ -470,7 +480,9 @@ button{
   margin-top:5px
 }
 
-/* SECTIONS */
+/* =========================
+   SECTIONS
+========================= */
 
 .section{
   padding:80px 0
@@ -505,7 +517,9 @@ button{
   margin:0
 }
 
-/* FEATURES */
+/* =========================
+   FEATURES
+========================= */
 
 .feature-grid{
   display:grid;
@@ -555,7 +569,9 @@ button{
   margin:0
 }
 
-/* AI */
+/* =========================
+   AI
+========================= */
 
 .dark-section{
   background:#11121b;
@@ -636,7 +652,9 @@ button{
   line-height:1.5
 }
 
-/* STEPS */
+/* =========================
+   STEPS
+========================= */
 
 .steps{
   display:grid;
@@ -675,12 +693,15 @@ button{
   margin:0
 }
 
-/* PRICING */
+/* =========================
+   PRICING
+========================= */
 
 .pricing{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
+  grid-template-columns:repeat(2,minmax(0,430px));
+  justify-content:center;
+  gap:18px;
   align-items:stretch
 }
 
@@ -688,8 +709,9 @@ button{
   background:#fff;
   border:1px solid var(--line);
   border-radius:14px;
-  padding:24px;
-  position:relative
+  padding:26px;
+  position:relative;
+  box-shadow:var(--shadow)
 }
 
 .price.featured{
@@ -779,7 +801,9 @@ button{
   border-color:var(--primary)
 }
 
-/* FAQ */
+/* =========================
+   FAQ
+========================= */
 
 .faq{
   max-width:780px;
@@ -821,7 +845,9 @@ button{
   transform:rotate(45deg)
 }
 
-/* FINAL CTA */
+/* =========================
+   FINAL CTA
+========================= */
 
 .final-cta{
   padding:90px 0;
@@ -877,7 +903,9 @@ button{
   cursor:pointer
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer{
   border-top:1px solid var(--line);
@@ -903,7 +931,9 @@ footer{
   gap:18px
 }
 
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
 
 .modal-bg{
   position:fixed;
@@ -982,7 +1012,9 @@ footer{
   cursor:pointer
 }
 
-/* TOAST */
+/* =========================
+   TOAST
+========================= */
 
 .toast{
   position:fixed;
@@ -1004,7 +1036,9 @@ footer{
   transform:none
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(max-width:800px){
 
@@ -1034,9 +1068,14 @@ footer{
   }
 
   .feature-grid,
-  .pricing,
   .dark-grid{
     grid-template-columns:1fr
+  }
+
+  .pricing{
+    grid-template-columns:1fr;
+    max-width:500px;
+    margin:auto
   }
 
   .steps{
@@ -1125,7 +1164,9 @@ footer{
   }
 
   .foot-links{
-    gap:12px
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center
   }
 }
 </style>
@@ -1133,7 +1174,12 @@ footer{
 
 <body>
 
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <header class="nav">
+
   <div class="nav-inner">
 
     <a class="brand" href="#">
@@ -1142,28 +1188,61 @@ footer{
     </a>
 
     <nav class="nav-links">
-      <a href="#funzioni">Funzioni</a>
-      <a href="#ai">AI</a>
-      <a href="#come-funziona">Come funziona</a>
-      <a href="#pricing">Prezzi</a>
-      <a href="#faq">FAQ</a>
+
+      <a href="#funzioni">
+        Funzioni
+      </a>
+
+      <a href="#ai">
+        AI
+      </a>
+
+      <a href="#come-funziona">
+        Come funziona
+      </a>
+
+      <a href="#pricing">
+        Prezzi
+      </a>
+
+      <a href="#faq">
+        FAQ
+      </a>
+
     </nav>
 
     <div class="nav-actions">
-      <button class="login" id="loginBtn">Accedi</button>
-      <button class="nav-cta" onclick="go('pricing')">
+
+      <button
+        class="login"
+        id="loginBtn">
+        Accedi
+      </button>
+
+      <button
+        class="nav-cta"
+        onclick="go('pricing')">
         Inizia ora →
       </button>
+
     </div>
 
   </div>
+
 </header>
 
+
+<!-- =========================
+     TICKER
+========================= -->
+
 <div class="ticker">
+
   <div class="ticker-track">
 
     <span>
-      FLOWPILOT <b>AI WORKFLOW INTELLIGENCE</b>
+      FLOWPILOT
+      <b>AI WORKFLOW INTELLIGENCE</b>
     </span>
 
     <span>
@@ -1175,7 +1254,8 @@ footer{
     </span>
 
     <span>
-      FLOWPILOT <b>AI WORKFLOW INTELLIGENCE</b>
+      FLOWPILOT
+      <b>AI WORKFLOW INTELLIGENCE</b>
     </span>
 
     <span>
@@ -1187,11 +1267,15 @@ footer{
     </span>
 
   </div>
+
 </div>
+
 
 <main>
 
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero wrap">
 
@@ -1200,17 +1284,23 @@ footer{
   </div>
 
   <h1>
+
     Il lavoro della tua azienda.
+
     <br>
+
     <span class="accent">
       Finalmente sotto controllo.
     </span>
+
   </h1>
 
   <p class="hero-sub">
+
     FlowPilot collega persone, task, processi e automazioni
     in un unico sistema. L'AI individua cosa rallenta il team
     e trasforma il lavoro ripetitivo in workflow automatici.
+
   </p>
 
   <div class="hero-buttons">
@@ -1218,16 +1308,21 @@ footer{
     <button
       class="hero-cta"
       onclick="go('pricing')">
+
       Inizia gratuitamente →
+
     </button>
 
     <button
       class="hero-cta secondary"
       onclick="go('come-funziona')">
+
       Scopri come funziona
+
     </button>
 
   </div>
+
 
   <!-- PRODUCT PREVIEW -->
 
@@ -1236,6 +1331,7 @@ footer{
     <div class="demo">
 
       <div class="demo-bar">
+
         <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
@@ -1243,6 +1339,7 @@ footer{
         <span style="margin-left:8px">
           app.flowpilot.ai / overview
         </span>
+
       </div>
 
       <div class="demo-window">
@@ -1275,6 +1372,7 @@ footer{
 
         </aside>
 
+
         <div class="demo-main">
 
           <div class="demo-main-top">
@@ -1289,29 +1387,59 @@ footer{
 
           </div>
 
+
           <div class="mini-stats">
 
             <div class="mini-stat">
-              <span>OPEN TASKS</span>
-              <strong>24</strong>
+
+              <span>
+                OPEN TASKS
+              </span>
+
+              <strong>
+                24
+              </strong>
+
             </div>
 
             <div class="mini-stat">
-              <span>COMPLETED</span>
-              <strong>68</strong>
+
+              <span>
+                COMPLETED
+              </span>
+
+              <strong>
+                68
+              </strong>
+
             </div>
 
             <div class="mini-stat">
-              <span>AUTOMATIONS</span>
-              <strong>14</strong>
+
+              <span>
+                AUTOMATIONS
+              </span>
+
+              <strong>
+                14
+              </strong>
+
             </div>
 
             <div class="mini-stat">
-              <span>TIME SAVED</span>
-              <strong>11.4h</strong>
+
+              <span>
+                TIME SAVED
+              </span>
+
+              <strong>
+                11.4h
+              </strong>
+
             </div>
 
           </div>
+
 
           <div class="demo-lower">
 
@@ -1327,6 +1455,7 @@ footer{
               <div class="mini-line w1"></div>
 
             </div>
+
 
             <div class="mini-card ai-card">
 
@@ -1357,35 +1486,71 @@ footer{
 
 </section>
 
-<!-- STATS -->
+
+<!-- =========================
+     STATS
+========================= -->
 
 <div class="wrap stats">
 
   <div class="stat">
-    <strong>1 dashboard</strong>
-    <span>per tutta l'operatività</span>
+
+    <strong>
+      1 dashboard
+    </strong>
+
+    <span>
+      per tutta l'operatività
+    </span>
+
   </div>
 
   <div class="stat">
-    <strong>AI-native</strong>
-    <span>automazioni suggerite dall'AI</span>
+
+    <strong>
+      AI-native
+    </strong>
+
+    <span>
+      automazioni suggerite dall'AI
+    </span>
+
   </div>
 
   <div class="stat">
-    <strong>24/7</strong>
-    <span>workflow sempre attivi</span>
+
+    <strong>
+      24/7
+    </strong>
+
+    <span>
+      workflow sempre attivi
+    </span>
+
   </div>
 
   <div class="stat">
-    <strong>100%</strong>
-    <span>visibilità sul lavoro</span>
+
+    <strong>
+      100%
+    </strong>
+
+    <span>
+      visibilità sul lavoro
+    </span>
+
   </div>
 
 </div>
 
-<!-- FUNZIONI -->
 
-<section class="section" id="funzioni">
+<!-- =========================
+     FUNZIONI
+========================= -->
+
+<section
+  class="section"
+  id="funzioni">
 
   <div class="wrap">
 
@@ -1396,18 +1561,25 @@ footer{
       </div>
 
       <h2>
+
         Non gestire il lavoro.
+
         <br>
+
         Fallo scorrere.
+
       </h2>
 
       <p>
+
         FlowPilot riunisce la parte operativa dell'azienda
         e rende visibili le attività che contano, quelle ferme
         e quelle che possono essere automatizzate.
+
       </p>
 
     </div>
+
 
     <div class="feature-grid">
 
@@ -1422,12 +1594,15 @@ footer{
         </h3>
 
         <p>
+
           Organizza il lavoro per progetto, responsabile,
           scadenza e priorità. Ogni persona sa cosa deve fare
           e cosa viene prima.
+
         </p>
 
       </article>
+
 
       <article class="feature">
 
@@ -1440,12 +1615,15 @@ footer{
         </h3>
 
         <p>
+
           Trasforma processi ripetitivi in automazioni:
           trigger, azioni, notifiche e assegnazioni
           senza interventi manuali.
+
         </p>
 
       </article>
+
 
       <article class="feature">
 
@@ -1458,8 +1636,10 @@ footer{
         </h3>
 
         <p>
+
           Scopri dove il team perde tempo, quali progetti
           rallentano e quanto lavoro viene realmente completato.
+
         </p>
 
       </article>
@@ -1470,9 +1650,14 @@ footer{
 
 </section>
 
-<!-- AI -->
 
-<section class="section dark-section" id="ai">
+<!-- =========================
+     AI
+========================= -->
+
+<section
+  class="section dark-section"
+  id="ai">
 
   <div class="wrap dark-grid">
 
@@ -1483,24 +1668,33 @@ footer{
       </div>
 
       <h2>
+
         L'AI non si limita a rispondere.
+
         <br>
+
         Trova cosa automatizzare.
+
       </h2>
 
       <p>
+
         FlowPilot osserva i pattern del lavoro e suggerisce
         workflow utili. Può individuare attività ricorrenti,
         colli di bottiglia e passaggi che non richiedono una persona.
+
       </p>
 
       <button
         class="hero-cta"
         onclick="showToast('Demo AI: presto collegata al motore di automazione.')">
+
         Vedi un esempio →
+
       </button>
 
     </div>
+
 
     <div class="model-list">
 
@@ -1517,13 +1711,16 @@ footer{
           </strong>
 
           <span>
+
             Quando arriva un lead, crea il task corretto,
             assegna il responsabile e avvisa il team.
+
           </span>
 
         </div>
 
       </div>
+
 
       <div class="model">
 
@@ -1538,13 +1735,16 @@ footer{
           </strong>
 
           <span>
+
             Ogni settimana raccoglie i dati del workspace
             e prepara un riepilogo pronto da condividere.
+
           </span>
 
         </div>
 
       </div>
+
 
       <div class="model">
 
@@ -1559,13 +1759,16 @@ footer{
           </strong>
 
           <span>
+
             Individua task in ritardo e attiva reminder
             intelligenti in base a priorità e responsabile.
+
           </span>
 
         </div>
 
       </div>
+
 
       <div class="model">
 
@@ -1580,8 +1783,10 @@ footer{
           </strong>
 
           <span>
+
             Analizza i processi e propone nuove automazioni
             con una stima del tempo che possono far risparmiare.
+
           </span>
 
         </div>
@@ -1594,9 +1799,14 @@ footer{
 
 </section>
 
-<!-- COME FUNZIONA -->
 
-<section class="section" id="come-funziona">
+<!-- =========================
+     COME FUNZIONA
+========================= -->
+
+<section
+  class="section"
+  id="come-funziona">
 
   <div class="wrap">
 
@@ -1607,17 +1817,25 @@ footer{
       </div>
 
       <h2>
+
         Dalla confusione
+
+        <br>
+
         a un workflow.
+
       </h2>
 
       <p>
+
         Nessuna configurazione complessa.
         Parti dal lavoro che fai già oggi
         e lascia che FlowPilot lo trasformi.
+
       </p>
 
     </div>
+
 
     <div class="steps">
 
@@ -1632,11 +1850,14 @@ footer{
         </h3>
 
         <p>
+
           Crea il workspace e porta progetti,
           persone e attività in un unico ambiente.
+
         </p>
 
       </div>
+
 
       <div class="step">
 
@@ -1649,11 +1870,14 @@ footer{
         </h3>
 
         <p>
+
           Descrivi come viene svolto oggi un processo,
           anche se è ancora manuale.
+
         </p>
 
       </div>
+
 
       <div class="step">
 
@@ -1666,11 +1890,14 @@ footer{
         </h3>
 
         <p>
+
           L'AI individua passaggi ripetitivi
           e propone un workflow automatico.
+
         </p>
 
       </div>
+
 
       <div class="step">
 
@@ -1683,8 +1910,10 @@ footer{
         </h3>
 
         <p>
+
           Il workflow lavora in background mentre
           il team si concentra sulle attività ad alto valore.
+
         </p>
 
       </div>
@@ -1695,9 +1924,14 @@ footer{
 
 </section>
 
-<!-- PRICING -->
 
-<section class="section" id="pricing">
+<!-- =========================
+     PRICING
+========================= -->
+
+<section
+  class="section"
+  id="pricing">
 
   <div class="wrap">
 
@@ -1708,17 +1942,23 @@ footer{
       </div>
 
       <h2>
-        Un piano per ogni fase.
+        Scegli il piano giusto.
       </h2>
 
       <p>
-        Inizia piccolo. Quando il tuo team cresce,
-        FlowPilot cresce con lui.
+
+        Inizia con Starter oppure porta tutta
+        la potenza di FlowPilot nella tua azienda con Pro.
+
       </p>
 
     </div>
 
+
     <div class="pricing">
+
+
+      <!-- STARTER -->
 
       <article class="price">
 
@@ -1727,30 +1967,61 @@ footer{
         </h3>
 
         <p class="price-desc">
-          Per piccoli team che vogliono organizzare il lavoro.
+
+          Per piccoli team che vogliono organizzare
+          il lavoro e iniziare ad automatizzare.
+
         </p>
 
         <div class="price-number">
-          €0
-          <small>/ mese</small>
+
+          €19,99
+
+          <small>
+            / mese
+          </small>
+
         </div>
 
         <div class="price-note">
-          Per iniziare senza carta di credito
+
+          Per iniziare con FlowPilot
+
         </div>
 
+
         <ul>
-          <li>Fino a 3 membri</li>
-          <li>Task e progetti</li>
-          <li>Dashboard operativa</li>
-          <li>Automazioni base</li>
+
+          <li>
+            Fino a 3 membri
+          </li>
+
+          <li>
+            Task e progetti
+          </li>
+
+          <li>
+            Dashboard operativa
+          </li>
+
+          <li>
+            Automazioni base
+          </li>
+
         </ul>
 
-        <button onclick="showToast('Registrazione Starter — pronta per essere collegata.')">
-          Inizia gratis
+
+        <button
+          onclick="showToast('Registrazione Starter — pronta per essere collegata.')">
+
+          Inizia ora
+
         </button>
 
       </article>
+
+
+      <!-- PRO -->
 
       <article class="price featured">
 
@@ -1763,63 +2034,64 @@ footer{
         </h3>
 
         <p class="price-desc">
-          Per aziende che vogliono automatizzare davvero.
+
+          Per aziende che vogliono automatizzare
+          davvero i propri processi.
+
         </p>
 
+
         <div class="price-number">
-          €29
-          <small>/ utente / mese</small>
+
+          €49,99
+
+          <small>
+            / mese
+          </small>
+
         </div>
 
         <div class="price-note">
-          Tutto ciò che serve per il team
+
+          Tutte le funzionalità avanzate di FlowPilot
+
         </div>
 
+
         <ul>
-          <li>Membri illimitati</li>
-          <li>AI workflow suggestions</li>
-          <li>Automazioni avanzate</li>
-          <li>Analytics e KPI</li>
-          <li>Priorità AI</li>
+
+          <li>
+            Membri illimitati
+          </li>
+
+          <li>
+            AI workflow suggestions
+          </li>
+
+          <li>
+            Automazioni avanzate
+          </li>
+
+          <li>
+            Analytics e KPI
+          </li>
+
+          <li>
+            Priorità AI
+          </li>
+
         </ul>
 
-        <button onclick="showToast('Checkout Pro — pronto per essere collegato a Stripe.')">
+
+        <button
+          onclick="showToast('Checkout Pro — pronto per essere collegato a Stripe.')">
+
           Inizia con Pro →
+
         </button>
 
       </article>
 
-      <article class="price">
-
-        <h3>
-          Business
-        </h3>
-
-        <p class="price-desc">
-          Per organizzazioni con processi complessi.
-        </p>
-
-        <div class="price-number">
-          Custom
-        </div>
-
-        <div class="price-note">
-          Configurazione su misura
-        </div>
-
-        <ul>
-          <li>Workspace multipli</li>
-          <li>Workflow personalizzati</li>
-          <li>Controlli e ruoli avanzati</li>
-          <li>Supporto prioritario</li>
-          <li>API e integrazioni</li>
-        </ul>
-
-        <button onclick="showToast('Contatto Business — presto disponibile.')">
-          Parla con noi
-        </button>
-
-      </article>
 
     </div>
 
@@ -1827,9 +2099,14 @@ footer{
 
 </section>
 
-<!-- FAQ -->
 
-<section class="section" id="faq">
+<!-- =========================
+     FAQ
+========================= -->
+
+<section
+  class="section"
+  id="faq">
 
   <div class="wrap">
 
@@ -1849,83 +2126,126 @@ footer{
 
     </div>
 
+
     <div class="faq">
+
 
       <div class="faq-item">
 
         <button class="faq-q">
+
           Cos'è FlowPilot?
-          <span>＋</span>
+
+          <span>
+            ＋
+          </span>
+
         </button>
 
         <div class="faq-a">
+
           FlowPilot è una piattaforma AI per gestire il lavoro
           aziendale, coordinare task e progetti e trasformare
           processi ripetitivi in workflow automatici.
+
         </div>
 
       </div>
 
+
       <div class="faq-item">
 
         <button class="faq-q">
+
           FlowPilot sostituisce i software che usiamo già?
-          <span>＋</span>
+
+          <span>
+            ＋
+          </span>
+
         </button>
 
         <div class="faq-a">
+
           L'obiettivo è diventare il layer operativo che coordina
           il lavoro. Le integrazioni con gli strumenti esistenti
           possono essere aggiunte senza obbligare il team a cambiare tutto.
+
         </div>
 
       </div>
 
+
       <div class="faq-item">
 
         <button class="faq-q">
+
           Come funziona l'AI?
-          <span>＋</span>
+
+          <span>
+            ＋
+          </span>
+
         </button>
 
         <div class="faq-a">
+
           L'AI analizza attività e processi disponibili nel workspace
           e può suggerire automazioni, priorità e interventi.
           Le automazioni vengono poi eseguite secondo le regole
           definite dal team.
+
         </div>
 
       </div>
 
+
       <div class="faq-item">
 
         <button class="faq-q">
+
           Posso provarlo gratuitamente?
-          <span>＋</span>
+
+          <span>
+            ＋
+          </span>
+
         </button>
 
         <div class="faq-a">
-          Sì. Il piano Starter è pensato per iniziare senza costi
-          e capire come organizzare il proprio workspace.
+
+          FlowPilot offre un'esperienza iniziale pensata per permettere
+          al team di capire come organizzare il proprio workspace
+          prima di scegliere il piano più adatto.
+
         </div>
 
       </div>
 
+
       <div class="faq-item">
 
         <button class="faq-q">
+
           I miei dati sono controllabili?
-          <span>＋</span>
+
+          <span>
+            ＋
+          </span>
+
         </button>
 
         <div class="faq-a">
+
           Il prodotto è progettato per rendere visibili permessi,
           workflow e attività. Nella versione production verranno
           aggiunti autenticazione, gestione dei ruoli, audit log
           e policy di sicurezza.
+
         </div>
 
       </div>
+
 
     </div>
 
@@ -1933,7 +2253,10 @@ footer{
 
 </section>
 
-<!-- CTA -->
+
+<!-- =========================
+     FINAL CTA
+========================= -->
 
 <section class="final-cta">
 
@@ -1944,22 +2267,33 @@ footer{
       <div
         class="section-label"
         style="color:#a9a6ff">
+
         Il prossimo passo
+
       </div>
 
       <h2>
+
         Fai lavorare il tuo sistema.
+
         <br>
+
         Non il tuo team.
+
       </h2>
 
       <p>
+
         Organizza. Automatizza. Misura.
         Tutto da un unico posto.
+
       </p>
 
-      <button onclick="go('pricing')">
+      <button
+        onclick="go('pricing')">
+
         Inizia con FlowPilot →
+
       </button>
 
     </div>
@@ -1970,7 +2304,10 @@ footer{
 
 </main>
 
-<!-- FOOTER -->
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
@@ -1981,26 +2318,46 @@ footer{
     </div>
 
     <div class="foot-links">
-      <a href="#funzioni">Funzioni</a>
-      <a href="#pricing">Prezzi</a>
-      <a href="#faq">FAQ</a>
+
+      <a href="#funzioni">
+        Funzioni
+      </a>
+
+      <a href="#pricing">
+        Prezzi
+      </a>
+
+      <a href="#faq">
+        FAQ
+      </a>
+
       <span>
         © 2026 FlowPilot
       </span>
+
     </div>
 
   </div>
 
 </footer>
 
-<!-- LOGIN MODAL -->
 
-<div class="modal-bg" id="loginModal">
+<!-- =========================
+     LOGIN MODAL
+========================= -->
+
+<div
+  class="modal-bg"
+  id="loginModal">
 
   <div class="modal">
 
-    <button class="close" id="closeModal">
+    <button
+      class="close"
+      id="closeModal">
+
       ×
+
     </button>
 
     <h2>
@@ -2010,6 +2367,7 @@ footer{
     <p>
       Accedi al tuo workspace aziendale.
     </p>
+
 
     <div class="field">
 
@@ -2023,6 +2381,7 @@ footer{
 
     </div>
 
+
     <div class="field">
 
       <label>
@@ -2035,19 +2394,31 @@ footer{
 
     </div>
 
+
     <button
       class="modal-submit"
       id="modalSubmit">
+
       Accedi →
+
     </button>
 
   </div>
 
 </div>
 
-<div class="toast" id="toast"></div>
+
+<div
+  class="toast"
+  id="toast">
+</div>
+
 
 <script>
+
+/* =========================
+   SCROLL
+========================= */
 
 function go(id){
 
@@ -2058,6 +2429,11 @@ function go(id){
     });
 
 }
+
+
+/* =========================
+   TOAST
+========================= */
 
 function showToast(msg){
 
@@ -2078,7 +2454,10 @@ function showToast(msg){
 
 }
 
-/* FAQ */
+
+/* =========================
+   FAQ
+========================= */
 
 document
   .querySelectorAll('.faq-q')
@@ -2088,19 +2467,36 @@ document
       'click',
       () => {
 
-        q.parentElement
-          .classList
-          .toggle('open');
+        const item =
+          q.parentElement;
+
+        document
+          .querySelectorAll('.faq-item')
+          .forEach(other => {
+
+            if(other !== item){
+
+              other.classList.remove('open');
+
+            }
+
+          });
+
+        item.classList.toggle('open');
 
       }
     );
 
   });
 
-/* LOGIN */
+
+/* =========================
+   LOGIN MODAL
+========================= */
 
 const modal =
   document.getElementById('loginModal');
+
 
 document
   .getElementById('loginBtn')
@@ -2110,6 +2506,7 @@ document
 
   };
 
+
 document
   .getElementById('closeModal')
   .onclick = () => {
@@ -2117,6 +2514,7 @@ document
     modal.classList.remove('show');
 
   };
+
 
 modal.addEventListener(
   'click',
@@ -2131,6 +2529,7 @@ modal.addEventListener(
   }
 );
 
+
 document
   .getElementById('modalSubmit')
   .onclick = () => {
@@ -2143,7 +2542,10 @@ document
 
   };
 
-/* NAVIGATION */
+
+/* =========================
+   NAVIGATION
+========================= */
 
 document
   .querySelectorAll('a[href^="#"]')
