@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="FlowPilot — il sistema AI che trasforma il lavoro operativo della tua azienda in workflow automatici.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>FlowPilot — AI Workflow Intelligence</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,2597 +13,2363 @@
 <style>
 
 :root{
-  --bg:#f7f8fc;
-  --card:#fff;
-  --text:#171925;
-  --muted:#73778a;
-  --line:#e7e9ef;
-  --primary:#5b55f7;
-  --primary2:#756fff;
-  --dark:#11121b;
-  --green:#17956d;
-  --shadow:0 18px 55px rgba(28,31,55,.08);
-  --r:15px
+    --bg:#f7f8fc;
+    --white:#ffffff;
+    --text:#171925;
+    --muted:#777b8d;
+    --line:#e7e9ef;
+    --primary:#5b55f7;
+    --primary-dark:#4943df;
+    --green:#17956d;
+    --dark:#11121b;
+    --shadow:0 18px 55px rgba(28,31,55,.08);
 }
 
 *{
-  box-sizing:border-box
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth
+    scroll-behavior:smooth;
 }
 
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Inter,system-ui,sans-serif;
-  font-size:16px
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,system-ui,sans-serif;
 }
 
-a{
-  text-decoration:none;
-  color:inherit
+button,
+input{
+    font-family:inherit;
 }
 
 button{
-  font:inherit
+    cursor:pointer;
 }
 
-.wrap{
-  width:min(1120px,calc(100% - 40px));
-  margin:auto
+a{
+    color:inherit;
+    text-decoration:none;
 }
 
 
-/* =========================
-   NAVBAR
-========================= */
+/* NAVBAR */
 
 .nav{
-  height:72px;
-  display:flex;
-  align-items:center;
-  border-bottom:1px solid rgba(231,233,239,.8);
-  background:rgba(247,248,252,.86);
-  backdrop-filter:blur(16px);
-  position:sticky;
-  top:0;
-  z-index:20
+    height:72px;
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    display:flex;
+    align-items:center;
+
+    background:rgba(247,248,252,.88);
+    backdrop-filter:blur(16px);
+
+    border-bottom:1px solid var(--line);
 }
 
 .nav-inner{
-  width:min(1180px,calc(100% - 40px));
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between
+    width:min(1180px,calc(100% - 40px));
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:800;
-  font-size:20px;
-  letter-spacing:-.03em
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:20px;
+    font-weight:800;
+    letter-spacing:-.04em;
 }
 
-.brand-mark{
-  width:30px;
-  height:30px;
-  border-radius:9px;
-  background:linear-gradient(135deg,var(--primary2),#4842e7);
-  position:relative;
-  display:grid;
-  place-items:center;
-  color:#fff
-}
+.logo-icon{
+    width:31px;
+    height:31px;
 
-.brand-mark:after{
-  content:"";
-  width:10px;
-  height:10px;
-  border:2px solid #fff;
-  border-radius:3px;
-  transform:rotate(45deg)
+    display:grid;
+    place-items:center;
+
+    border-radius:9px;
+
+    background:linear-gradient(
+        135deg,
+        #756fff,
+        #4c46df
+    );
+
+    color:white;
 }
 
 .nav-links{
-  display:flex;
-  gap:28px;
-  color:#6f7384;
-  font-size:13px;
-  font-weight:600
+    display:flex;
+    gap:27px;
+
+    color:#737789;
+    font-size:13px;
+    font-weight:600;
 }
 
 .nav-links a:hover{
-  color:var(--primary)
+    color:var(--primary);
 }
 
 .nav-actions{
-  display:flex;
-  align-items:center;
-  gap:9px
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-.login{
-  border:0;
-  background:transparent;
-  color:#666a7a;
-  font-size:13px;
-  font-weight:600;
-  padding:9px 10px;
-  cursor:pointer
+.login-btn{
+    border:0;
+    background:transparent;
+
+    color:#626677;
+
+    font-size:13px;
+    font-weight:600;
+
+    padding:9px 12px;
 }
 
-.nav-cta,
-.hero-cta{
-  border:0;
-  background:var(--primary);
-  color:#fff;
-  border-radius:8px;
-  padding:10px 14px;
-  font-size:13px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 6px 18px rgba(91,85,247,.2)
+.primary-btn{
+    border:0;
+    border-radius:8px;
+
+    background:var(--primary);
+    color:white;
+
+    padding:12px 17px;
+
+    font-size:13px;
+    font-weight:700;
+
+    box-shadow:0 8px 20px rgba(91,85,247,.2);
+
+    transition:.2s;
 }
 
-.nav-cta:hover,
-.hero-cta:hover{
-  background:#4c46e5
-}
-
-
-/* =========================
-   TICKER
-========================= */
-
-.ticker{
-  overflow:hidden;
-  border-bottom:1px solid var(--line);
-  background:#fff;
-  height:34px
-}
-
-.ticker-track{
-  height:100%;
-  display:flex;
-  align-items:center;
-  gap:42px;
-  white-space:nowrap;
-  animation:move 28s linear infinite;
-  color:#969aa9;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:.12em
-}
-
-.ticker-track b{
-  color:#6b66e9
-}
-
-@keyframes move{
-  from{
-    transform:translateX(0)
-  }
-  to{
-    transform:translateX(-45%)
-  }
+.primary-btn:hover{
+    background:var(--primary-dark);
+    transform:translateY(-1px);
 }
 
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero{
-  padding:88px 0 72px;
-  text-align:center;
-  position:relative;
-  overflow:hidden
+    padding:105px 20px 85px;
+
+    text-align:center;
+
+    position:relative;
+    overflow:hidden;
 }
 
 .hero:before{
-  content:"";
-  position:absolute;
-  width:580px;
-  height:300px;
-  background:#716cf4;
-  filter:blur(120px);
-  opacity:.11;
-  left:50%;
-  top:40px;
-  transform:translateX(-50%);
-  pointer-events:none
+    content:"";
+
+    position:absolute;
+
+    width:600px;
+    height:300px;
+
+    left:50%;
+    top:40px;
+
+    transform:translateX(-50%);
+
+    background:#756fff;
+
+    filter:blur(130px);
+
+    opacity:.12;
 }
 
 .eyebrow{
-  color:var(--primary);
-  text-transform:uppercase;
-  letter-spacing:.15em;
-  font-size:11px;
-  font-weight:800;
-  margin-bottom:15px
+    position:relative;
+
+    color:var(--primary);
+
+    font-size:12px;
+    font-weight:800;
+
+    letter-spacing:.16em;
+    text-transform:uppercase;
+
+    margin-bottom:18px;
 }
 
 .hero h1{
-  font-size:clamp(50px,6vw,82px);
-  line-height:.98;
-  letter-spacing:-.065em;
-  margin:0 auto 23px;
-  max-width:900px;
-  position:relative
+    position:relative;
+
+    max-width:950px;
+
+    margin:0 auto 25px;
+
+    font-size:clamp(50px,6vw,82px);
+
+    line-height:.98;
+
+    letter-spacing:-.065em;
 }
 
-.hero h1 .accent{
-  background:linear-gradient(100deg,#5b55f7,#8b86ff);
-  -webkit-background-clip:text;
-  color:transparent
+.gradient{
+    background:linear-gradient(
+        100deg,
+        #5b55f7,
+        #8984ff
+    );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
 }
 
-.hero-sub{
-  max-width:650px;
-  margin:0 auto;
-  color:#777b8d;
-  font-size:17px;
-  line-height:1.75
+.hero-description{
+    position:relative;
+
+    max-width:720px;
+
+    margin:auto;
+
+    color:var(--muted);
+
+    font-size:17px;
+    line-height:1.75;
 }
 
-.hero-buttons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-top:28px
+.hero-actions{
+    position:relative;
+
+    display:flex;
+    justify-content:center;
+    gap:11px;
+
+    margin-top:30px;
 }
 
-.hero-cta{
-  padding:13px 19px;
-  font-size:13px
+.secondary-btn{
+    border:1px solid var(--line);
+    border-radius:8px;
+
+    background:white;
+
+    color:#3d4050;
+
+    padding:12px 17px;
+
+    font-size:13px;
+    font-weight:700;
 }
 
-.secondary{
-  background:#fff;
-  color:#343747;
-  border:1px solid var(--line);
-  box-shadow:none
+
+/* PRODUCT PREVIEW */
+
+.preview{
+    width:min(940px,100%);
+
+    margin:55px auto 0;
+
+    background:#11121b;
+
+    border:1px solid #292a37;
+
+    border-radius:18px;
+
+    padding:10px;
+
+    box-shadow:0 35px 90px rgba(20,21,33,.2);
+
+    text-align:left;
 }
 
-.secondary:hover{
-  background:#f1f2f7
-}
+.browser-bar{
+    height:34px;
 
+    display:flex;
+    align-items:center;
 
-/* =========================
-   DEMO
-========================= */
+    gap:6px;
 
-.demo-wrap{
-  margin:45px auto 0;
-  max-width:920px;
-  position:relative
-}
+    padding:0 8px;
 
-.demo{
-  background:#11121b;
-  border:1px solid #2a2b38;
-  border-radius:18px;
-  padding:10px;
-  box-shadow:0 35px 90px rgba(20,21,33,.2);
-  text-align:left
-}
+    color:#777b8b;
 
-.demo-bar{
-  height:33px;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:0 8px;
-  color:#7d8192;
-  font-size:10px
+    font-size:10px;
 }
 
 .dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#414351
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#424351;
 }
 
-.demo-window{
-  background:#f8f8fb;
-  border-radius:11px;
-  min-height:300px;
-  display:grid;
-  grid-template-columns:145px 1fr;
-  overflow:hidden
+.preview-window{
+    display:grid;
+    grid-template-columns:150px 1fr;
+
+    min-height:340px;
+
+    overflow:hidden;
+
+    border-radius:11px;
+
+    background:#f7f7fa;
 }
 
-.demo-side{
-  background:#14151e;
-  color:#9296a6;
-  padding:17px 12px
+.preview-sidebar{
+    background:#15161f;
+    color:#9296a6;
+
+    padding:18px 12px;
 }
 
-.demo-brand{
-  color:#fff;
-  font-weight:800;
-  font-size:12px;
-  margin-bottom:22px
+.preview-brand{
+    color:#fff;
+
+    font-size:12px;
+    font-weight:800;
+
+    margin-bottom:22px;
 }
 
-.demo-nav{
-  padding:8px 9px;
-  border-radius:6px;
-  font-size:10px;
-  margin:3px 0
+.preview-link{
+    padding:9px;
+
+    border-radius:7px;
+
+    font-size:10px;
+
+    margin:4px 0;
 }
 
-.demo-nav.active{
-  background:#292a3a;
-  color:#fff
+.preview-link.active{
+    color:#fff;
+    background:#292a3a;
 }
 
-.demo-main{
-  padding:22px
+.preview-main{
+    padding:24px;
 }
 
-.demo-main-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center
+.preview-title{
+    font-size:20px;
+    font-weight:800;
 }
 
-.mini-title{
-  font-size:19px;
-  font-weight:800
+.preview-stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:9px;
+
+    margin-top:20px;
 }
 
-.mini-btn{
-  background:var(--primary);
-  color:#fff;
-  border:0;
-  border-radius:6px;
-  padding:7px 9px;
-  font-size:10px
+.preview-stat{
+    background:white;
+
+    border:1px solid #e9eaf0;
+
+    border-radius:8px;
+
+    padding:12px;
 }
 
-.mini-stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-  margin:18px 0
+.preview-stat span{
+    color:#9296a4;
+    font-size:9px;
 }
 
-.mini-stat{
-  background:#fff;
-  border:1px solid #e9eaf0;
-  border-radius:7px;
-  padding:10px
+.preview-stat strong{
+    display:block;
+
+    margin-top:7px;
+
+    font-size:20px;
 }
 
-.mini-stat span{
-  font-size:9px;
-  color:#9296a4
+.preview-bottom{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+
+    gap:10px;
+
+    margin-top:10px;
 }
 
-.mini-stat strong{
-  display:block;
-  font-size:19px;
-  margin-top:6px
+.preview-card{
+    background:white;
+
+    border:1px solid #e9eaf0;
+
+    border-radius:8px;
+
+    padding:15px;
 }
 
-.demo-lower{
-  display:grid;
-  grid-template-columns:1.3fr 1fr;
-  gap:9px
+.preview-card h4{
+    margin:0 0 12px;
+
+    font-size:11px;
 }
 
-.mini-card{
-  background:#fff;
-  border:1px solid #e9eaf0;
-  border-radius:8px;
-  padding:12px
+.line{
+    height:7px;
+
+    background:#eff0f4;
+
+    border-radius:5px;
+
+    margin:9px 0;
 }
 
-.mini-card h4{
-  font-size:11px;
-  margin:0 0 10px
+.line.one{width:90%}
+.line.two{width:65%}
+.line.three{width:78%}
+
+.ai-preview{
+    background:linear-gradient(
+        145deg,
+        #191a29,
+        #292957
+    );
+
+    color:white;
 }
 
-.mini-line{
-  height:7px;
-  background:#f0f1f5;
-  border-radius:4px;
-  margin:8px 0
-}
+.ai-preview p{
+    color:#b7b9ca;
 
-.mini-line.w1{
-  width:90%
-}
-
-.mini-line.w2{
-  width:68%
-}
-
-.mini-line.w3{
-  width:78%
-}
-
-.ai-card{
-  background:linear-gradient(145deg,#1a1b2a,#292957);
-  color:#fff
-}
-
-.ai-card h4{
-  color:#aaa7ff
-}
-
-.ai-card p{
-  font-size:10px;
-  line-height:1.6;
-  color:#b6b8c8
+    font-size:10px;
+    line-height:1.6;
 }
 
 
-/* =========================
-   STATS
-========================= */
+/* STATS */
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:13px;
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  margin-bottom:100px
+    width:min(1120px,calc(100% - 40px));
+
+    margin:0 auto 100px;
+
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    background:white;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
 }
 
 .stat{
-  text-align:center;
-  padding:22px;
-  border-right:1px solid var(--line)
+    padding:24px;
+
+    text-align:center;
+
+    border-right:1px solid var(--line);
 }
 
 .stat:last-child{
-  border:0
+    border-right:0;
 }
 
 .stat strong{
-  display:block;
-  font-size:26px;
-  letter-spacing:-.04em
+    display:block;
+
+    font-size:27px;
+
+    letter-spacing:-.04em;
 }
 
 .stat span{
-  display:block;
-  color:#9296a4;
-  font-size:11px;
-  margin-top:5px
+    display:block;
+
+    margin-top:6px;
+
+    color:#9296a4;
+
+    font-size:11px;
 }
 
 
-/* =========================
-   SECTIONS
-========================= */
+/* SECTIONS */
 
 .section{
-  padding:80px 0
+    padding:90px 20px;
+}
+
+.section-inner{
+    width:min(1120px,100%);
+    margin:auto;
 }
 
 .section-head{
-  text-align:center;
-  max-width:650px;
-  margin:0 auto 42px
+    max-width:700px;
+
+    margin:0 auto 50px;
+
+    text-align:center;
 }
 
 .section-label{
-  color:var(--primary);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  margin-bottom:10px
+    color:var(--primary);
+
+    font-size:12px;
+    font-weight:800;
+
+    letter-spacing:.15em;
+    text-transform:uppercase;
+
+    margin-bottom:13px;
 }
 
 .section-head h2{
-  font-size:46px;
-  letter-spacing:-.05em;
-  line-height:1.08;
-  margin:0 0 13px
+    margin:0 0 17px;
+
+    font-size:46px;
+
+    line-height:1.05;
+
+    letter-spacing:-.055em;
 }
 
 .section-head p{
-  color:var(--muted);
-  font-size:15px;
-  line-height:1.75;
-  margin:0
+    margin:0;
+
+    color:var(--muted);
+
+    font-size:15px;
+
+    line-height:1.75;
 }
 
 
-/* =========================
-   FEATURES
-========================= */
+/* FEATURES */
 
-.feature-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px
+.features{
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:16px;
 }
 
 .feature{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:var(--r);
-  padding:22px;
-  box-shadow:var(--shadow)
+    background:white;
+
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    padding:27px;
+
+    box-shadow:var(--shadow);
 }
 
 .feature-icon{
-  width:35px;
-  height:35px;
-  border-radius:10px;
-  background:#eeecff;
-  color:var(--primary);
-  display:grid;
-  place-items:center;
-  font-weight:800;
-  margin-bottom:18px
-}
+    width:38px;
+    height:38px;
 
-.feature:nth-child(2) .feature-icon{
-  background:#e9f7f2;
-  color:var(--green)
-}
+    display:grid;
+    place-items:center;
 
-.feature:nth-child(3) .feature-icon{
-  background:#fff0df;
-  color:#d7802d
+    border-radius:10px;
+
+    background:#eeecff;
+
+    color:var(--primary);
+
+    font-weight:800;
+
+    margin-bottom:19px;
 }
 
 .feature h3{
-  font-size:17px;
-  margin:0 0 10px
+    margin:0 0 11px;
+
+    font-size:18px;
 }
 
 .feature p{
-  font-size:13px;
-  line-height:1.75;
-  color:#858998;
-  margin:0
+    margin:0;
+
+    color:#858998;
+
+    font-size:14px;
+
+    line-height:1.75;
 }
 
 
-/* =========================
-   AI
-========================= */
+/* AI SECTION */
 
 .dark-section{
-  background:#11121b;
-  color:#fff;
-  position:relative;
-  overflow:hidden
-}
+    background:#11121b;
 
-.dark-section:before{
-  content:"";
-  position:absolute;
-  width:500px;
-  height:500px;
-  background:#5b55f7;
-  filter:blur(150px);
-  opacity:.15;
-  right:-180px;
-  top:-220px
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
 }
 
 .dark-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:55px;
-  align-items:center;
-  position:relative
+    width:min(1120px,100%);
+
+    margin:auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:65px;
+
+    align-items:center;
 }
 
 .dark-copy h2{
-  font-size:46px;
-  line-height:1.05;
-  letter-spacing:-.05em;
-  margin:0 0 15px
+    margin:0 0 20px;
+
+    font-size:46px;
+
+    line-height:1.05;
+
+    letter-spacing:-.055em;
 }
 
 .dark-copy p{
-  color:#a7aabb;
-  font-size:14px;
-  line-height:1.8;
-  max-width:480px
+    max-width:520px;
+
+    color:#a7aabb;
+
+    font-size:15px;
+
+    line-height:1.8;
 }
 
-.model-list{
-  display:grid;
-  gap:9px
+.ai-list{
+    display:grid;
+
+    gap:11px;
 }
 
-.model{
-  border:1px solid #2a2b38;
-  background:#191a24;
-  border-radius:10px;
-  padding:14px;
-  display:flex;
-  gap:12px;
-  align-items:flex-start
+.ai-item{
+    display:flex;
+
+    gap:13px;
+
+    padding:17px;
+
+    border:1px solid #2a2b38;
+
+    border-radius:10px;
+
+    background:#191a24;
 }
 
-.model-icon{
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  background:#2b2b48;
-  color:#8985ff;
-  display:grid;
-  place-items:center;
-  flex:none
+.ai-icon{
+    width:30px;
+    height:30px;
+
+    flex:none;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:8px;
+
+    background:#2b2b48;
+
+    color:#8985ff;
 }
 
-.model strong{
-  font-size:12px
+.ai-item strong{
+    font-size:13px;
 }
 
-.model span{
-  display:block;
-  color:#898d9f;
-  font-size:11px;
-  margin-top:4px;
-  line-height:1.6
+.ai-item span{
+    display:block;
+
+    margin-top:5px;
+
+    color:#898d9f;
+
+    font-size:11px;
+
+    line-height:1.6;
 }
 
 
-/* =========================
-   STEPS
-========================= */
+/* STEPS */
 
 .steps{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:0;
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    background:white;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    overflow:hidden;
 }
 
 .step{
-  padding:23px;
-  border-right:1px solid var(--line)
+    padding:26px;
+
+    border-right:1px solid var(--line);
 }
 
 .step:last-child{
-  border:0
+    border-right:0;
 }
 
-.num{
-  font-size:11px;
-  color:var(--primary);
-  font-weight:800
+.step-number{
+    color:var(--primary);
+
+    font-size:12px;
+
+    font-weight:800;
 }
 
 .step h3{
-  font-size:14px;
-  margin:14px 0 7px
+    margin:15px 0 8px;
+
+    font-size:15px;
 }
 
 .step p{
-  font-size:12px;
-  color:#888c9a;
-  line-height:1.7;
-  margin:0
+    margin:0;
+
+    color:#888c9a;
+
+    font-size:13px;
+
+    line-height:1.7;
 }
 
 
-/* =========================
-   PRICING
-========================= */
+/* PRICING */
 
 .pricing{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,430px));
-  justify-content:center;
-  gap:18px;
-  align-items:stretch
+    display:grid;
+
+    grid-template-columns:repeat(2,430px);
+
+    justify-content:center;
+
+    gap:20px;
 }
 
-.price{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:26px;
-  position:relative;
-  box-shadow:var(--shadow)
+.price-card{
+    position:relative;
+
+    padding:30px;
+
+    background:white;
+
+    border:1px solid var(--line);
+
+    border-radius:15px;
+
+    box-shadow:var(--shadow);
 }
 
-.price.featured{
-  border:1.5px solid var(--primary);
-  box-shadow:0 18px 55px rgba(91,85,247,.12);
-  transform:translateY(-5px)
+.price-card.pro{
+    border:1.5px solid var(--primary);
+
+    transform:translateY(-5px);
+
+    box-shadow:0 20px 60px rgba(91,85,247,.13);
 }
 
 .popular{
-  position:absolute;
-  right:18px;
-  top:18px;
-  background:#ecebff;
-  color:var(--primary);
-  font-size:10px;
-  font-weight:800;
-  padding:5px 7px;
-  border-radius:5px
+    position:absolute;
+
+    top:18px;
+    right:18px;
+
+    padding:5px 8px;
+
+    border-radius:5px;
+
+    background:#ecebff;
+
+    color:var(--primary);
+
+    font-size:10px;
+    font-weight:800;
 }
 
-.price h3{
-  font-size:18px;
-  margin:0
+.price-card h3{
+    margin:0;
+
+    font-size:21px;
 }
 
-.price-desc{
-  font-size:12px;
-  color:#9296a4;
-  min-height:30px;
-  line-height:1.6
+.price-description{
+    min-height:43px;
+
+    color:#9296a4;
+
+    font-size:13px;
+
+    line-height:1.6;
 }
 
-.price-number{
-  font-size:40px;
-  font-weight:800;
-  letter-spacing:-.06em;
-  margin:18px 0 3px
+.price{
+    margin:20px 0 4px;
+
+    font-size:43px;
+
+    font-weight:800;
+
+    letter-spacing:-.06em;
 }
 
-.price-number small{
-  font-size:12px;
-  font-weight:500;
-  color:#9296a4
+.price small{
+    color:#9296a4;
+
+    font-size:13px;
+
+    font-weight:500;
 }
 
 .price-note{
-  font-size:10px;
-  color:#a1a4b0;
-  margin-bottom:18px
+    color:#a1a4b0;
+
+    font-size:10px;
+
+    margin-bottom:20px;
 }
 
-.price ul{
-  list-style:none;
-  padding:0;
-  margin:0 0 22px;
-  border-top:1px solid var(--line)
+.price-card ul{
+    list-style:none;
+
+    padding:0;
+
+    margin:0 0 23px;
 }
 
-.price li{
-  font-size:12px;
-  padding:11px 0;
-  border-bottom:1px solid #f0f1f4
+.price-card li{
+    padding:11px 0;
+
+    border-bottom:1px solid #f0f1f4;
+
+    font-size:13px;
 }
 
-.price li:before{
-  content:"✓";
-  color:var(--green);
-  font-weight:800;
-  margin-right:7px
+.price-card li:before{
+    content:"✓";
+
+    margin-right:8px;
+
+    color:var(--green);
+
+    font-weight:800;
 }
 
-.price button{
-  width:100%;
-  padding:10px;
-  border-radius:7px;
-  border:1px solid var(--line);
-  background:#fff;
-  font-size:12px;
-  font-weight:700;
-  color:#4b4f5f;
-  cursor:pointer
+.price-button{
+    width:100%;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    border:1px solid var(--line);
+
+    background:white;
+
+    font-size:13px;
+    font-weight:700;
 }
 
-.price.featured button{
-  background:var(--primary);
-  color:#fff;
-  border-color:var(--primary)
+.price-card.pro .price-button{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
 }
 
 
-/* =========================
-   FAQ
-========================= */
+/* FAQ */
 
 .faq{
-  max-width:780px;
-  margin:auto
+    max-width:800px;
+
+    margin:auto;
 }
 
 .faq-item{
-  border-top:1px solid var(--line)
+    border-top:1px solid var(--line);
 }
 
-.faq-q{
-  width:100%;
-  border:0;
-  background:none;
-  text-align:left;
-  padding:19px 0;
-  font-size:14px;
-  font-weight:700;
-  display:flex;
-  justify-content:space-between;
-  cursor:pointer;
-  color:var(--text)
+.faq-question{
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+
+    padding:21px 0;
+
+    border:0;
+
+    background:none;
+
+    text-align:left;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:var(--text);
 }
 
-.faq-a{
-  display:none;
-  color:#858998;
-  font-size:12px;
-  line-height:1.75;
-  padding:0 0 19px;
-  max-width:680px
+.faq-answer{
+    display:none;
+
+    padding:0 0 20px;
+
+    max-width:700px;
+
+    color:#858998;
+
+    font-size:13px;
+
+    line-height:1.75;
 }
 
-.faq-item.open .faq-a{
-  display:block
-}
-
-.faq-item.open .faq-q span{
-  transform:rotate(45deg)
+.faq-item.open .faq-answer{
+    display:block;
 }
 
 
-/* =========================
-   FINAL CTA
-========================= */
+/* FINAL */
 
-.final-cta{
-  padding:90px 0;
-  text-align:center
+.final{
+    padding:90px 20px;
 }
 
 .final-box{
-  background:linear-gradient(145deg,#191a2a,#29285a);
-  color:#fff;
-  border-radius:20px;
-  padding:60px 25px;
-  position:relative;
-  overflow:hidden
-}
+    width:min(1120px,100%);
 
-.final-box:before{
-  content:"";
-  position:absolute;
-  width:300px;
-  height:300px;
-  background:#756fff;
-  filter:blur(100px);
-  opacity:.2;
-  left:50%;
-  top:-190px;
-  transform:translateX(-50%)
-}
+    margin:auto;
 
-.final-box>*{
-  position:relative
+    padding:65px 30px;
+
+    text-align:center;
+
+    color:white;
+
+    border-radius:20px;
+
+    background:linear-gradient(
+        145deg,
+        #191a2a,
+        #29285a
+    );
 }
 
 .final-box h2{
-  font-size:46px;
-  letter-spacing:-.055em;
-  margin:0 0 12px
+    margin:0 0 15px;
+
+    font-size:46px;
+
+    letter-spacing:-.055em;
 }
 
 .final-box p{
-  color:#b3b5c5;
-  font-size:13px;
-  margin:0 auto 24px
-}
+    color:#b3b5c5;
 
-.final-box button{
-  background:#fff;
-  color:#25263a;
-  border:0;
-  border-radius:8px;
-  padding:12px 18px;
-  font-size:13px;
-  font-weight:800;
-  cursor:pointer
+    font-size:14px;
+
+    margin-bottom:27px;
 }
 
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer{
-  border-top:1px solid var(--line);
-  padding:28px 0 45px;
-  color:#9296a4;
-  font-size:11px
+    padding:30px 20px 45px;
+
+    border-top:1px solid var(--line);
+
+    color:#9296a4;
+
+    font-size:11px;
 }
 
-.foot{
-  display:flex;
-  justify-content:space-between;
-  align-items:center
+.footer-inner{
+    width:min(1120px,100%);
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
 }
 
-.foot-brand{
-  color:#333644;
-  font-weight:800;
-  font-size:14px
+.footer-logo{
+    color:#333644;
+
+    font-size:15px;
+
+    font-weight:800;
 }
 
-.foot-links{
-  display:flex;
-  gap:18px
+.footer-links{
+    display:flex;
+
+    gap:20px;
 }
 
 
-/* =========================
-   MODAL
-========================= */
+/* LOGIN MODAL */
 
-.modal-bg{
-  position:fixed;
-  inset:0;
-  background:rgba(12,13,21,.5);
-  z-index:50;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(10,11,18,.55);
+
+    backdrop-filter:blur(5px);
 }
 
-.modal-bg.show{
-  display:flex
+.modal-overlay.active{
+    display:flex;
 }
 
 .modal{
-  background:#fff;
-  width:min(420px,100%);
-  border-radius:15px;
-  padding:25px;
-  position:relative;
-  box-shadow:0 30px 90px rgba(0,0,0,.22)
+    width:min(430px,100%);
+
+    padding:30px;
+
+    position:relative;
+
+    background:white;
+
+    border-radius:16px;
+
+    box-shadow:0 30px 90px rgba(0,0,0,.25);
 }
 
 .close{
-  position:absolute;
-  right:14px;
-  top:10px;
-  border:0;
-  background:none;
-  font-size:24px;
-  color:#9a9dab;
-  cursor:pointer
+    position:absolute;
+
+    right:15px;
+    top:12px;
+
+    border:0;
+
+    background:none;
+
+    color:#9296a4;
+
+    font-size:25px;
 }
 
 .modal h2{
-  margin:0 0 5px;
-  font-size:22px
+    margin:0 0 6px;
+
+    font-size:24px;
 }
 
-.modal p{
-  font-size:12px;
-  color:#9094a2
+.modal-description{
+    margin:0 0 25px;
+
+    color:#9296a4;
+
+    font-size:13px;
+
+    line-height:1.6;
 }
 
-.field{
-  margin-top:13px
+.form-group{
+    margin-bottom:15px;
 }
 
-.field label{
-  display:block;
-  font-size:11px;
-  font-weight:700;
-  margin-bottom:6px
+.form-group label{
+    display:block;
+
+    margin-bottom:7px;
+
+    font-size:12px;
+
+    font-weight:700;
 }
 
-.field input{
-  width:100%;
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:7px;
-  outline:0;
-  font-size:13px
-}
-
-.modal-submit{
-  width:100%;
-  margin-top:16px;
-  padding:11px;
-  border:0;
-  border-radius:7px;
-  background:var(--primary);
-  color:#fff;
-  font-weight:700;
-  font-size:12px;
-  cursor:pointer
-}
-
-
-/* =========================
-   TOAST
-========================= */
-
-.toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#171925;
-  color:#fff;
-  padding:12px 16px;
-  border-radius:9px;
-  font-size:12px;
-  opacity:0;
-  transform:translateY(15px);
-  transition:.2s;
-  z-index:60
-}
-
-.toast.show{
-  opacity:1;
-  transform:none
-}
-
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(max-width:800px){
-
-  .nav-links{
-    display:none
-  }
-
-  .hero{
-    padding:65px 0 55px
-  }
-
-  .hero h1{
-    font-size:45px
-  }
-
-  .stats{
-    grid-template-columns:1fr 1fr;
-    margin-bottom:55px
-  }
-
-  .stat:nth-child(2){
-    border-right:0
-  }
-
-  .stat:nth-child(-n+2){
-    border-bottom:1px solid var(--line)
-  }
-
-  .feature-grid,
-  .dark-grid{
-    grid-template-columns:1fr
-  }
-
-  .pricing{
-    grid-template-columns:1fr;
-    max-width:500px;
-    margin:auto
-  }
-
-  .steps{
-    grid-template-columns:1fr 1fr
-  }
-
-  .step:nth-child(2){
-    border-right:0
-  }
-
-  .step:nth-child(-n+2){
-    border-bottom:1px solid var(--line)
-  }
-
-  .price.featured{
-    transform:none
-  }
-
-  .dark-copy h2,
-  .section-head h2,
-  .final-box h2{
-    font-size:38px
-  }
-}
-
-
-@media(max-width:520px){
-
-  .wrap{
-    width:calc(100% - 28px)
-  }
-
-  .nav-inner{
-    width:calc(100% - 28px)
-  }
-
-  .nav-cta{
-    padding:8px 10px
-  }
-
-  .hero h1{
-    font-size:38px
-  }
-
-  .hero-sub{
-    font-size:14px
-  }
-
-  .hero-buttons{
-    flex-direction:column;
-    align-items:center
-  }
-
-  .hero-buttons button{
+.form-group input{
     width:100%;
-    max-width:280px
-  }
 
-  .demo-wrap{
-    margin-top:30px
-  }
+    padding:12px;
 
-  .demo-window{
-    grid-template-columns:1fr
-  }
+    border:1px solid var(--line);
 
-  .demo-side{
-    display:none
-  }
+    border-radius:8px;
 
-  .steps{
-    grid-template-columns:1fr
-  }
+    outline:none;
 
-  .step{
-    border-right:0!important;
-    border-bottom:1px solid var(--line)
-  }
+    font-size:14px;
+}
 
-  .step:last-child{
-    border-bottom:0
-  }
+.form-group input:focus{
+    border-color:var(--primary);
+}
 
-  .foot{
-    flex-direction:column;
-    gap:15px
-  }
+.login-submit{
+    width:100%;
 
-  .foot-links{
-    gap:12px;
-    flex-wrap:wrap;
-    justify-content:center
-  }
+    margin-top:5px;
+
+    padding:13px;
+
+    border:0;
+
+    border-radius:8px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:13px;
+
+    font-weight:700;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:850px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .features,
+    .dark-grid{
+        grid-template-columns:1fr;
+    }
+
+    .steps{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .step:nth-child(2){
+        border-right:0;
+    }
+
+    .step:nth-child(-n+2){
+        border-bottom:1px solid var(--line);
+    }
+
+    .pricing{
+        grid-template-columns:1fr;
+
+        width:min(430px,100%);
+
+        margin:auto;
+    }
+
+    .price-card.pro{
+        transform:none;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat:nth-child(2){
+        border-right:0;
+    }
+
+    .stat:nth-child(-n+2){
+        border-bottom:1px solid var(--line);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero{
+        padding-top:70px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero-description{
+        font-size:14px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .hero-actions button{
+        width:100%;
+        max-width:300px;
+    }
+
+    .preview-window{
+        grid-template-columns:1fr;
+    }
+
+    .preview-sidebar{
+        display:none;
+    }
+
+    .preview-stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .preview-bottom{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        width:calc(100% - 28px);
+    }
+
+    .section-head h2,
+    .dark-copy h2,
+    .final-box h2{
+        font-size:38px;
+    }
+
+    .steps{
+        grid-template-columns:1fr;
+    }
+
+    .step{
+        border-right:0!important;
+        border-bottom:1px solid var(--line);
+    }
+
+    .step:last-child{
+        border-bottom:0;
+    }
+
+    .footer-inner{
+        flex-direction:column;
+        gap:18px;
+    }
 
 }
 
 </style>
 </head>
 
-
 <body>
 
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<!-- NAVBAR -->
 
 <header class="nav">
 
-  <div class="nav-inner">
+    <div class="nav-inner">
 
-    <a class="brand" href="#">
-      <span class="brand-mark"></span>
-      FlowPilot
-    </a>
+        <a href="#" class="logo">
+            <span class="logo-icon">✦</span>
+            FlowPilot
+        </a>
 
-    <nav class="nav-links">
+        <nav class="nav-links">
 
-      <a href="#funzioni">
-        Funzioni
-      </a>
+            <a href="#funzioni">
+                Funzioni
+            </a>
 
-      <a href="#ai">
-        AI
-      </a>
+            <a href="#ai">
+                AI
+            </a>
 
-      <a href="#come-funziona">
-        Come funziona
-      </a>
+            <a href="#come-funziona">
+                Come funziona
+            </a>
 
-      <a href="#pricing">
-        Prezzi
-      </a>
+            <a href="#prezzi">
+                Prezzi
+            </a>
 
-      <a href="#faq">
-        FAQ
-      </a>
+            <a href="#faq">
+                FAQ
+            </a>
 
-    </nav>
+        </nav>
 
-    <div class="nav-actions">
+        <div class="nav-actions">
 
-      <button
-        class="login"
-        id="loginBtn">
-        Accedi
-      </button>
+            <button
+                class="login-btn"
+                onclick="openLogin()">
 
-      <button
-        class="nav-cta"
-        onclick="go('pricing')">
-        Inizia ora →
-      </button>
+                Accedi
+
+            </button>
+
+            <button
+                class="primary-btn"
+                onclick="scrollToPricing()">
+
+                Inizia ora →
+
+            </button>
+
+        </div>
 
     </div>
-
-  </div>
 
 </header>
 
 
-<!-- =========================
-     TICKER
-========================= -->
+<!-- HERO -->
 
-<div class="ticker">
+<section class="hero">
 
-  <div class="ticker-track">
+    <div class="eyebrow">
+        AI Workflow Intelligence
+    </div>
 
-    <span>
-      FLOWPILOT
-      <b>AI WORKFLOW INTELLIGENCE</b>
-    </span>
+    <h1>
 
-    <span>
-      AUTOMAZIONI INTELLIGENTI
-    </span>
+        Il lavoro della tua azienda.
 
-    <span>
-      PIÙ CONTROLLO. MENO LAVORO MANUALE.
-    </span>
+        <br>
 
-    <span>
-      FLOWPILOT
-      <b>AI WORKFLOW INTELLIGENCE</b>
-    </span>
+        <span class="gradient">
+            Finalmente sotto controllo.
+        </span>
 
-    <span>
-      AUTOMAZIONI INTELLIGENTI
-    </span>
+    </h1>
 
-    <span>
-      PIÙ CONTROLLO. MENO LAVORO MANUALE.
-    </span>
+    <p class="hero-description">
 
-  </div>
+        FlowPilot collega persone, task, processi e automazioni
+        in un unico sistema. L'AI individua cosa rallenta il team
+        e trasforma il lavoro ripetitivo in workflow automatici.
+
+    </p>
+
+    <div class="hero-actions">
+
+        <button
+            class="primary-btn"
+            onclick="scrollToPricing()">
+
+            Inizia gratuitamente →
+
+        </button>
+
+        <button
+            class="secondary-btn"
+            onclick="document.getElementById('come-funziona').scrollIntoView({behavior:'smooth'})">
+
+            Scopri come funziona
+
+        </button>
+
+    </div>
+
+
+    <!-- PREVIEW -->
+
+    <div class="preview">
+
+        <div class="browser-bar">
+
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+
+            <span style="margin-left:8px;">
+                app.flowpilot.ai
+            </span>
+
+        </div>
+
+
+        <div class="preview-window">
+
+            <aside class="preview-sidebar">
+
+                <div class="preview-brand">
+                    ✦ FlowPilot
+                </div>
+
+                <div class="preview-link active">
+                    ◈ Overview
+                </div>
+
+                <div class="preview-link">
+                    ✓ Tasks
+                </div>
+
+                <div class="preview-link">
+                    ▦ Projects
+                </div>
+
+                <div class="preview-link">
+                    ✦ Automations
+                </div>
+
+                <div class="preview-link">
+                    ⌁ Analytics
+                </div>
+
+            </aside>
+
+
+            <div class="preview-main">
+
+                <div class="preview-title">
+                    Good morning, team.
+                </div>
+
+
+                <div class="preview-stats">
+
+                    <div class="preview-stat">
+
+                        <span>
+                            OPEN TASKS
+                        </span>
+
+                        <strong>
+                            24
+                        </strong>
+
+                    </div>
+
+                    <div class="preview-stat">
+
+                        <span>
+                            COMPLETED
+                        </span>
+
+                        <strong>
+                            68
+                        </strong>
+
+                    </div>
+
+                    <div class="preview-stat">
+
+                        <span>
+                            AUTOMATIONS
+                        </span>
+
+                        <strong>
+                            14
+                        </strong>
+
+                    </div>
+
+                    <div class="preview-stat">
+
+                        <span>
+                            TIME SAVED
+                        </span>
+
+                        <strong>
+                            11.4h
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="preview-bottom">
+
+                    <div class="preview-card">
+
+                        <h4>
+                            Today's focus
+                        </h4>
+
+                        <div class="line one"></div>
+                        <div class="line two"></div>
+                        <div class="line three"></div>
+                        <div class="line one"></div>
+
+                    </div>
+
+
+                    <div class="preview-card ai-preview">
+
+                        <h4>
+                            ✦ FlowPilot AI
+                        </h4>
+
+                        <p>
+                            Abbiamo trovato 3 processi ripetitivi
+                            che possono essere automatizzati.
+                        </p>
+
+                        <p style="color:white;font-weight:700;">
+                            ≈ 4.5 ore risparmiate / settimana
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>1 dashboard</strong>
+        <span>per tutta l'operatività</span>
+    </div>
+
+    <div class="stat">
+        <strong>AI-native</strong>
+        <span>automazioni suggerite dall'AI</span>
+    </div>
+
+    <div class="stat">
+        <strong>24/7</strong>
+        <span>workflow sempre attivi</span>
+    </div>
+
+    <div class="stat">
+        <strong>100%</strong>
+        <span>visibilità sul lavoro</span>
+    </div>
 
 </div>
 
 
-<main>
+<!-- FUNZIONI -->
 
+<section
+    class="section"
+    id="funzioni">
 
-<!-- =========================
-     HERO
-========================= -->
+    <div class="section-inner">
 
-<section class="hero wrap">
+        <div class="section-head">
 
-  <div class="eyebrow">
-    AI workflow intelligence
-  </div>
-
-  <h1>
-
-    Il lavoro della tua azienda.
-
-    <br>
-
-    <span class="accent">
-      Finalmente sotto controllo.
-    </span>
-
-  </h1>
-
-  <p class="hero-sub">
-
-    FlowPilot collega persone, task, processi e automazioni
-    in un unico sistema. L'AI individua cosa rallenta il team
-    e trasforma il lavoro ripetitivo in workflow automatici.
-
-  </p>
-
-  <div class="hero-buttons">
-
-    <button
-      class="hero-cta"
-      onclick="go('pricing')">
-
-      Inizia gratuitamente →
-
-    </button>
-
-    <button
-      class="hero-cta secondary"
-      onclick="go('come-funziona')">
-
-      Scopri come funziona
-
-    </button>
-
-  </div>
-
-
-  <!-- PRODUCT PREVIEW -->
-
-  <div class="demo-wrap">
-
-    <div class="demo">
-
-      <div class="demo-bar">
-
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-
-        <span style="margin-left:8px">
-          app.flowpilot.ai / overview
-        </span>
-
-      </div>
-
-      <div class="demo-window">
-
-        <aside class="demo-side">
-
-          <div class="demo-brand">
-            ✦ FlowPilot
-          </div>
-
-          <div class="demo-nav active">
-            ◈ Overview
-          </div>
-
-          <div class="demo-nav">
-            ✓ Tasks
-          </div>
-
-          <div class="demo-nav">
-            ▦ Projects
-          </div>
-
-          <div class="demo-nav">
-            ✦ Automations
-          </div>
-
-          <div class="demo-nav">
-            ⌁ Analytics
-          </div>
-
-        </aside>
-
-
-        <div class="demo-main">
-
-          <div class="demo-main-top">
-
-            <div class="mini-title">
-              Good morning, team.
+            <div class="section-label">
+                Tutto in un unico posto
             </div>
 
-            <button class="mini-btn">
-              + New task
+            <h2>
+                Non gestire il lavoro.
+                <br>
+                Fallo scorrere.
+            </h2>
+
+            <p>
+                FlowPilot riunisce la parte operativa dell'azienda
+                e rende visibili le attività che contano, quelle ferme
+                e quelle che possono essere automatizzate.
+            </p>
+
+        </div>
+
+
+        <div class="features">
+
+            <article class="feature">
+
+                <div class="feature-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Task e priorità
+                </h3>
+
+                <p>
+                    Organizza il lavoro per progetto,
+                    responsabile, scadenza e priorità.
+                </p>
+
+            </article>
+
+
+            <article class="feature">
+
+                <div class="feature-icon">
+                    ↻
+                </div>
+
+                <h3>
+                    Workflow automatici
+                </h3>
+
+                <p>
+                    Trasforma processi ripetitivi in automazioni
+                    senza interventi manuali.
+                </p>
+
+            </article>
+
+
+            <article class="feature">
+
+                <div class="feature-icon">
+                    ⌁
+                </div>
+
+                <h3>
+                    Controllo e analytics
+                </h3>
+
+                <p>
+                    Scopri dove il team perde tempo,
+                    quali progetti rallentano e cosa migliorare.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI -->
+
+<section
+    class="section dark-section"
+    id="ai">
+
+    <div class="dark-grid">
+
+        <div class="dark-copy">
+
+            <div class="section-label">
+                Il copilota dell'azienda
+            </div>
+
+            <h2>
+                L'AI non si limita a rispondere.
+                <br>
+                Trova cosa automatizzare.
+            </h2>
+
+            <p>
+                FlowPilot osserva i pattern del lavoro e suggerisce
+                workflow utili. Può individuare attività ricorrenti,
+                colli di bottiglia e passaggi che non richiedono una persona.
+            </p>
+
+            <button
+                class="primary-btn"
+                onclick="openLogin()">
+
+                Prova FlowPilot →
+
             </button>
 
-          </div>
+        </div>
 
 
-          <div class="mini-stats">
+        <div class="ai-list">
 
-            <div class="mini-stat">
+            <div class="ai-item">
 
-              <span>
-                OPEN TASKS
-              </span>
+                <div class="ai-icon">
+                    ✦
+                </div>
 
-              <strong>
-                24
-              </strong>
+                <div>
 
-            </div>
+                    <strong>
+                        Lead → CRM → Follow-up
+                    </strong>
 
-            <div class="mini-stat">
+                    <span>
+                        Quando arriva un lead, crea il task,
+                        assegna il responsabile e avvisa il team.
+                    </span>
 
-              <span>
-                COMPLETED
-              </span>
-
-              <strong>
-                68
-              </strong>
-
-            </div>
-
-            <div class="mini-stat">
-
-              <span>
-                AUTOMATIONS
-              </span>
-
-              <strong>
-                14
-              </strong>
-
-            </div>
-
-            <div class="mini-stat">
-
-              <span>
-                TIME SAVED
-              </span>
-
-              <strong>
-                11.4h
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <div class="demo-lower">
-
-            <div class="mini-card">
-
-              <h4>
-                Today's focus
-              </h4>
-
-              <div class="mini-line w1"></div>
-              <div class="mini-line w2"></div>
-              <div class="mini-line w3"></div>
-              <div class="mini-line w1"></div>
+                </div>
 
             </div>
 
 
-            <div class="mini-card ai-card">
+            <div class="ai-item">
 
-              <h4>
-                ✦ FlowPilot AI
-              </h4>
+                <div class="ai-icon">
+                    ↻
+                </div>
 
-              <p>
-                Abbiamo trovato 3 processi ripetitivi
-                che possono essere automatizzati.
-              </p>
+                <div>
 
-              <p style="color:#fff;font-weight:700">
-                ≈ 4.5 ore risparmiate / settimana
-              </p>
+                    <strong>
+                        Report settimanale
+                    </strong>
+
+                    <span>
+                        Raccoglie i dati del workspace e prepara
+                        automaticamente un riepilogo.
+                    </span>
+
+                </div>
 
             </div>
 
-          </div>
+
+            <div class="ai-item">
+
+                <div class="ai-icon">
+                    ◷
+                </div>
+
+                <div>
+
+                    <strong>
+                        Gestione degli arretrati
+                    </strong>
+
+                    <span>
+                        Individua task in ritardo e attiva
+                        reminder intelligenti.
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
-      </div>
-
     </div>
-
-  </div>
 
 </section>
 
 
-<!-- =========================
-     STATS
-========================= -->
-
-<div class="wrap stats">
-
-  <div class="stat">
-
-    <strong>
-      1 dashboard
-    </strong>
-
-    <span>
-      per tutta l'operatività
-    </span>
-
-  </div>
-
-  <div class="stat">
-
-    <strong>
-      AI-native
-    </strong>
-
-    <span>
-      automazioni suggerite dall'AI
-    </span>
-
-  </div>
-
-  <div class="stat">
-
-    <strong>
-      24/7
-    </strong>
-
-    <span>
-      workflow sempre attivi
-    </span>
-
-  </div>
-
-  <div class="stat">
-
-    <strong>
-      100%
-    </strong>
-
-    <span>
-      visibilità sul lavoro
-    </span>
-
-  </div>
-
-</div>
-
-
-<!-- =========================
-     FUNZIONI
-========================= -->
+<!-- COME FUNZIONA -->
 
 <section
-  class="section"
-  id="funzioni">
+    class="section"
+    id="come-funziona">
 
-  <div class="wrap">
+    <div class="section-inner">
 
-    <div class="section-head">
+        <div class="section-head">
 
-      <div class="section-label">
-        Tutto in un unico posto
-      </div>
+            <div class="section-label">
+                Come funziona
+            </div>
 
-      <h2>
+            <h2>
+                Dalla confusione
+                <br>
+                a un workflow.
+            </h2>
 
-        Non gestire il lavoro.
+            <p>
+                Parti dal lavoro che fai già oggi
+                e lascia che FlowPilot lo trasformi.
+            </p>
 
-        <br>
+        </div>
 
-        Fallo scorrere.
 
-      </h2>
+        <div class="steps">
 
-      <p>
+            <div class="step">
 
-        FlowPilot riunisce la parte operativa dell'azienda
-        e rende visibili le attività che contano, quelle ferme
-        e quelle che possono essere automatizzate.
+                <div class="step-number">
+                    01
+                </div>
 
-      </p>
+                <h3>
+                    Collega il team
+                </h3>
+
+                <p>
+                    Crea il workspace e porta progetti,
+                    persone e attività in un unico ambiente.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    02
+                </div>
+
+                <h3>
+                    Definisci il processo
+                </h3>
+
+                <p>
+                    Descrivi come viene svolto oggi un processo,
+                    anche se è ancora manuale.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    03
+                </div>
+
+                <h3>
+                    FlowPilot lo ottimizza
+                </h3>
+
+                <p>
+                    L'AI individua passaggi ripetitivi
+                    e propone un workflow automatico.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    04
+                </div>
+
+                <h3>
+                    Lascia che scorra
+                </h3>
+
+                <p>
+                    Il workflow lavora in background
+                    mentre il team si concentra sul valore.
+                </p>
+
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="feature-grid">
-
-
-      <article class="feature">
-
-        <div class="feature-icon">
-          ✓
-        </div>
-
-        <h3>
-          Task e priorità
-        </h3>
-
-        <p>
-
-          Organizza il lavoro per progetto, responsabile,
-          scadenza e priorità. Ogni persona sa cosa deve fare
-          e cosa viene prima.
-
-        </p>
-
-      </article>
-
-
-      <article class="feature">
-
-        <div class="feature-icon">
-          ↻
-        </div>
-
-        <h3>
-          Workflow automatici
-        </h3>
-
-        <p>
-
-          Trasforma processi ripetitivi in automazioni:
-          trigger, azioni, notifiche e assegnazioni
-          senza interventi manuali.
-
-        </p>
-
-      </article>
-
-
-      <article class="feature">
-
-        <div class="feature-icon">
-          ⌁
-        </div>
-
-        <h3>
-          Controllo e analytics
-        </h3>
-
-        <p>
-
-          Scopri dove il team perde tempo, quali progetti
-          rallentano e quanto lavoro viene realmente completato.
-
-        </p>
-
-      </article>
-
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- =========================
-     AI
-========================= -->
+<!-- PREZZI -->
 
 <section
-  class="section dark-section"
-  id="ai">
+    class="section"
+    id="prezzi">
 
-  <div class="wrap dark-grid">
+    <div class="section-inner">
+
+        <div class="section-head">
+
+            <div class="section-label">
+                Prezzi
+            </div>
+
+            <h2>
+                Scegli il piano giusto.
+            </h2>
+
+            <p>
+                Inizia con Starter oppure porta tutta
+                la potenza di FlowPilot nella tua azienda.
+            </p>
+
+        </div>
 
 
-    <div class="dark-copy">
+        <div class="pricing">
 
-      <div class="section-label">
-        Il copilota dell'azienda
-      </div>
 
-      <h2>
+            <!-- STARTER -->
 
-        L'AI non si limita a rispondere.
+            <article class="price-card">
 
-        <br>
+                <h3>
+                    Starter
+                </h3>
 
-        Trova cosa automatizzare.
+                <p class="price-description">
+                    Per piccoli team che vogliono organizzare
+                    il lavoro e iniziare ad automatizzare.
+                </p>
 
-      </h2>
+                <div class="price">
+                    €19,99
+                    <small>/ mese</small>
+                </div>
 
-      <p>
+                <div class="price-note">
+                    Per iniziare con FlowPilot
+                </div>
 
-        FlowPilot osserva i pattern del lavoro e suggerisce
-        workflow utili. Può individuare attività ricorrenti,
-        colli di bottiglia e passaggi che non richiedono una persona.
+                <ul>
 
-      </p>
+                    <li>
+                        Fino a 3 membri
+                    </li>
 
-      <button
-        class="hero-cta"
-        onclick="showToast('Demo AI: presto collegata al motore di automazione.')">
+                    <li>
+                        Task e progetti
+                    </li>
 
-        Vedi un esempio →
+                    <li>
+                        Dashboard operativa
+                    </li>
 
-      </button>
+                    <li>
+                        Automazioni base
+                    </li>
+
+                </ul>
+
+                <button
+                    class="price-button"
+                    onclick="openLogin()">
+
+                    Inizia ora
+
+                </button>
+
+            </article>
+
+
+            <!-- PRO -->
+
+            <article class="price-card pro">
+
+                <div class="popular">
+                    PIÙ SCELTO
+                </div>
+
+                <h3>
+                    Pro
+                </h3>
+
+                <p class="price-description">
+                    Per aziende che vogliono automatizzare
+                    davvero i propri processi.
+                </p>
+
+                <div class="price">
+                    €49,99
+                    <small>/ mese</small>
+                </div>
+
+                <div class="price-note">
+                    Tutte le funzionalità avanzate
+                </div>
+
+                <ul>
+
+                    <li>
+                        Membri illimitati
+                    </li>
+
+                    <li>
+                        AI workflow suggestions
+                    </li>
+
+                    <li>
+                        Automazioni avanzate
+                    </li>
+
+                    <li>
+                        Analytics e KPI
+                    </li>
+
+                    <li>
+                        Priorità AI
+                    </li>
+
+                </ul>
+
+                <button
+                    class="price-button"
+                    onclick="openLogin()">
+
+                    Inizia con Pro →
+
+                </button>
+
+            </article>
+
+
+        </div>
 
     </div>
-
-
-    <div class="model-list">
-
-
-      <div class="model">
-
-        <div class="model-icon">
-          ✦
-        </div>
-
-        <div>
-
-          <strong>
-            Lead → CRM → Follow-up
-          </strong>
-
-          <span>
-
-            Quando arriva un lead, crea il task corretto,
-            assegna il responsabile e avvisa il team.
-
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="model">
-
-        <div class="model-icon">
-          ↻
-        </div>
-
-        <div>
-
-          <strong>
-            Report settimanale
-          </strong>
-
-          <span>
-
-            Ogni settimana raccoglie i dati del workspace
-            e prepara un riepilogo pronto da condividere.
-
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="model">
-
-        <div class="model-icon">
-          ◷
-        </div>
-
-        <div>
-
-          <strong>
-            Gestione degli arretrati
-          </strong>
-
-          <span>
-
-            Individua task in ritardo e attiva reminder
-            intelligenti in base a priorità e responsabile.
-
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="model">
-
-        <div class="model-icon">
-          ⌁
-        </div>
-
-        <div>
-
-          <strong>
-            AI workflow suggestions
-          </strong>
-
-          <span>
-
-            Analizza i processi e propone nuove automazioni
-            con una stima del tempo che possono far risparmiare.
-
-          </span>
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- =========================
-     COME FUNZIONA
-========================= -->
+<!-- FAQ -->
 
 <section
-  class="section"
-  id="come-funziona">
+    class="section"
+    id="faq">
 
-  <div class="wrap">
+    <div class="section-inner">
 
-    <div class="section-head">
+        <div class="section-head">
 
-      <div class="section-label">
-        Come funziona
-      </div>
+            <div class="section-label">
+                FAQ
+            </div>
 
-      <h2>
+            <h2>
+                Domande frequenti.
+            </h2>
 
-        Dalla confusione
+        </div>
 
-        <br>
 
-        a un workflow.
+        <div class="faq">
 
-      </h2>
+            <div class="faq-item">
 
-      <p>
+                <button
+                    class="faq-question"
+                    onclick="toggleFaq(this)">
 
-        Nessuna configurazione complessa.
-        Parti dal lavoro che fai già oggi
-        e lascia che FlowPilot lo trasformi.
+                    Cos'è FlowPilot?
 
-      </p>
+                    <span>＋</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    FlowPilot è una piattaforma AI per gestire
+                    il lavoro aziendale, coordinare task e progetti
+                    e trasformare processi ripetitivi in workflow automatici.
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    onclick="toggleFaq(this)">
+
+                    Come funziona l'AI?
+
+                    <span>＋</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    L'AI analizza le attività disponibili nel workspace
+                    e può suggerire automazioni, priorità e interventi.
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <button
+                    class="faq-question"
+                    onclick="toggleFaq(this)">
+
+                    Posso iniziare subito?
+
+                    <span>＋</span>
+
+                </button>
+
+                <div class="faq-answer">
+
+                    Sì. Crea il tuo accesso e verrai portato
+                    direttamente nella dashboard operativa di FlowPilot.
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="steps">
-
-
-      <div class="step">
-
-        <div class="num">
-          01
-        </div>
-
-        <h3>
-          Collega il team
-        </h3>
-
-        <p>
-
-          Crea il workspace e porta progetti,
-          persone e attività in un unico ambiente.
-
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="num">
-          02
-        </div>
-
-        <h3>
-          Definisci il processo
-        </h3>
-
-        <p>
-
-          Descrivi come viene svolto oggi un processo,
-          anche se è ancora manuale.
-
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="num">
-          03
-        </div>
-
-        <h3>
-          FlowPilot lo ottimizza
-        </h3>
-
-        <p>
-
-          L'AI individua passaggi ripetitivi
-          e propone un workflow automatico.
-
-        </p>
-
-      </div>
-
-
-      <div class="step">
-
-        <div class="num">
-          04
-        </div>
-
-        <h3>
-          Lascia che scorra
-        </h3>
-
-        <p>
-
-          Il workflow lavora in background mentre
-          il team si concentra sulle attività ad alto valore.
-
-        </p>
-
-      </div>
-
-
-    </div>
-
-  </div>
 
 </section>
 
 
-<!-- =========================
-     PRICING
-========================= -->
+<!-- CTA -->
 
-<section
-  class="section"
-  id="pricing">
-
-  <div class="wrap">
-
-    <div class="section-head">
-
-      <div class="section-label">
-        Prezzi
-      </div>
-
-      <h2>
-        Scegli il piano giusto.
-      </h2>
-
-      <p>
-
-        Inizia con Starter oppure porta tutta
-        la potenza di FlowPilot nella tua azienda con Pro.
-
-      </p>
-
-    </div>
-
-
-    <div class="pricing">
-
-
-      <!-- STARTER -->
-
-      <article class="price">
-
-        <h3>
-          Starter
-        </h3>
-
-        <p class="price-desc">
-
-          Per piccoli team che vogliono organizzare
-          il lavoro e iniziare ad automatizzare.
-
-        </p>
-
-        <div class="price-number">
-
-          €19,99
-
-          <small>
-            / mese
-          </small>
-
-        </div>
-
-        <div class="price-note">
-
-          Per iniziare con FlowPilot
-
-        </div>
-
-
-        <ul>
-
-          <li>
-            Fino a 3 membri
-          </li>
-
-          <li>
-            Task e progetti
-          </li>
-
-          <li>
-            Dashboard operativa
-          </li>
-
-          <li>
-            Automazioni base
-          </li>
-
-        </ul>
-
-
-        <button
-          onclick="showToast('Registrazione Starter — pronta per essere collegata.')">
-
-          Inizia ora
-
-        </button>
-
-      </article>
-
-
-      <!-- PRO -->
-
-      <article class="price featured">
-
-        <span class="popular">
-          PIÙ SCELTO
-        </span>
-
-        <h3>
-          Pro
-        </h3>
-
-        <p class="price-desc">
-
-          Per aziende che vogliono automatizzare
-          davvero i propri processi.
-
-        </p>
-
-
-        <div class="price-number">
-
-          €49,99
-
-          <small>
-            / mese
-          </small>
-
-        </div>
-
-        <div class="price-note">
-
-          Tutte le funzionalità avanzate di FlowPilot
-
-        </div>
-
-
-        <ul>
-
-          <li>
-            Membri illimitati
-          </li>
-
-          <li>
-            AI workflow suggestions
-          </li>
-
-          <li>
-            Automazioni avanzate
-          </li>
-
-          <li>
-            Analytics e KPI
-          </li>
-
-          <li>
-            Priorità AI
-          </li>
-
-        </ul>
-
-
-        <button
-          onclick="showToast('Checkout Pro — pronto per essere collegato a Stripe.')">
-
-          Inizia con Pro →
-
-        </button>
-
-      </article>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     FAQ
-========================= -->
-
-<section
-  class="section"
-  id="faq">
-
-  <div class="wrap">
-
-    <div class="section-head">
-
-      <div class="section-label">
-        FAQ
-      </div>
-
-      <h2>
-        Domande frequenti.
-      </h2>
-
-      <p>
-        Tutto quello che devi sapere prima di iniziare.
-      </p>
-
-    </div>
-
-
-    <div class="faq">
-
-
-      <div class="faq-item">
-
-        <button class="faq-q">
-
-          Cos'è FlowPilot?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          FlowPilot è una piattaforma AI per gestire il lavoro
-          aziendale, coordinare task e progetti e trasformare
-          processi ripetitivi in workflow automatici.
-
-        </div>
-
-      </div>
-
-
-      <div class="faq-item">
-
-        <button class="faq-q">
-
-          FlowPilot sostituisce i software che usiamo già?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          L'obiettivo è diventare il layer operativo che coordina
-          il lavoro. Le integrazioni con gli strumenti esistenti
-          possono essere aggiunte senza obbligare il team a cambiare tutto.
-
-        </div>
-
-      </div>
-
-
-      <div class="faq-item">
-
-        <button class="faq-q">
-
-          Come funziona l'AI?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          L'AI analizza attività e processi disponibili nel workspace
-          e può suggerire automazioni, priorità e interventi.
-          Le automazioni vengono poi eseguite secondo le regole
-          definite dal team.
-
-        </div>
-
-      </div>
-
-
-      <div class="faq-item">
-
-        <button class="faq-q">
-
-          Posso provarlo gratuitamente?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          FlowPilot offre un'esperienza iniziale pensata per permettere
-          al team di capire come organizzare il proprio workspace
-          prima di scegliere il piano più adatto.
-
-        </div>
-
-      </div>
-
-
-      <div class="faq-item">
-
-        <button class="faq-q">
-
-          I miei dati sono controllabili?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          Il prodotto è progettato per rendere visibili permessi,
-          workflow e attività. Nella versione production verranno
-          aggiunti autenticazione, gestione dei ruoli, audit log
-          e policy di sicurezza.
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     FINAL CTA
-========================= -->
-
-<section class="final-cta">
-
-  <div class="wrap">
+<section class="final">
 
     <div class="final-box">
 
-      <div
-        class="section-label"
-        style="color:#a9a6ff">
+        <div class="section-label">
+            Il prossimo passo
+        </div>
 
-        Il prossimo passo
+        <h2>
+            Fai lavorare il tuo sistema.
+            <br>
+            Non il tuo team.
+        </h2>
 
-      </div>
+        <p>
+            Organizza. Automatizza. Misura.
+            Tutto da un unico posto.
+        </p>
 
-      <h2>
+        <button
+            class="primary-btn"
+            onclick="openLogin()">
 
-        Fai lavorare il tuo sistema.
+            Entra in FlowPilot →
 
-        <br>
-
-        Non il tuo team.
-
-      </h2>
-
-      <p>
-
-        Organizza. Automatizza. Misura.
-        Tutto da un unico posto.
-
-      </p>
-
-      <button
-        onclick="go('pricing')">
-
-        Inizia con FlowPilot →
-
-      </button>
+        </button>
 
     </div>
-
-  </div>
 
 </section>
 
 
-</main>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- FOOTER -->
 
 <footer>
 
-  <div class="wrap foot">
+    <div class="footer-inner">
 
-    <div class="foot-brand">
-      ✦ FlowPilot
+        <div class="footer-logo">
+            ✦ FlowPilot
+        </div>
+
+        <div class="footer-links">
+
+            <a href="#funzioni">
+                Funzioni
+            </a>
+
+            <a href="#prezzi">
+                Prezzi
+            </a>
+
+            <a href="#faq">
+                FAQ
+            </a>
+
+            <span>
+                © 2026 FlowPilot
+            </span>
+
+        </div>
+
     </div>
-
-    <div class="foot-links">
-
-      <a href="#funzioni">
-        Funzioni
-      </a>
-
-      <a href="#pricing">
-        Prezzi
-      </a>
-
-      <a href="#faq">
-        FAQ
-      </a>
-
-      <span>
-        © 2026 FlowPilot
-      </span>
-
-    </div>
-
-  </div>
 
 </footer>
 
 
-<!-- =========================
-     LOGIN MODAL
-========================= -->
+<!-- LOGIN -->
 
 <div
-  class="modal-bg"
-  id="loginModal">
+    class="modal-overlay"
+    id="loginModal">
 
-  <div class="modal">
+    <div class="modal">
 
-    <button
-      class="close"
-      id="closeModal">
+        <button
+            class="close"
+            onclick="closeLogin()">
 
-      ×
+            ×
 
-    </button>
+        </button>
 
-    <h2>
-      Accedi a FlowPilot
-    </h2>
+        <h2>
+            Accedi a FlowPilot
+        </h2>
 
-    <p>
-      Accedi al tuo workspace aziendale.
-    </p>
+        <p class="modal-description">
+
+            Inserisci le tue credenziali per accedere
+            alla dashboard operativa.
+
+        </p>
 
 
-    <div class="field">
+        <form onsubmit="login(event)">
 
-      <label>
-        Email
-      </label>
+            <div class="form-group">
 
-      <input
-        type="email"
-        placeholder="nome@azienda.com">
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="nome@azienda.com"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    required>
+
+            </div>
+
+
+            <button
+                class="login-submit"
+                type="submit">
+
+                Accedi →
+
+            </button>
+
+        </form>
 
     </div>
 
-
-    <div class="field">
-
-      <label>
-        Password
-      </label>
-
-      <input
-        type="password"
-        placeholder="••••••••">
-
-    </div>
-
-
-    <button
-      class="modal-submit"
-      id="modalSubmit">
-
-      Accedi →
-
-    </button>
-
-  </div>
-
-</div>
-
-
-<div
-  class="toast"
-  id="toast">
 </div>
 
 
 <script>
 
+function openLogin(){
 
-/* =========================
-   SCROLL
-========================= */
-
-function go(id){
-
-  document
-    .getElementById(id)
-    ?.scrollIntoView({
-      behavior:'smooth'
-    });
+    document
+        .getElementById("loginModal")
+        .classList.add("active");
 
 }
 
+function closeLogin(){
 
-/* =========================
-   TOAST
-========================= */
-
-function showToast(msg){
-
-  const toast =
-    document.getElementById('toast');
-
-  toast.textContent = msg;
-
-  toast.classList.add('show');
-
-  clearTimeout(window.toastTimer);
-
-  window.toastTimer =
-    setTimeout(
-      () => toast.classList.remove('show'),
-      2600
-    );
+    document
+        .getElementById("loginModal")
+        .classList.remove("active");
 
 }
 
+function login(event){
 
-/* =========================
-   FAQ
-========================= */
+    event.preventDefault();
 
-document
-  .querySelectorAll('.faq-q')
-  .forEach(q => {
+    const email =
+        document.getElementById("email").value.trim();
 
-    q.addEventListener(
-      'click',
-      () => {
+    const password =
+        document.getElementById("password").value.trim();
 
-        const item =
-          q.parentElement;
-
-        document
-          .querySelectorAll('.faq-item')
-          .forEach(other => {
-
-            if(other !== item){
-
-              other.classList.remove('open');
-
-            }
-
-          });
-
-        item.classList.toggle('open');
-
-      }
-    );
-
-  });
-
-
-/* =========================
-   LOGIN MODAL
-========================= */
-
-const modal =
-  document.getElementById('loginModal');
-
-
-document
-  .getElementById('loginBtn')
-  .onclick = () => {
-
-    modal.classList.add('show');
-
-  };
-
-
-document
-  .getElementById('closeModal')
-  .onclick = () => {
-
-    modal.classList.remove('show');
-
-  };
-
-
-modal.addEventListener(
-  'click',
-  event => {
-
-    if(event.target === modal){
-
-      modal.classList.remove('show');
-
+    if(!email || !password){
+        return;
     }
 
-  }
-);
+    /*
+        Salviamo temporaneamente l'utente.
+        Questo NON è ancora un sistema di autenticazione reale.
+    */
 
-
-document
-  .getElementById('modalSubmit')
-  .onclick = () => {
-
-    modal.classList.remove('show');
-
-    showToast(
-      'Accesso pronto per essere collegato al backend.'
+    localStorage.setItem(
+        "flowpilot_user",
+        email
     );
 
-  };
+    localStorage.setItem(
+        "flowpilot_logged_in",
+        "true"
+    );
+
+    /*
+        Trasferimento alla vera applicazione.
+    */
+
+    window.location.href = "app.html";
+
+}
 
 
-/* =========================
-   NAVIGATION
-========================= */
+function scrollToPricing(){
+
+    document
+        .getElementById("prezzi")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+function toggleFaq(button){
+
+    const item =
+        button.parentElement;
+
+    item.classList.toggle("open");
+
+}
+
 
 document
-  .querySelectorAll('a[href^="#"]')
-  .forEach(a => {
+    .getElementById("loginModal")
+    .addEventListener("click",function(event){
 
-    a.addEventListener(
-      'click',
-      event => {
-
-        const id =
-          a.getAttribute('href')
-           .slice(1);
-
-        if(document.getElementById(id)){
-
-          event.preventDefault();
-
-          go(id);
-
+        if(event.target === this){
+            closeLogin();
         }
 
-      }
-    );
-
-  });
+    });
 
 </script>
 
