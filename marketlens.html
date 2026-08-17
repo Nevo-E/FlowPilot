@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="it">
+  
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketLens — Market Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script data-marketlens-chart src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#F7FAFF;--bg-soft:#EDF4FF;--panel:#FFFFFF;--panel-soft:#EAF2FF;--line:#D5E2F5;
+    --text:#071A3A;--muted:#52667F;--muted-2:#8AA0BB;--signal:#1687FF;--signal-deep:#0759C9;
+    --signal-soft:#E1F0FF;--coral:#FF6B6B;--coral-soft:#FFF0F0;--gold:#4CC9FF;--gold-soft:#E4F7FF;
+    --r-sm:10px;--r:16px;--r-lg:24px;--r-pill:999px;
+    --shadow-sm:0 1px 2px rgba(18,24,21,0.05),0 1px 4px rgba(18,24,21,0.04);
+    --shadow-md:0 6px 16px rgba(18,24,21,0.06),0 16px 36px rgba(18,24,21,0.06);
+    --display:'Inter',sans-serif;--body:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  }
+  .brand-mark{background:linear-gradient(135deg,#56D5FF,#146BFF);box-shadow:0 0 0 4px var(--signal-soft)}
+  .page-language{font:600 12px var(--body);color:var(--text);background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);padding:8px 10px;cursor:pointer;outline:none}
+  .btn-fill,.step-num{background:linear-gradient(135deg,#071A3A,#0759C9)}
+  .btn-mint,.plan-card.featured .plan-cta{background:linear-gradient(135deg,#1687FF,#0759C9);color:#fff}
+  .btn-mint:hover{box-shadow:0 6px 18px rgba(22,135,255,.35)}
+  .hero-visual{background:linear-gradient(145deg,#EAF3FF 0%,#FFF 53%,#E2F0FF 100%)}
+  .hero-visual::before{background:#C7E4FF}.hero-visual::after{background:#D8F4FF}
+  .plan-badge{background:linear-gradient(135deg,#56D5FF,#1687FF);color:#071A3A}
+  .language-market-row{display:flex;gap:9px;flex-wrap:wrap;padding:6px 10px 10px;border-top:1px solid var(--line);margin-top:4px}
+  .selector-group{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+  .selector-group select{font:600 12px var(--body);color:var(--text);background:#fff;border:1px solid var(--line);border-radius:var(--r-pill);padding:7px 28px 7px 10px;cursor:pointer;outline:none}
+  .ai-banner{display:flex;gap:14px;align-items:center;margin:0 0 26px;padding:17px 19px;border:1px solid #B9D9FF;border-radius:var(--r);background:linear-gradient(105deg,#E8F4FF,#F9FCFF)}
+  .ai-orb{width:36px;height:36px;flex:0 0 36px;border-radius:12px;background:linear-gradient(135deg,#56D5FF,#0759C9);box-shadow:0 8px 20px rgba(7,89,201,.22)}
+  .ai-banner strong{font-family:var(--display);font-size:14px}.ai-banner span{display:block;font-size:12.5px;color:var(--muted)}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}::selection{background:var(--signal-soft);color:var(--signal-deep)}:focus-visible{outline:2px solid var(--signal-deep);outline-offset:2px}
+  .wrap{width:85vw;max-width:none;margin:0 auto;padding:0}@media(max-width:640px){.wrap{width:92vw;padding:0}}
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav-inner{width:85vw;max-width:none;margin:0 auto;padding:16px 0;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}.brand-mark{width:10px;height:10px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px var(--signal-soft)}
+  .nav-links{display:flex;gap:28px;font-size:14px;color:var(--muted)}.nav-links a{text-decoration:none;transition:color .15s ease}.nav-links a:hover{color:var(--text)}
+  .flowpilot-return-link{color:var(--signal-deep)!important;font-weight:700;border:1px solid var(--line);padding:8px 12px;border-radius:var(--r-pill);background:var(--signal-soft)}.flowpilot-return-link:hover{border-color:var(--signal-deep);background:#fff}
+  @media(max-width:860px){.nav-links{display:none}}
+  .btn-ghost{font-family:var(--body);font-size:13.5px;font-weight:600;color:var(--text);background:transparent;border:1px solid var(--line);padding:9px 18px;border-radius:var(--r-pill);cursor:pointer;transition:all .15s ease;white-space:nowrap}.btn-ghost:hover{border-color:var(--signal-deep);color:var(--signal-deep)}
+  .btn-fill{font-family:var(--body);font-size:13.5px;font-weight:700;background:var(--text);color:#fff;border:none;padding:9px 20px;border-radius:var(--r-pill);cursor:pointer;transition:opacity .15s ease;white-space:nowrap}.btn-fill:hover{opacity:.82}
+  .btn-mint{font-family:var(--body);font-size:13.5px;font-weight:700;background:var(--signal);color:#04211A;border:none;padding:9px 20px;border-radius:var(--r-pill);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease;white-space:nowrap}.btn-mint:hover{box-shadow:0 6px 18px rgba(0,217,160,.35);transform:translateY(-1px)}.btn-mint:disabled{opacity:.45;cursor:not-allowed;box-shadow:none;transform:none}
+  .account-chip{font-family:var(--mono);font-size:11.5px;color:var(--signal-deep);background:var(--signal-soft);padding:8px 14px;border-radius:var(--r-pill);display:flex;align-items:center;gap:7px;white-space:nowrap}.nav-auth{display:flex;align-items:center;gap:10px}
+  .ticker-strip{margin-top:66px;border-bottom:1px solid var(--line);background:var(--panel-soft);overflow:hidden;white-space:nowrap;padding:10px 0}.ticker-track{display:inline-flex;gap:44px;font-family:var(--mono);font-size:12px;color:var(--muted);animation:scroll-left 38s linear infinite;padding-left:100%}.ticker-track span b{color:var(--signal-deep);font-weight:600}@keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+  .hero{padding:78px 0 64px;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:clamp(42px,6vw,100px);align-items:center;min-height:610px}.hero-copy{min-width:0}.eyebrow{font-family:var(--mono);font-size:12px;color:var(--signal-deep);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;display:inline-flex;align-items:center;gap:8px;background:var(--signal-soft);padding:7px 14px;border-radius:var(--r-pill)}
+  h1.hero-title{font-family:var(--display);font-weight:800;font-size:clamp(42px,5.4vw,78px);line-height:1.02;letter-spacing:-.035em;max-width:900px}h1.hero-title .accent{color:var(--muted-2)}.hero-sub{margin-top:22px;font-size:18px;color:var(--muted);max-width:680px}.hero-visual{position:relative;width:100%;min-height:420px;border:1px solid var(--line);border-radius:32px;background:linear-gradient(145deg,#F6F9F8 0%,#FFFFFF 55%,#EAFBF5 100%);box-shadow:var(--shadow-md);overflow:hidden;display:flex;align-items:center;justify-content:center}.hero-visual::before{content:'';position:absolute;width:280px;height:280px;border-radius:50%;background:var(--signal-soft);filter:blur(8px);top:-100px;right:-80px}.hero-visual::after{content:'';position:absolute;width:220px;height:220px;border-radius:50%;background:#FFF3DE;opacity:.65;bottom:-100px;left:-80px;filter:blur(10px)}.hero-visual svg{position:relative;z-index:1;width:88%;height:auto;max-width:570px}.hero-visual-label{position:absolute;left:24px;top:22px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.82);border:1px solid var(--line);padding:7px 10px;border-radius:999px;backdrop-filter:blur(8px)}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;gap:42px;padding-top:64px}.hero-visual{min-height:340px;max-width:760px}.hero-copy{max-width:900px}}
+  @media(max-width:640px){.hero{padding:58px 0 48px;min-height:auto}.hero-visual{min-height:270px;border-radius:24px}.hero-visual svg{width:94%}.hero-visual-label{left:16px;top:16px}.hero-sub{font-size:16px}}
+  .search-shell{margin-top:40px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-md);max-width:700px;padding:10px}.search-row{display:flex;align-items:center;gap:8px}.search-icon{flex-shrink:0;color:var(--muted-2);padding:0 6px 0 10px}
+  #query{flex:1;background:transparent;border:none;color:var(--text);font-family:var(--body);font-size:15.5px;outline:none;padding:12px 4px}#query::placeholder{color:var(--muted-2)}#query:disabled{cursor:not-allowed}
+  .search-locked-note{display:flex;align-items:center;gap:10px;padding:12px 14px;color:var(--muted);font-size:14.5px;flex:1}.chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 10px 4px}.chip{font-family:var(--body);font-size:12.5px;color:var(--muted);border:1px solid var(--line);padding:7px 13px;border-radius:var(--r-pill);cursor:pointer;background:var(--bg-soft);transition:all .15s ease}.chip:hover{border-color:var(--signal);color:var(--signal-deep);background:var(--signal-soft)}
+  .trust{padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;gap:52px;flex-wrap:wrap}.trust-item{font-family:var(--body);font-size:12.5px;color:var(--muted-2)}.trust-item b{display:block;font-family:var(--display);font-size:26px;color:var(--text);font-weight:700;margin-bottom:2px}
+  section.block{padding:88px 0}section.block.soft{background:var(--bg-soft);width:85vw;max-width:none;margin:0 auto;border-radius:40px;padding:88px 40px}@media(max-width:1360px){section.block.soft{width:85vw}}@media(max-width:640px){section.block.soft{width:92vw;border-radius:28px;padding:64px 24px}}section.block.soft .wrap{padding:0;max-width:none;width:100%}
+  .block-head{max-width:620px;margin-bottom:48px}.section-tag{font-family:var(--mono);font-size:11px;color:var(--signal-deep);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;display:inline-block}.block-head h2{font-family:var(--display);font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-.02em;margin-bottom:14px}.block-head p{color:var(--muted);font-size:16px}
+  .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}@media(max-width:920px){.feature-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.feature-grid{grid-template-columns:1fr}}
+  .feature-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 24px;box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease}.feature-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+  .feature-icon{width:44px;height:44px;border-radius:var(--r);background:var(--signal-soft);color:var(--signal-deep);display:flex;align-items:center;justify-content:center;margin-bottom:18px}.feature-card h3{font-family:var(--display);font-size:16.5px;font-weight:700;margin-bottom:8px}.feature-card p{font-size:14px;color:var(--muted);line-height:1.6}
+  .model-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}@media(max-width:860px){.model-grid{grid-template-columns:1fr}}.model-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px 26px;box-shadow:var(--shadow-sm)}.model-card .tag{font-family:var(--mono);font-size:10.5px;color:var(--signal-deep);background:var(--signal-soft);padding:5px 11px;border-radius:var(--r-pill);display:inline-block;margin-bottom:16px;letter-spacing:.05em}.model-card h3{font-family:var(--display);font-size:17px;font-weight:700;margin-bottom:10px}.model-card p{font-size:14px;color:var(--muted);line-height:1.65}
+  .steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative}@media(max-width:920px){.steps-row{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.steps-row{grid-template-columns:1fr}}.step-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 22px;box-shadow:var(--shadow-sm);position:relative}.step-num{width:34px;height:34px;border-radius:50%;background:var(--text);color:#fff;font-family:var(--mono);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-bottom:16px}.step-card h3{font-family:var(--display);font-size:15.5px;font-weight:700;margin-bottom:8px}.step-card p{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}@media(max-width:900px){.pricing-grid{grid-template-columns:1fr}}.plan-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px 28px;display:flex;flex-direction:column;position:relative;box-shadow:var(--shadow-sm);transition:transform .18s ease,box-shadow .18s ease}.plan-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}.plan-card.featured{border-color:var(--signal);box-shadow:0 0 0 3px var(--signal-soft),var(--shadow-md)}
+  .plan-badge{position:absolute;top:-13px;left:28px;background:var(--signal);color:#04211A;font-family:var(--mono);font-size:10px;font-weight:700;padding:6px 14px;border-radius:var(--r-pill);letter-spacing:.04em}.plan-name{font-family:var(--display);font-size:15px;font-weight:700;margin-bottom:6px}.plan-price{font-family:var(--display);font-size:40px;font-weight:800;line-height:1;margin:10px 0 6px;letter-spacing:-.02em}.plan-price span{font-family:var(--body);font-size:13px;color:var(--muted);font-weight:500}.plan-desc{font-size:13.5px;color:var(--muted);margin-bottom:24px;min-height:36px;line-height:1.55}.plan-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:28px;flex:1}.plan-features li{font-size:13.5px;color:var(--text);display:flex;gap:10px;align-items:flex-start;line-height:1.45}.plan-features li.disabled{color:var(--muted-2)}.plan-features li .ico{flex-shrink:0;width:19px;height:19px;border-radius:50%;font-size:11px;display:flex;align-items:center;justify-content:center;margin-top:1px}.plan-features li:not(.disabled) .ico{background:var(--signal-soft);color:var(--signal-deep)}.plan-features li.disabled .ico{background:var(--bg-soft);color:var(--muted-2)}
+  .plan-cta{width:100%;padding:13px;font-family:var(--body);font-size:14px;font-weight:700;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;border-radius:var(--r-pill);transition:all .15s ease}.plan-card.featured .plan-cta{background:var(--signal);color:#04211A;border-color:var(--signal)}.plan-cta:hover{border-color:var(--signal-deep);color:var(--signal-deep)}.plan-card.featured .plan-cta:hover{opacity:.88;color:#04211A}.plan-card.active-plan{box-shadow:0 0 0 2px var(--signal-deep)}
+  @keyframes flash-pulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 0 4px var(--signal-soft)}}#pricing.flash{animation:flash-pulse .7s ease 2;border-radius:var(--r-lg)}
+  .faq-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr);gap:56px;align-items:center}.faq-visual{min-height:430px;background:linear-gradient(145deg,#E3FBF1 0%,#F6F9F8 55%,#FFFFFF 100%);border:1px solid var(--line);border-radius:28px;position:relative;overflow:hidden;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center}.faq-visual::before{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:rgba(0,217,160,.16);top:-80px;right:-70px}.faq-visual::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(245,166,35,.12);bottom:-70px;left:-60px}.faq-visual-card{position:relative;z-index:2;width:78%;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow-md)}.faq-visual-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;font-family:var(--mono);font-size:10px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.08em}.faq-visual-dot{width:9px;height:9px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 5px var(--signal-soft)}.faq-visual-title{font-family:var(--display);font-size:18px;font-weight:800;margin-bottom:18px}.faq-bars{display:flex;align-items:flex-end;gap:10px;height:145px;border-bottom:1px solid var(--line);padding:0 8px}.faq-bar{flex:1;border-radius:7px 7px 0 0;background:var(--signal);opacity:.8}.faq-bar:nth-child(1){height:38%}.faq-bar:nth-child(2){height:52%}.faq-bar:nth-child(3){height:47%}.faq-bar:nth-child(4){height:68%}.faq-bar:nth-child(5){height:82%}.faq-bar:nth-child(6){height:100%;opacity:1}.faq-visual-foot{display:flex;justify-content:space-between;gap:10px;margin-top:16px;font-size:11px;color:var(--muted)}.faq-visual-foot b{color:var(--signal-deep);font-size:13px}@media(max-width:900px){.faq-layout{grid-template-columns:1fr}.faq-visual{min-height:360px}.faq-list{max-width:none}}.faq-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.faq-q{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;cursor:pointer;font-family:var(--display);font-weight:600;font-size:15px}.faq-q .chev{color:var(--muted-2);transition:transform .25s ease;flex-shrink:0}.faq-item.open .faq-q .chev{transform:rotate(45deg)}.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}.faq-item.open .faq-a{max-height:220px}.faq-a p{padding:0 24px 20px;font-size:14px;color:var(--muted);line-height:1.65}
+  .loading{display:none;padding:70px 0;text-align:center}.loading.active{display:block}.loading-bar{width:260px;height:4px;background:var(--line);margin:26px auto 0;overflow:hidden;position:relative;border-radius:var(--r-pill)}.loading-bar::after{content:'';position:absolute;top:0;left:-40%;width:40%;height:100%;background:var(--signal);animation:load-sweep 1.1s ease-in-out infinite;border-radius:var(--r-pill)}@keyframes load-sweep{0%{left:-40%}100%{left:100%}}.loading-steps{margin-top:22px;font-family:var(--mono);font-size:12.5px;color:var(--muted-2)}.loading-steps .active-step{color:var(--signal-deep)}
+  #results{display:none;padding:60px 0 100px}#results.active{display:block;animation:fade-up .5s ease both}@keyframes fade-up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .section-label{font-family:var(--mono);font-size:11px;color:var(--signal-deep);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}.report-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:36px}.report-title{font-family:var(--display);font-size:clamp(24px,3vw,36px);font-weight:800;max-width:680px;letter-spacing:-.02em}.report-meta{font-family:var(--mono);font-size:11.5px;color:var(--muted-2);text-align:right}
+  .summary-panel{background:var(--signal-soft);border-radius:var(--r-lg);padding:26px 28px;margin-bottom:40px;font-size:16px;color:#0B2A21;max-width:900px}.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}@media(max-width:820px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 20px;box-shadow:var(--shadow-sm)}.kpi-label{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}.kpi-value{font-family:var(--display);font-size:28px;font-weight:800;line-height:1}.kpi-value.pos{color:var(--signal-deep)}.kpi-value.gold{color:var(--gold)}.kpi-sub{font-family:var(--body);font-size:12px;color:var(--muted);margin-top:8px}
+  .chart-row{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:48px}@media(max-width:900px){.chart-row{grid-template-columns:1fr}}.chart-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px 24px 16px;box-shadow:var(--shadow-sm)}.chart-card h3{font-family:var(--display);font-size:15.5px;font-weight:700;margin-bottom:4px}.chart-card .chart-note{font-family:var(--mono);font-size:11px;color:var(--muted-2);margin-bottom:16px}.chart-holder{position:relative;height:250px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px}@media(max-width:820px){.two-col{grid-template-columns:1fr}}.col-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-sm)}.col-card h3{font-family:var(--display);font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}.col-card.drivers h3::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--signal)}.col-card.risks h3::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--coral)}.col-card ul{list-style:none;display:flex;flex-direction:column;gap:12px}.col-card li{font-size:14px;color:var(--text);padding-left:16px;position:relative;line-height:1.55}.col-card li::before{content:'';position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--muted-2)}
+  .sources-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 24px;margin-bottom:24px;box-shadow:var(--shadow-sm)}.source-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-top:1px solid var(--line);gap:16px}.source-row:first-of-type{border-top:none}.source-name{font-size:13.5px;color:var(--text)}.source-link{font-family:var(--body);font-size:12.5px;font-weight:600;color:var(--signal-deep);text-decoration:none;white-space:nowrap;background:var(--signal-soft);padding:6px 13px;border-radius:var(--r-pill)}.source-link:hover{background:var(--signal);color:#04211A}.disclaimer{font-family:var(--body);font-size:12px;color:var(--muted-2);line-height:1.7;max-width:900px}
+  .error-box{display:none;background:var(--coral-soft);border:1px solid var(--coral);border-radius:var(--r);padding:22px 24px;margin-top:26px;font-size:13.5px;color:#8A2E1D;max-width:640px}.error-box.active{display:block}
+  .locked-wrap{position:relative}.locked-content{filter:blur(6px);pointer-events:none;user-select:none}.locked-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(255,255,255,.72);z-index:5;padding:20px;text-align:center;border-radius:var(--r-lg)}.locked-overlay p{font-size:13px;color:var(--muted);max-width:280px;line-height:1.6}.locked-overlay button{font-family:var(--body);font-size:12.5px;font-weight:700;background:var(--signal);color:#04211A;border:none;padding:10px 20px;cursor:pointer;border-radius:var(--r-pill)}
+  .modal-overlay{position:fixed;inset:0;background:rgba(18,24,21,.45);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:300;padding:20px}.modal-overlay.active{display:flex}.modal-box{background:var(--panel);border-radius:var(--r-lg);padding:34px 32px;width:100%;max-width:380px;position:relative;box-shadow:var(--shadow-md)}.modal-box h2{font-family:var(--display);font-size:21px;font-weight:800;margin-bottom:6px}.modal-sub{font-size:13px;color:var(--muted);margin-bottom:26px}.modal-field{margin-bottom:16px}.modal-field label{display:block;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}.modal-field input{width:100%;background:var(--bg-soft);border:1px solid var(--line);color:var(--text);padding:12px 14px;font-family:var(--body);font-size:14px;outline:none;border-radius:var(--r)}.modal-field input:focus{border-color:var(--signal-deep)}.modal-submit{width:100%;background:var(--signal);color:#04211A;border:none;padding:13px;font-family:var(--body);font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;border-radius:var(--r-pill)}.modal-submit:hover{opacity:.9}.modal-foot{margin-top:18px;font-size:12.5px;color:var(--muted-2);text-align:center}.modal-foot a{color:var(--signal-deep);cursor:pointer;text-decoration:underline}.modal-note{font-family:var(--mono);font-size:10px;color:var(--muted-2);margin-top:16px;line-height:1.7}.modal-close{position:absolute;top:14px;right:14px;background:var(--bg-soft);border:none;border-radius:50%;width:30px;height:30px;color:var(--muted);font-size:14px;cursor:pointer}.modal-close:hover{color:var(--text)}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--text);color:#fff;padding:13px 22px;font-size:13px;font-weight:600;border-radius:var(--r-pill);z-index:400;opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease;box-shadow:var(--shadow-md)}.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+  footer{border-top:1px solid var(--line);padding:44px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}footer .brand{font-size:14px}footer .foot-note{font-size:12.5px;color:var(--muted-2)}
+
+  
+  .auth-tab.active{border-color:var(--signal-deep);color:var(--signal-deep);background:var(--signal-soft)}
+
+  
+  .upgrade-banner{
+    display:none;
+    margin:24px 0 0;
+    padding:22px 24px;
+    border-radius:var(--r-lg);
+    border:1px solid #B9D9FF;
+    background:linear-gradient(105deg,#E8F4FF,#F9FCFF);
+    box-shadow:var(--shadow-sm);
+  }
+  .upgrade-banner.active{display:block}
+  .upgrade-banner h3{
+    font-family:var(--display);
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:8px;
+    color:var(--text);
+  }
+  .upgrade-banner p{
+    font-size:14px;
+    color:var(--muted);
+    margin-bottom:18px;
+    line-height:1.55;
+  }
+  .upgrade-plans{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media(max-width:640px){.upgrade-plans{grid-template-columns:1fr}}
+  .upgrade-plan-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    padding:18px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .upgrade-plan-card.featured{
+    border-color:var(--signal);
+    box-shadow:0 0 0 3px var(--signal-soft);
+  }
+  .upgrade-plan-card .up-name{font-weight:700;font-size:15px}
+  .upgrade-plan-card .up-price{font-family:var(--display);font-size:28px;font-weight:800;letter-spacing:-.02em}
+  .upgrade-plan-card .up-price span{font-size:13px;color:var(--muted);font-weight:500}
+  .upgrade-plan-card .up-desc{font-size:13px;color:var(--muted);line-height:1.45;flex:1}
+  body.show-upgrade-pricing #pricing{
+    display:block !important;
+    visibility:visible !important;
+    height:auto !important;
+    overflow:visible !important;
+    margin:unset !important;
+    padding:88px 40px !important;
+  }
+  body.show-upgrade-pricing #pricing .plan-card[data-plan="Base"]{
+    display:none !important;
+  }
+  body.show-upgrade-pricing #pricing .pricing-grid{
+    grid-template-columns:repeat(2,1fr);
+    max-width:720px;
+    margin:0 auto;
+  }
+  @media(max-width:900px){
+    body.show-upgrade-pricing #pricing .pricing-grid{grid-template-columns:1fr}
+  }
+
+  /* ---------- modalità account ---------- */
+  body.account-logged-in #funzioni,
+  body.account-logged-in #modelli,
+  body.account-logged-in #come-funziona,
+  body.account-logged-in #pricing,
+  body.account-logged-in #faq {
+    display:none !important;
+  }
+  body.account-logged-in .nav-links{
+    display:flex !important;
+    gap:28px;
+  }
+  body.account-logged-in .public-nav-link{
+    display:none !important;
+  }
+  body.account-logged-in .plans-nav-link{
+    display:inline !important;
+    text-decoration:none;
+  }
+
+  body.account-logged-in #funzioni,
+  body.account-logged-in #modelli,
+  body.account-logged-in #come-funziona,
+  body.account-logged-in #pricing,
+  body.account-logged-in #faq {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-mark"></span>MarketLens</div>
+    <div class="nav-links" id="mainNavLinks">
+      <a class="public-nav-link" href="#funzioni">Funzioni</a><a class="public-nav-link" href="#modelli">Modelli</a><a class="public-nav-link" href="#come-funziona">Come funziona</a><a class="public-nav-link" href="#faq">FAQ</a><a class="plans-nav-link" href="plans.html">Piani</a><a class="flowpilot-return-link" href="flowpilot.html">Torna a FlowPilot</a>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px"><select class="page-language" id="pageLanguage" aria-label="Lingua della pagina"><option value="it">ITA</option><option value="en">ENG</option></select><div class="nav-auth" id="navAuth"></div></div>
+  </div>
+</header>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="auth-tabs" id="authTabs" style="display:flex;gap:8px;margin-bottom:18px;">
+      <button type="button" class="btn-ghost auth-tab active" id="tabLogin" style="flex:1;padding:8px 12px;">Accedi</button>
+      <button type="button" class="btn-ghost auth-tab" id="tabRegister" style="flex:1;padding:8px 12px;">Registrati</button>
+    </div>
+    <h2 id="modalTitle">Sign in</h2>
+    <p class="modal-sub" id="modalSub">Accedi al tuo account MarketLens</p>
+    <div class="modal-field" id="nameField" style="display:none;">
+      <label>Nome</label>
+      <input type="text" id="modalName" placeholder="Il tuo nome" autocomplete="name">
+    </div>
+    <div class="modal-field"><label>Email</label><input type="email" id="modalEmail" placeholder="nome@azienda.com" autocomplete="email"></div>
+    <div class="modal-field"><label>Password</label><input type="password" id="modalPassword" placeholder="••••••••" autocomplete="current-password"></div>
+    <div class="modal-field" id="confirmField" style="display:none;">
+      <label>Conferma password</label>
+      <input type="password" id="modalPasswordConfirm" placeholder="••••••••" autocomplete="new-password">
+    </div>
+    <button class="modal-submit" id="modalSubmit">Sign in</button>
+    <div id="authError" style="display:none;background:var(--coral-soft);border:1px solid var(--coral);border-radius:var(--r);padding:10px 12px;margin-top:12px;font-size:12.5px;color:#8A2E1D;"></div>
+    <div class="modal-foot" id="modalFoot">
+      Non hai un account? <a id="switchToRegister">Registrati</a>
+    </div>
+    <p class="modal-note" id="modalNote">La registrazione crea un account Base (prova gratuita) con 3 analisi. Nessun pagamento richiesto.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="ticker-strip"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<main class="wrap">
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">Intelligence di mercato su richiesta</div>
+    <h1 class="hero-title">Interroga qualsiasi<br><span class="accent">mercato.</span> Ottieni<br>il report completo.</h1>
+    <p class="hero-sub">Dimensioni, crescita, segmenti, concorrenti e fonti verificabili — generati in tempo reale da una singola query. Costruito per team strategy, corporate development e investor relations.</p>
+    <div class="search-shell" id="heroSearchArea"></div>
+  </div>
+
+  <div class="hero-visual" aria-label="Dashboard di market intelligence">
+    <div class="hero-visual-label">LIVE MARKET INTELLIGENCE</div>
+    <svg viewBox="0 0 620 470" role="img" aria-hidden="true">
+      <defs>
+        <linearGradient id="heroMint" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#56D5FF" stop-opacity=".95"/>
+          <stop offset="1" stop-color="#0759C9" stop-opacity=".7"/>
+        </linearGradient>
+        <linearGradient id="heroArea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#1687FF" stop-opacity=".25"/>
+          <stop offset="1" stop-color="#1687FF" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <rect x="34" y="48" width="552" height="372" rx="26" fill="#FFFFFF" stroke="#E4E9E7"/>
+      <rect x="60" y="76" width="150" height="78" rx="16" fill="#E3FBF1"/>
+      <text x="78" y="100" font-family="Inter, sans-serif" font-size="11" fill="#5C6863">MARKET SIZE</text>
+      <text x="78" y="132" font-family="Inter, sans-serif" font-size="27" font-weight="800" fill="#121815">€48.2B</text>
+      <rect x="226" y="76" width="150" height="78" rx="16" fill="#F6F9F8"/>
+      <text x="244" y="100" font-family="Inter, sans-serif" font-size="11" fill="#5C6863">CAGR</text>
+      <text x="244" y="132" font-family="Inter, sans-serif" font-size="27" font-weight="800" fill="#0759C9">+12.4%</text>
+      <rect x="392" y="76" width="166" height="78" rx="16" fill="#FFF3DE"/>
+      <text x="410" y="100" font-family="Inter, sans-serif" font-size="11" fill="#5C6863">FORECAST</text>
+      <text x="410" y="132" font-family="Inter, sans-serif" font-size="27" font-weight="800" fill="#121815">€86.7B</text>
+      <text x="60" y="190" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#121815">Market growth trajectory</text>
+      <text x="60" y="210" font-family="JetBrains Mono, monospace" font-size="10" fill="#96A29C">2022 — 2030</text>
+      <line x1="60" y1="350" x2="558" y2="350" stroke="#E4E9E7"/>
+      <line x1="60" y1="300" x2="558" y2="300" stroke="#E4E9E7"/>
+      <line x1="60" y1="250" x2="558" y2="250" stroke="#E4E9E7"/>
+      <path d="M60 338 C105 328,120 315,155 320 S215 292,250 300 S305 270,340 278 S395 245,430 258 S490 210,558 220 L558 350 L60 350 Z" fill="url(#heroArea)"/>
+      <path d="M60 338 C105 328,120 315,155 320 S215 292,250 300 S305 270,340 278 S395 245,430 258 S490 210,558 220" fill="none" stroke="url(#heroMint)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="60" cy="338" r="6" fill="#0759C9"/><circle cx="155" cy="320" r="6" fill="#0759C9"/><circle cx="250" cy="300" r="6" fill="#0759C9"/><circle cx="340" cy="278" r="6" fill="#0759C9"/><circle cx="430" cy="258" r="6" fill="#0759C9"/><circle cx="558" cy="220" r="7" fill="#0759C9"/>
+      <text x="60" y="374" font-family="JetBrains Mono, monospace" font-size="10" fill="#96A29C">22</text>
+      <text x="177" y="374" font-family="JetBrains Mono, monospace" font-size="10" fill="#96A29C">24</text>
+      <text x="292" y="374" font-family="JetBrains Mono, monospace" font-size="10" fill="#96A29C">26</text>
+      <text x="407" y="374" font-family="JetBrains Mono, monospace" font-size="10" fill="#96A29C">28</text>
+      <text x="532" y="374" font-family="JetBrains Mono, monospace" font-size="10" fill="#96A29C">30</text>
+    </svg>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="trust-item"><b>60s</b>tempo medio di generazione</div><div class="trust-item"><b>4+</b>fonti citate per report</div><div class="trust-item"><b>∞</b>mercati interrogabili</div><div class="trust-item"><b>100%</b>dati verificabili al link originale</div>
+</section>
+
+<section class="block" id="funzioni">
+  <div class="block-head"><span class="section-tag">Funzioni</span><h2>Tutto quello che serve per capire un mercato.</h2><p>Un'unica query restituisce un report pronto da presentare, con la stessa profondità di un'analisi fatta a mano — in una frazione del tempo.</p></div>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg></div><h3>Ricerca web in tempo reale</h3><p>Ogni report parte da una ricerca vera sul web, non da conoscenza statica: i numeri riflettono lo stato attuale del mercato.</p></div>
+    <div class="feature-card"><div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="12" width="4" height="8" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="17" rx="1"/></svg></div><h3>Grafici interattivi</h3><p>Crescita storica, proiezioni, segmentazione e quote di mercato, visualizzate automaticamente — nessun foglio di calcolo da preparare.</p></div>
+    <div class="feature-card"><div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>Fonti verificabili</h3><p>Ogni cifra è accompagnata da un link diretto alla fonte, così puoi controllare e citare il dato originale in due secondi.</p></div>
+    <div class="feature-card"><div class="feature-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M14 3v6h6"/></svg></div><h3>Report pronti da condividere</h3><p>Sintesi esecutiva, KPI, driver e rischi scritti in italiano chiaro, pensati per essere letti da chi decide, non solo da chi analizza.</p></div>
+  </div>
+</section>
+</main>
+
+<section class="block soft" id="modelli"><div class="wrap">
+  <div class="block-head"><span class="section-tag">Modelli</span><h2>Il motore che genera ogni report.</h2><p>Trasparenza su come viene costruita ogni analisi, così sai esattamente cosa stai leggendo.</p></div>
+  <div class="ai-banner"><div class="ai-orb"></div><div><strong>MarketLensAI — powered by ChatGPT luna</strong><span>Analisi contestuale, fonti e output localizzati per il mercato selezionato.</span></div></div>
+  <div class="model-grid">
+    <div class="model-card"><span class="tag">MarketLensAI</span><h3>MarketLensAI — powered by ChatGPT luna</h3><p>Il motore interpreta dati e contesto di mercato, crea una sintesi strutturata e adatta il report alla lingua e al mercato scelti.</p></div>
+    <div class="model-card"><span class="tag">RICERCA</span><h3>Accesso al web in tempo reale</h3><p>Prima di scrivere, il modello interroga il web per raccogliere dati aggiornati su dimensione, crescita, concorrenti e segmenti — non si basa solo su conoscenza pregressa.</p></div>
+    <div class="model-card"><span class="tag">VERIFICA</span><h3>Citazione delle fonti</h3><p>Ogni cifra riportata è collegata alla pagina da cui proviene. Ti consigliamo comunque di verificare sempre le fonti primarie prima di decisioni rilevanti.</p></div>
+  </div>
+</div></section>
+
+<main class="wrap">
+<section class="block" id="come-funziona">
+  <div class="block-head"><span class="section-tag">Come funziona</span><h2>Dalla domanda al report, in quattro passaggi.</h2><p>Nessuna configurazione, nessun foglio di calcolo: scrivi il mercato che ti interessa e MarketLens fa il resto.</p></div>
+  <div class="steps-row">
+    <div class="step-card"><div class="step-num">1</div><h3>Scegli un piano</h3><p>Attiva l'accesso in pochi secondi, senza impegno a lungo termine.</p></div>
+    <div class="step-card"><div class="step-num">2</div><h3>Scrivi il mercato</h3><p>Digita qualsiasi settore, prodotto o area geografica ti interessi analizzare.</p></div>
+    <div class="step-card"><div class="step-num">3</div><h3>MarketLens cerca ed elabora</h3><p>Il sistema raccoglie dati reali dal web e li trasforma in un report strutturato.</p></div>
+    <div class="step-card"><div class="step-num">4</div><h3>Ricevi il report</h3><p>KPI, grafici, driver, rischi e fonti — pronti da leggere o condividere con il team.</p></div>
+  </div>
+</section>
+</main>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+<section class="block soft" id="pricing"><div class="wrap">
+  <div class="block-head"><span class="section-tag">Prezzi</span><h2>Un piano per ogni fase di crescita.</h2><p>Genera report di mercato con il livello di profondità che serve al tuo team. Cambia piano quando vuoi.</p></div>
+  <div class="pricing-grid">
+    <div class="plan-card" data-plan="Base"><div class="plan-name">Base</div><div class="plan-price">Gratuito<span> prova</span></div><div class="plan-desc">Prova gratuita: registrati e genera fino a 3 report, senza pagamento.</div><ul class="plan-features"><li><span class="ico">✓</span>3 produzioni demo incluse</li><li><span class="ico">✓</span>Sintesi esecutiva e KPI</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Esportazione PDF</li><li><span class="ico">✓</span>Solo registrazione — nessun pagamento</li></ul><button id="checkout-base" class="plan-cta" onclick="window.location.href='plans.html'">Inizia prova gratuita</button></div>
+    <div class="plan-card featured" data-plan="Pro"><div class="plan-badge">Più scelto</div><div class="plan-name">Pro</div><div class="plan-price">11,99€<span> /mese</span></div><div class="plan-desc">Per un flusso di ricerca continuo su più mercati.</div><ul class="plan-features"><li><span class="ico">✓</span>Produzioni illimitate</li><li><span class="ico">✓</span>Sintesi esecutiva e KPI</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Esportazione PDF</li><li><span class="ico">✓</span>Vincolo di 2 mesi; 2° mese al 50% se disdici entro il 1°</li></ul><button id="checkout-pro" class="plan-cta" onclick="startCheckout('Pro')">Scegli Pro</button></div>
+    <div class="plan-card" data-plan="Business"><div class="plan-name">Business</div><div class="plan-price">19,99€<span> singolo consulto</span></div><div class="plan-desc">Un'analisi approfondita pronta da condividere con il team.</div><ul class="plan-features"><li><span class="ico">✓</span>Consulto di mercato completo</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Esportazione PDF</li><li><span class="ico">✓</span>Grafici e panorama competitivo</li></ul><button id="checkout-business" class="plan-cta" onclick="startCheckout('Business')">Scegli Business</button></div>
+  </div>
+</div></section>
+
+<main class="wrap">
+<section class="block" id="faq">
+  <div class="faq-layout">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    <div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+      <div class="block-head"><span class="section-tag">FAQ</span><h2>Domande frequenti.</h2><p>Tutto quello che devi sapere prima di iniziare una ricerca di mercato con MarketLens.</p></div>
+      <div class="faq-list" id="faqList">
+    <div class="faq-item"><div class="faq-q">I dati sono aggiornati in tempo reale?<span class="chev">+</span></div><div class="faq-a"><p>Ogni report viene generato al momento della richiesta tramite una ricerca web reale, quindi riflette le informazioni disponibili online in quel momento — non è un archivio statico.</p></div></div>
+    <div class="faq-item"><div class="faq-q">Posso cambiare piano in qualsiasi momento?<span class="chev">+</span></div><div class="faq-a"><p>Sì. Puoi passare a un piano superiore o inferiore quando vuoi; il nuovo livello di funzionalità si applica subito al report successivo.</p></div></div>
+    <div class="faq-item"><div class="faq-q">Le fonti sono davvero verificabili?<span class="chev">+</span></div><div class="faq-a"><p>Sì, ogni report include link diretti alle pagine da cui provengono i dati citati, così puoi controllarli in autonomia prima di usarli in una decisione.</p></div></div>
+    <div class="faq-item"><div class="faq-q">Cosa succede se esaurisco le 3 produzioni del piano Base?<span class="chev">+</span></div><div class="faq-a"><p>Puoi passare al piano Pro per sbloccare produzioni illimitate; il piano Base è un pagamento singolo e non si rinnova automaticamente.</p></div></div>
+    <div class="faq-item"><div class="faq-q">Quanto è affidabile un report generato automaticamente?<span class="chev">+</span></div><div class="faq-a"><p>È un ottimo punto di partenza per orientarsi rapidamente su un mercato, ma non sostituisce una due diligence completa: consigliamo di verificare sempre le fonti primarie prima di decisioni strategiche o di investimento importanti.</p></div></div>
+      </div>
+    </div>
+    <div class="faq-visual" aria-label="Anteprima di un report MarketLens">
+      <div class="faq-visual-card">
+        <div class="faq-visual-top"><span>Market intelligence</span><span class="faq-visual-dot"></span></div>
+        <div class="faq-visual-title">Panorama del mercato</div>
+        <div class="faq-bars"><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span></div>
+        <div class="faq-visual-foot"><span>Crescita prevista</span><b>+12,8% CAGR</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="loading" id="loading"><div class="section-label" style="text-align:center;">Elaborazione in corso</div><div class="loading-bar"></div><div class="loading-steps" id="loadingSteps"><span class="active-step">→ interrogazione fonti di settore...</span></div></div>
+<div class="error-box" id="errorBox"></div>
+
+<div class="upgrade-banner" id="upgradeBanner">
+  <h3 id="upgradeTitle">Hai esaurito le 3 analisi gratuite</h3>
+  <p id="upgradeText">La prova Base è terminata. Per continuare a generare report scegli un piano a pagamento.</p>
+  <div class="upgrade-plans">
+    <div class="upgrade-plan-card featured">
+      <div class="up-name">Pro</div>
+      <div class="up-price">11,99€<span> /mese</span></div>
+      <div class="up-desc">Produzioni illimitate, sintesi, KPI, fonti e PDF. Ideale per ricerca continua.</div>
+      <button type="button" class="plan-cta" id="upgradeBtnPro" style="background:linear-gradient(135deg,#1687FF,#0759C9);color:#fff;border:none;" onclick="startCheckout('Pro')">Scegli Pro</button>
+    </div>
+    <div class="upgrade-plan-card">
+      <div class="up-name">Business</div>
+      <div class="up-price">19,99€<span> singolo consulto</span></div>
+      <div class="up-desc">Un’analisi approfondita pronta da condividere con il team.</div>
+      <button type="button" class="plan-cta" id="upgradeBtnBusiness" onclick="startCheckout('Business')">Scegli Business</button>
+    </div>
+  </div>
+</div>
+
+
+<section id="results">
+  <div class="demo-trial-note" id="demoTrialNote" style="display:none;background:var(--signal-soft);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;margin-bottom:18px;font-size:13px;color:var(--text);">Demo gratuita · dati illustrativi</div>
+  <div class="report-header"><div><div class="section-label">Report generato</div><div class="report-title" id="reportTitle">—</div></div><div class="report-meta"><button class="btn-ghost" id="exportBtn" style="display:none;margin-bottom:8px;" onclick="exportReportPDF()">↓ Esporta PDF</button><div id="reportMeta">—</div></div></div>
+  <div class="summary-panel" id="summaryPanel">—</div><div class="kpi-grid" id="kpiGrid"></div>
+  <div class="chart-row" id="chartRow1"><div class="chart-card"><h3>Crescita del mercato</h3><div class="chart-note" id="trendNote">Storico e proiezione</div><div class="chart-holder"><canvas id="trendChart"></canvas></div></div><div class="chart-card"><h3>Quote di mercato</h3><div class="chart-note">Principali attori</div><div class="chart-holder"><canvas id="competitorChart"></canvas></div></div></div>
+  <div class="chart-row" id="chartRow2" style="grid-template-columns:1fr;"><div class="chart-card"><h3>Segmentazione del mercato</h3><div class="chart-note">Ripartizione per segmento</div><div class="chart-holder" style="height:220px;"><canvas id="segmentChart"></canvas></div></div></div>
+  <div class="two-col" id="twoCol"><div class="col-card drivers"><h3>Driver di crescita</h3><ul id="driversList"></ul></div><div class="col-card risks"><h3>Rischi e vincoli</h3><ul id="risksList"></ul></div></div>
+  <div class="section-label" id="sourcesLabel">Fonti</div><div class="sources-card" id="sourcesSection"><div id="sourcesList"></div></div>
+  <p class="disclaimer">I dati sono generati tramite ricerca automatizzata e modelli di intelligenza artificiale a partire da fonti pubbliche. MarketLens non garantisce l'accuratezza assoluta delle stime: verificare sempre le fonti primarie citate prima di prendere decisioni strategiche o di investimento.</p>
+</section>
+</main>
+
+<footer class="wrap"><div class="brand"><span class="brand-mark"></span>MarketLens</div><div class="foot-note">Market Intelligence — MarketLensAI powered by ChatGPT luna</div></footer>
+
+
+<script>
+/* ---------- sistema lingua pagina ---------- */
+let currentPageLanguage = localStorage.getItem('marketlens_page_language') || 'it';
+function t(key){return (PAGE_TRANSLATIONS[currentPageLanguage]||PAGE_TRANSLATIONS.it)[key]||key;}
+
+const PAGE_TRANSLATIONS = {
+  it: {
+    "Funzioni":"Funzioni","Modelli":"Modelli","Come funziona":"Come funziona","Prezzi":"Prezzi","Piani":"Piani","FAQ":"FAQ",
+    "Lingua":"Lingua","Lingua della pagina":"Lingua della pagina","Lingua del report":"Lingua del report",
+    "Mercato":"Mercato","Mercato da analizzare":"Mercato da analizzare",
+    "Sign in":"Sign in","Sign up":"Registrati","Registrati":"Registrati","Crea account":"Crea account","Creazione…":"Creazione…","Logout":"Logout","Account":"Account","Prova gratuita — entra nella demo":"Prova gratuita — entra nella demo","Prova gratuita: nessun pagamento richiesto per la demo.":"Prova gratuita: nessun pagamento richiesto per la demo.",
+    "Accedi al tuo account MarketLens":"Accedi al tuo account MarketLens",
+    "L'accesso viene verificato dal server e il piano viene controllato tramite pagamento attivo.":"L'accesso viene verificato dal server e il piano viene controllato tramite pagamento attivo.",
+    "MarketLens verifica le credenziali sul Cloudflare Worker. Il livello del piano non può essere impostato dal browser: per Pro/Business viene controllato lo stato dell'abbonamento Stripe.":"MarketLens verifica le credenziali sul Cloudflare Worker. Il livello del piano non può essere impostato dal browser: per Pro/Business viene controllato lo stato dell'abbonamento Stripe.",
+    "Intelligence di mercato su richiesta":"Intelligence di mercato su richiesta",
+    "Interroga qualsiasi":"Interroga qualsiasi","mercato.":"mercato.","Ottieni":"Ottieni","il report completo.":"il report completo.",
+    "Dimensioni, crescita, segmenti, concorrenti e fonti verificabili — generati in tempo reale da una singola query. Costruito per team strategy, corporate development e investor relations.":"Dimensioni, crescita, segmenti, concorrenti e fonti verificabili — generati in tempo reale da una singola query. Costruito per team strategy, corporate development e investor relations.",
+    "LIVE MARKET INTELLIGENCE":"LIVE MARKET INTELLIGENCE",
+    "tempo medio di generazione":"tempo medio di generazione","fonti citate per report":"fonti citate per report","mercati interrogabili":"mercati interrogabili","dati verificabili al link originale":"dati verificabili al link originale",
+    "Tutto quello che serve per capire un mercato.":"Tutto quello che serve per capire un mercato.",
+    "Un'unica query restituisce un report pronto da presentare, con la stessa profondità di un'analisi fatta a mano — in una frazione del tempo.":"Un'unica query restituisce un report pronto da presentare, con la stessa profondità di un'analisi fatta a mano — in una frazione del tempo.",
+    "Ricerca web in tempo reale":"Ricerca web in tempo reale",
+    "Ogni report parte da una ricerca vera sul web, non da conoscenza statica: i numeri riflettono lo stato attuale del mercato.":"Ogni report parte da una ricerca vera sul web, non da conoscenza statica: i numeri riflettono lo stato attuale del mercato.",
+    "Grafici interattivi":"Grafici interattivi",
+    "Crescita storica, proiezioni, segmentazione e quote di mercato, visualizzate automaticamente — nessun foglio di calcolo da preparare.":"Crescita storica, proiezioni, segmentazione e quote di mercato, visualizzate automaticamente — nessun foglio di calcolo da preparare.",
+    "Fonti verificabili":"Fonti verificabili",
+    "Ogni cifra è accompagnata da un link diretto alla fonte, così puoi controllare e citare il dato originale in due secondi.":"Ogni cifra è accompagnata da un link diretto alla fonte, così puoi controllare e citare il dato originale in due secondi.",
+    "Report pronti da condividere":"Report pronti da condividere",
+    "Sintesi esecutiva, KPI, driver e rischi scritti in italiano chiaro, pensati per essere letti da chi decide, non solo da chi analizza.":"Sintesi esecutiva, KPI, driver e rischi scritti in italiano chiaro, pensati per essere letti da chi decide, non solo da chi analizza.",
+    "Modelli":"Modelli","Il motore che genera ogni report.":"Il motore che genera ogni report.",
+    "Trasparenza su come viene costruita ogni analisi, così sai esattamente cosa stai leggendo.":"Trasparenza su come viene costruita ogni analisi, così sai esattamente cosa stai leggendo.",
+    "Analisi contestuale, fonti e output localizzati per il mercato selezionato.":"Analisi contestuale, fonti e output localizzati per il mercato selezionato.",
+    "Il motore interpreta dati e contesto di mercato, crea una sintesi strutturata e adatta il report alla lingua e al mercato scelti.":"Il motore interpreta dati e contesto di mercato, crea una sintesi strutturata e adatta il report alla lingua e al mercato scelti.",
+    "Accesso al web in tempo reale":"Accesso al web in tempo reale",
+    "Prima di scrivere, il modello interroga il web per raccogliere dati aggiornati su dimensione, crescita, concorrenti e segmenti — non si basa solo su conoscenza pregressa.":"Prima di scrivere, il modello interroga il web per raccogliere dati aggiornati su dimensione, crescita, concorrenti e segmenti — non si basa solo su conoscenza pregressa.",
+    "Citazione delle fonti":"Citazione delle fonti",
+    "Ogni cifra riportata è collegata alla pagina da cui proviene. Ti consigliamo comunque di verificare sempre le fonti primarie prima di decisioni rilevanti.":"Ogni cifra riportata è collegata alla pagina da cui proviene. Ti consigliamo comunque di verificare sempre le fonti primarie prima di decisioni rilevanti.",
+    "Dalla domanda al report, in quattro passaggi.":"Dalla domanda al report, in quattro passaggi.",
+    "Nessuna configurazione, nessun foglio di calcolo: scrivi il mercato che ti interessa e MarketLens fa il resto.":"Nessuna configurazione, nessun foglio di calcolo: scrivi il mercato che ti interessa e MarketLens fa il resto.",
+    "Scegli un piano":"Scegli un piano","Attiva l'accesso in pochi secondi, senza impegno a lungo termine.":"Attiva l'accesso in pochi secondi, senza impegno a lungo termine.",
+    "Scrivi il mercato":"Scrivi il mercato","Digita qualsiasi settore, prodotto o area geografica ti interessi analizzare.":"Digita qualsiasi settore, prodotto o area geografica ti interessi analizzare.",
+    "MarketLens cerca ed elabora":"MarketLens cerca ed elabora","Il sistema raccoglie dati reali dal web e li trasforma in un report strutturato.":"Il sistema raccoglie dati reali dal web e li trasforma in un report strutturato.",
+    "Ricevi il report":"Ricevi il report","KPI, grafici, driver, rischi e fonti — pronti da leggere o condividere con il team.":"KPI, grafici, driver, rischi e fonti — pronti da leggere o condividere con il team.",
+    "Un piano per ogni fase di crescita.":"Un piano per ogni fase di crescita.",
+    "Genera report di mercato con il livello di profondità che serve al tuo team. Cambia piano quando vuoi.":"Genera report di mercato con il livello di profondità che serve al tuo team. Cambia piano quando vuoi.",
+    "una tantum":"una tantum","Per una prima esplorazione concreta, con fonti da verificare.":"Per una prima esplorazione concreta, con fonti da verificare.",
+    "3 produzioni incluse":"3 produzioni incluse","Sintesi esecutiva e KPI":"Sintesi esecutiva e KPI","Fonti verificabili con link":"Fonti verificabili con link","Esportazione PDF":"Esportazione PDF","Scegli Base":"Scegli Base",
+    "Più scelto":"Più scelto","Per un flusso di ricerca continuo su più mercati.":"Per un flusso di ricerca continuo su più mercati.","Produzioni illimitate":"Produzioni illimitate","Grafici, trend e concorrenti":"Grafici, trend e concorrenti","/mese":"/mese","Vincolo di 2 mesi; 2° mese al 50% se disdici entro il 1°":"Vincolo di 2 mesi; 2° mese al 50% se disdici entro il 1°","Scegli Pro":"Scegli Pro",
+    "singolo consulto":"singolo consulto","Un'analisi approfondita pronta da condividere con il team.":"Un'analisi approfondita pronta da condividere con il team.","Consulto di mercato completo":"Consulto di mercato completo","Grafici e panorama competitivo":"Grafici e panorama competitivo","Scegli Business":"Scegli Business",
+    "Domande frequenti.":"Domande frequenti.","Tutto quello che devi sapere prima di iniziare una ricerca di mercato con MarketLens.":"Tutto quello che devi sapere prima di iniziare una ricerca di mercato con MarketLens.",
+    "I dati sono aggiornati in tempo reale?":"I dati sono aggiornati in tempo reale?","Ogni report viene generato al momento della richiesta tramite una ricerca web reale, quindi riflette le informazioni disponibili online in quel momento — non è un archivio statico.":"Ogni report viene generato al momento della richiesta tramite una ricerca web reale, quindi riflette le informazioni disponibili online in quel momento — non è un archivio statico.",
+    "Posso cambiare piano in qualsiasi momento?":"Posso cambiare piano in qualsiasi momento?","Sì. Puoi passare a un piano superiore o inferiore quando vuoi; il nuovo livello di funzionalità si applica subito al report successivo.":"Sì. Puoi passare a un piano superiore o inferiore quando vuoi; il nuovo livello di funzionalità si applica subito al report successivo.",
+    "Le fonti sono davvero verificabili?":"Le fonti sono davvero verificabili?","Sì, ogni report include link diretti alle pagine da cui provengono i dati citati, così puoi controllarli in autonomia prima di usarli in una decisione.":"Sì, ogni report include link diretti alle pagine da cui provengono i dati citati, così puoi controllarli in autonomia prima di usarli in una decisione.",
+    "Cosa succede se esaurisco le 3 produzioni del piano Base?":"Cosa succede se esaurisco le 3 produzioni del piano Base?","Puoi passare al piano Pro per sbloccare produzioni illimitate; il piano Base è un pagamento singolo e non si rinnova automaticamente.":"Puoi passare al piano Pro per sbloccare produzioni illimitate; il piano Base è un pagamento singolo e non si rinnova automaticamente.",
+    "Quanto è affidabile un report generato automaticamente?":"Quanto è affidabile un report generato automaticamente?","È un ottimo punto di partenza per orientarsi rapidamente su un mercato, ma non sostituisce una due diligence completa: consigliamo di verificare sempre le fonti primarie prima di decisioni strategiche o di investimento importanti.":"È un ottimo punto di partenza per orientarsi rapidamente su un mercato, ma non sostituisce una due diligence completa: consigliamo di verificare sempre le fonti primarie prima di decisioni strategiche o di investimento importanti.",
+    "Crescita prevista":"Crescita prevista","Panorama del mercato":"Panorama del mercato","Market intelligence":"Market intelligence",
+    "Elaborazione in corso":"Elaborazione in corso","Report generato":"Report generato","Esporta PDF":"Esporta PDF","Crescita del mercato":"Crescita del mercato","Storico e proiezione":"Storico e proiezione","Quote di mercato":"Quote di mercato","Principali attori":"Principali attori","Segmentazione del mercato":"Segmentazione del mercato","Ripartizione per segmento":"Ripartizione per segmento","Driver di crescita":"Driver di crescita","Rischi e vincoli":"Rischi e vincoli","Fonti":"Fonti","aprì fonte":"aprì fonte","apri fonte":"apri fonte","Nessuna fonte disponibile":"Nessuna fonte disponibile",
+    "I dati sono generati tramite ricerca automatizzata e modelli di intelligenza artificiale a partire da fonti pubbliche. MarketLens non garantisce l'accuratezza assoluta delle stime: verificare sempre le fonti primarie citate prima di prendere decisioni strategiche o di investimento.":"I dati sono generati tramite ricerca automatizzata e modelli di intelligenza artificiale a partire da fonti pubbliche. MarketLens non garantisce l'accuratezza assoluta delle stime: verificare sempre le fonti primarie citate prima di prendere decisioni strategiche o di investimento.",
+    "Dimensione mercato":"Dimensione mercato","CAGR stimato":"CAGR stimato","crescita annua composta":"crescita annua composta","Proiezione":"Proiezione","Segmento leader":"Segmento leader","quota maggioritaria":"quota maggioritaria","AGGIORNATO AL":"AGGIORNATO AL","ANTEPRIMA DEMO":"ANTEPRIMA DEMO","esempio di visualizzazione":"esempio di visualizzazione",
+    "In attesa della prima analisi generata dagli utenti sulla piattaforma…":"In attesa della prima analisi generata dagli utenti sulla piattaforma…",
+    "Veicoli elettrici in Europa":"Veicoli elettrici in Europa","valore indicativo":"valore indicativo","Altri":"Altri","Nessuna risposta testuale ricevuta":"Nessuna risposta testuale ricevuta","Formato risposta non valido":"Formato risposta non valido",
+    "Inserisci email e password.":"Inserisci email e password.","Verifica…":"Verifica…","Risposta non valida dal Worker":"Risposta non valida dal Worker","Errore di autenticazione":"Errore di autenticazione",
+    "Login riuscito ma il Worker non ha restituito il token di sessione.":"Login riuscito ma il Worker non ha restituito il token di sessione.",
+    "Login riuscito ma il Worker non ha restituito un piano valido (Base, Pro o Business).":"Login riuscito ma il Worker non ha restituito un piano valido (Base, Pro o Business).",
+    "Accesso effettuato":"Accesso effettuato","Login riuscito, ma l'anteprima demo ha avuto un problema:":"Login riuscito, ma l'anteprima demo ha avuto un problema:",
+    "Il piano":"Il piano","richiede un abbonamento attivo. Completa il pagamento e poi accedi.":"richiede un abbonamento attivo. Completa il pagamento e poi accedi.",
+    "Serve un account con un piano attivo.":"Serve un account con un piano attivo.",
+    "Errore durante la generazione del report:":"Errore durante la generazione del report:","Riprova tra qualche istante.":"Riprova tra qualche istante.",
+    "Interrogazione fonti di settore":"Interrogazione fonti di settore","analisi dei dati storici":"analisi dei dati storici","calcolo delle proiezioni di crescita":"calcolo delle proiezioni di crescita","mappatura del panorama competitivo":"mappatura del panorama competitivo","compilazione del report finale":"compilazione del report finale",
+    "Caffè specialty":"Caffè specialty","Veicoli elettrici":"Veicoli elettrici","CRM per PMI":"CRM per PMI",
+    "Italia":"Italia","Inghilterra":"Inghilterra","Germania":"Germania","Francia":"Francia",
+    "Analizza →":"Analizza →","Accedi con un account MarketLens con un piano attivo per iniziare.":"Accedi con un account MarketLens con un piano attivo per iniziare.",
+    "es. veicoli elettrici, integratori sportivi, software CRM...":"es. veicoli elettrici, integratori sportivi, software CRM...",
+    "MarketLensAI — powered by ChatGPT luna":"MarketLensAI — powered by ChatGPT luna",
+    "Market Intelligence — MarketLensAI powered by ChatGPT luna":"Market Intelligence — MarketLensAI powered by ChatGPT luna"
+  },
+  en: {
+    "Funzioni":"Features","Modelli":"Models","Come funziona":"How it works","Prezzi":"Pricing","Piani":"Plans","FAQ":"FAQ",
+    "Lingua":"Language","Lingua della pagina":"Page language","Lingua del report":"Report language",
+    "Mercato":"Market","Mercato da analizzare":"Market to analyze",
+    "Sign in":"Sign in","Sign up":"Sign up","Registrati":"Sign up","Crea account":"Create account","Creazione…":"Creating…","Logout":"Log out","Account":"Account",
+    "Accedi al tuo account MarketLens":"Sign in to your MarketLens account",
+    "L'accesso viene verificato dal server e il piano viene controllato tramite pagamento attivo.":"Access is verified by the server and your plan is checked through active payment status.",
+    "MarketLens verifica le credenziali sul Cloudflare Worker. Il livello del piano non può essere impostato dal browser: per Pro/Business viene controllato lo stato dell'abbonamento Stripe.":"MarketLens verifies your credentials through the Cloudflare Worker. Your plan level cannot be set from the browser: Pro/Business access is checked against your Stripe subscription status.",
+    "Intelligence di mercato su richiesta":"On-demand market intelligence",
+    "Interroga qualsiasi":"Query any","mercato.":"market.","Ottieni":"Get","il report completo.":"the complete report.",
+    "Dimensioni, crescita, segmenti, concorrenti e fonti verificabili — generati in tempo reale da una singola query. Costruito per team strategy, corporate development e investor relations.":"Market size, growth, segments, competitors and verifiable sources — generated in real time from a single query. Built for strategy, corporate development and investor relations teams.",
+    "LIVE MARKET INTELLIGENCE":"LIVE MARKET INTELLIGENCE",
+    "tempo medio di generazione":"average generation time","fonti citate per report":"sources cited per report","mercati interrogabili":"searchable markets","dati verificabili al link originale":"data verifiable at the original link",
+    "Tutto quello che serve per capire un mercato.":"Everything you need to understand a market.",
+    "Un'unica query restituisce un report pronto da presentare, con la stessa profondità di un'analisi fatta a mano — in una frazione del tempo.":"One query returns a presentation-ready report with the depth of a manual analysis — in a fraction of the time.",
+    "Ricerca web in tempo reale":"Real-time web research",
+    "Ogni report parte da una ricerca vera sul web, non da conoscenza statica: i numeri riflettono lo stato attuale del mercato.":"Every report starts with real web research, not static knowledge: the numbers reflect the current state of the market.",
+    "Grafici interattivi":"Interactive charts",
+    "Crescita storica, proiezioni, segmentazione e quote di mercato, visualizzate automaticamente — nessun foglio di calcolo da preparare.":"Historical growth, projections, segmentation and market shares, visualized automatically — no spreadsheet required.",
+    "Fonti verificabili":"Verifiable sources",
+    "Ogni cifra è accompagnata da un link diretto alla fonte, così puoi controllare e citare il dato originale in due secondi.":"Every figure includes a direct link to its source, so you can verify and cite the original data in seconds.",
+    "Report pronti da condividere":"Share-ready reports",
+    "Sintesi esecutiva, KPI, driver e rischi scritti in italiano chiaro, pensati per essere letti da chi decide, non solo da chi analizza.":"Executive summary, KPIs, drivers and risks written clearly for decision-makers, not just analysts.",
+    "Il motore che genera ogni report.":"The engine behind every report.",
+    "Trasparenza su come viene costruita ogni analisi, così sai esattamente cosa stai leggendo.":"Transparency into how each analysis is built, so you know exactly what you are reading.",
+    "Analisi contestuale, fonti e output localizzati per il mercato selezionato.":"Contextual analysis, sources and output localized for the selected market.",
+    "Il motore interpreta dati e contesto di mercato, crea una sintesi strutturata e adatta il report alla lingua e al mercato scelti.":"The engine interprets market data and context, creates a structured summary, and adapts the report to the selected language and market.",
+    "Accesso al web in tempo reale":"Real-time web access",
+    "Prima di scrivere, il modello interroga il web per raccogliere dati aggiornati su dimensione, crescita, concorrenti e segmenti — non si basa solo su conoscenza pregressa.":"Before writing, the model searches the web for up-to-date data on market size, growth, competitors and segments — it does not rely only on prior knowledge.",
+    "Citazione delle fonti":"Source citations",
+    "Ogni cifra riportata è collegata alla pagina da cui proviene. Ti consigliamo comunque di verificare sempre le fonti primarie prima di decisioni rilevanti.":"Every reported figure is linked to the page it comes from. We still recommend checking primary sources before important decisions.",
+    "Dalla domanda al report, in quattro passaggi.":"From question to report in four steps.",
+    "Nessuna configurazione, nessun foglio di calcolo: scrivi il mercato che ti interessa e MarketLens fa il resto.":"No setup, no spreadsheet: enter the market you want to analyze and MarketLens does the rest.",
+    "Scegli un piano":"Choose a plan","Attiva l'accesso in pochi secondi, senza impegno a lungo termine.":"Activate access in seconds, with no long-term commitment.",
+    "Scrivi il mercato":"Enter the market","Digita qualsiasi settore, prodotto o area geografica ti interessi analizzare.":"Enter any industry, product or geographic area you want to analyze.",
+    "MarketLens cerca ed elabora":"MarketLens searches and analyzes","Il sistema raccoglie dati reali dal web e li trasforma in un report strutturato.":"The system gathers real web data and turns it into a structured report.",
+    "Ricevi il report":"Receive the report","KPI, grafici, driver, rischi e fonti — pronti da leggere o condividere con il team.":"KPIs, charts, drivers, risks and sources — ready to read or share with your team.",
+    "Un piano per ogni fase di crescita.":"A plan for every stage of growth.",
+    "Genera report di mercato con il livello di profondità che serve al tuo team. Cambia piano quando vuoi.":"Generate market reports at the depth your team needs. Change plans whenever you want.",
+    "una tantum":"one-time","Per una prima esplorazione concreta, con fonti da verificare.":"For a first practical exploration, with sources to verify.",
+    "3 produzioni incluse":"3 reports included","Sintesi esecutiva e KPI":"Executive summary and KPIs","Fonti verificabili con link":"Verifiable sources with links","Esportazione PDF":"PDF export","Scegli Base":"Choose Base",
+    "Più scelto":"Most popular","Per un flusso di ricerca continuo su più mercati.":"For continuous research across multiple markets.","Produzioni illimitate":"Unlimited reports","Grafici, trend e concorrenti":"Charts, trends and competitors","/mese":"/month","Vincolo di 2 mesi; 2° mese al 50% se disdici entro il 1°":"2-month minimum; 2nd month at 50% if cancelled within the 1st","Scegli Pro":"Choose Pro",
+    "singolo consulto":"single consultation","Un'analisi approfondita pronta da condividere con il team.":"An in-depth analysis ready to share with your team.","Consulto di mercato completo":"Full market consultation","Grafici e panorama competitivo":"Charts and competitive landscape","Scegli Business":"Choose Business",
+    "Domande frequenti.":"Frequently asked questions.","Tutto quello che devi sapere prima di iniziare una ricerca di mercato con MarketLens.":"Everything you need to know before starting market research with MarketLens.",
+    "I dati sono aggiornati in tempo reale?":"Is the data updated in real time?","Ogni report viene generato al momento della richiesta tramite una ricerca web reale, quindi riflette le informazioni disponibili online in quel momento — non è un archivio statico.":"Every report is generated when requested through real web research, so it reflects the information available online at that moment — it is not a static archive.",
+    "Posso cambiare piano in qualsiasi momento?":"Can I change plans at any time?","Sì. Puoi passare a un piano superiore o inferiore quando vuoi; il nuovo livello di funzionalità si applica subito al report successivo.":"Yes. You can move to a higher or lower plan whenever you want; the new feature level applies to your next report.",
+    "Le fonti sono davvero verificabili?":"Are the sources actually verifiable?","Sì, ogni report include link diretti alle pagine da cui provengono i dati citati, così puoi controllarli in autonomia prima di usarli in una decisione.":"Yes. Every report includes direct links to the pages where the cited data comes from, so you can verify it independently before using it in a decision.",
+    "Cosa succede se esaurisco le 3 produzioni del piano Base?":"What happens when I use all 3 Base reports?","Puoi passare al piano Pro per sbloccare produzioni illimitate; il piano Base è un pagamento singolo e non si rinnova automaticamente.":"You can switch to Pro to unlock unlimited reports; Base is a one-time payment and does not renew automatically.",
+    "Quanto è affidabile un report generato automaticamente?":"How reliable is an automatically generated report?","È un ottimo punto di partenza per orientarsi rapidamente su un mercato, ma non sostituisce una due diligence completa: consigliamo di verificare sempre le fonti primarie prima di decisioni strategiche o di investimento importanti.":"It is an excellent starting point for quickly understanding a market, but it does not replace full due diligence: always verify primary sources before important strategic or investment decisions.",
+    "Crescita prevista":"Expected growth","Panorama del mercato":"Market overview","Market intelligence":"Market intelligence",
+    "Elaborazione in corso":"Processing","Report generato":"Generated report","Esporta PDF":"Export PDF","Crescita del mercato":"Market growth","Storico e proiezione":"Historical data and forecast","Quote di mercato":"Market shares","Principali attori":"Key players","Segmentazione del mercato":"Market segmentation","Ripartizione per segmento":"Breakdown by segment","Driver di crescita":"Growth drivers","Rischi e vincoli":"Risks and constraints","Fonti":"Sources","aprì fonte":"open source","apri fonte":"open source","Nessuna fonte disponibile":"No sources available",
+    "I dati sono generati tramite ricerca automatizzata e modelli di intelligenza artificiale a partire da fonti pubbliche. MarketLens non garantisce l'accuratezza assoluta delle stime: verificare sempre le fonti primarie citate prima di prendere decisioni strategiche o di investimento.":"Data is generated through automated research and AI models using public sources. MarketLens does not guarantee absolute accuracy of estimates: always verify cited primary sources before making strategic or investment decisions.",
+    "Dimensione mercato":"Market size","CAGR stimato":"Estimated CAGR","crescita annua composta":"compound annual growth","Proiezione":"Forecast","Segmento leader":"Leading segment","quota maggioritaria":"majority share","AGGIORNATO AL":"UPDATED","ANTEPRIMA DEMO":"DEMO PREVIEW","esempio di visualizzazione":"example view",
+    "In attesa della prima analisi generata dagli utenti sulla piattaforma…":"Waiting for the first user-generated analysis on the platform…",
+    "Veicoli elettrici in Europa":"Electric vehicles in Europe","valore indicativo":"illustrative value","Altri":"Others","Nessuna risposta testuale ricevuta":"No text response received","Formato risposta non valido":"Invalid response format",
+    "Inserisci email e password.":"Enter email and password.","Verifica…":"Verifying…","Risposta non valida dal Worker":"Invalid response from Worker","Errore di autenticazione":"Authentication error",
+    "Login riuscito ma il Worker non ha restituito il token di sessione.":"Login succeeded but the Worker did not return a session token.",
+    "Login riuscito ma il Worker non ha restituito un piano valido (Base, Pro o Business).":"Login succeeded but the Worker did not return a valid plan (Base, Pro or Business).",
+    "Accesso effettuato":"Signed in","Login riuscito, ma l'anteprima demo ha avuto un problema:":"Sign-in succeeded, but the demo preview encountered a problem:",
+    "Il piano":"The","richiede un abbonamento attivo. Completa il pagamento e poi accedi.":"plan requires an active subscription. Complete payment and then sign in.",
+    "Serve un account con un piano attivo.":"An account with an active plan is required.",
+    "Errore durante la generazione del report:":"Error generating the report:","Riprova tra qualche istante.":"Please try again in a moment.",
+    "Interrogazione fonti di settore":"Querying industry sources","analisi dei dati storici":"Analyzing historical data","calcolo delle proiezioni di crescita":"Calculating growth projections","mappatura del panorama competitivo":"Mapping the competitive landscape","compilazione del report finale":"Compiling the final report",
+    "Caffè specialty":"Specialty coffee","Veicoli elettrici":"Electric vehicles","CRM per PMI":"SMB CRM",
+    "Italia":"Italy","Inghilterra":"England","Germania":"Germany","Francia":"France",
+    "Analizza →":"Analyze →","Accedi con un account MarketLens con un piano attivo per iniziare.":"Sign in with a MarketLens account with an active plan to get started.",
+    "es. veicoli elettrici, integratori sportivi, software CRM...":"e.g. electric vehicles, sports supplements, CRM software...",
+    "MarketLensAI — powered by ChatGPT luna":"MarketLensAI — powered by ChatGPT luna",
+    "Market Intelligence — MarketLensAI powered by ChatGPT luna":"Market Intelligence — MarketLensAI powered by ChatGPT luna"
+  }
+};
+
+const ORIGINAL_TEXT_NODES = new WeakMap();
+const ORIGINAL_ATTRIBUTES = new WeakMap();
+
+function translatePageText(root=document.body){
+  const dict=PAGE_TRANSLATIONS[currentPageLanguage]||PAGE_TRANSLATIONS.it;
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  const nodes=[];
+  while(walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach(node=>{
+    // Save the original Italian text only once. This prevents an English
+    // translation from becoming the new source when switching back to ITA.
+    if(!ORIGINAL_TEXT_NODES.has(node)) ORIGINAL_TEXT_NODES.set(node,node.nodeValue);
+    const original=ORIGINAL_TEXT_NODES.get(node);
+    const trimmed=original.trim();
+    if(!trimmed) return;
+    const translated=dict[trimmed] || trimmed;
+    node.nodeValue=original.replace(trimmed,translated);
+  });
+
+  root.querySelectorAll('input[placeholder], textarea[placeholder], [aria-label], [title]').forEach(el=>{
+    ['placeholder','aria-label','title'].forEach(attr=>{
+      const value=el.getAttribute(attr);
+      if(value===null) return;
+      if(!ORIGINAL_ATTRIBUTES.has(el)) ORIGINAL_ATTRIBUTES.set(el,{});
+      const originals=ORIGINAL_ATTRIBUTES.get(el);
+      if(!(attr in originals)) originals[attr]=value;
+      const original=originals[attr];
+      el.setAttribute(attr,dict[original] || original);
+    });
+  });
+}
+
+function applyPageLanguage(lang){
+  currentPageLanguage=lang==='en'?'en':'it';
+  localStorage.setItem('marketlens_page_language',currentPageLanguage);
+  document.documentElement.lang=currentPageLanguage;
+
+  const reportLang=document.getElementById('reportLanguage');
+  if(reportLang) reportLang.value=currentPageLanguage;
+
+  translatePageText();
+  // Dynamic account/search elements are regenerated here so their labels are also localized.
+  if(typeof updateNavAuth==='function') updateNavAuth();
+  if(typeof updateHeroSearch==='function') updateHeroSearch();
+  translatePageText();
+
+  // Re-render the ticker with the selected UI language.
+  if(typeof loadTicker==='function') loadTicker();
+}
+
+function relTime(ts){
+  const diffMin=Math.max(1,Math.round((Date.now()-ts)/60000));
+  if(currentPageLanguage==='en'){
+    if(diffMin<60)return `${diffMin} min ago`;
+    const diffH=Math.round(diffMin/60);
+    if(diffH<24)return `${diffH} hr ago`;
+    return `${Math.round(diffH/24)} days ago`;
+  }
+  if(diffMin<60)return `${diffMin} min fa`;
+  const diffH=Math.round(diffMin/60);
+  if(diffH<24)return `${diffH} h fa`;
+  return `${Math.round(diffH/24)} g fa`;
+}
+function renderTicker(list){
+  const track=document.getElementById('tickerTrack');
+  const waiting=currentPageLanguage==='en'
+    ? 'Waiting for the first user-generated analysis on the platform…'
+    : 'In attesa della prima analisi generata dagli utenti sulla piattaforma…';
+  if(!list||!list.length){track.innerHTML=Array(6).fill(`<span>${waiting}</span>`).join('');return}const items=list.map(item=>{const cagrPart=item.cagr?` · CAGR <b>${item.cagr}</b>`:'';return `<span>${(item.topic||'MERCATO').toUpperCase()}${cagrPart} · ${relTime(item.ts)}</span>`});track.innerHTML=Array(3).fill(items).flat().join('')}
+async function loadTicker(){try{const res=await fetch(RECENT_ENDPOINT);if(!res.ok)throw new Error('recent endpoint non disponibile');renderTicker(await res.json())}catch(e){renderTicker([])}}
+document.querySelectorAll('.faq-item').forEach(item=>{item.querySelector('.faq-q').addEventListener('click',()=>{const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')})});
+const loadingStepsTextIT=["→ interrogazione fonti di settore...","→ analisi dei dati storici...","→ calcolo delle proiezioni di crescita...","→ mappatura del panorama competitivo...","→ compilazione del report finale..."];const loadingStepsTextEN=["→ querying industry sources...","→ analyzing historical data...","→ calculating growth projections...","→ mapping the competitive landscape...","→ compiling the final report..."];let stepInterval;let loadingStepsText=loadingStepsTextIT;
+function startLoadingAnimation(){loadingStepsText=currentPageLanguage==='en'?loadingStepsTextEN:loadingStepsTextIT;const el=document.getElementById('loadingSteps');let i=0;el.innerHTML=`<span class="active-step">${loadingStepsText[0]}</span>`;stepInterval=setInterval(()=>{i=(i+1)%loadingStepsText.length;el.innerHTML=`<span class="active-step">${loadingStepsText[i]}</span>`},1800)}
+function stopLoadingAnimation(){clearInterval(stepInterval)}let charts={};
+const planRank={Base:1,Pro:2,Business:3};
+function normalizePlan(value){
+  const v=String(value||'').trim().toLowerCase();
+  if(v==='base') return 'Base';
+  if(v==='pro') return 'Pro';
+  if(v==='business') return 'Business';
+  return null;
+}
+let session={loggedIn:false,plan:null,token:null,email:null,paid:false,demo:false};
+const heroLockedHTML=`<div class="search-row"><span class="search-locked-note"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>Accedi con un account MarketLens con un piano attivo per iniziare.</span><button class="btn-mint" onclick="openModal()" style="margin:6px;">Sign in →</button></div>`;
+const heroActiveHTML=`<div class="search-row"><span class="search-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.2" y2="16.2"/></svg></span><input id="query" type="text" placeholder="es. veicoli elettrici, integratori sportivi, software CRM..." autocomplete="off"><button class="btn-mint" id="runBtn" style="margin:4px;">Analizza →</button></div><div class="language-market-row"><label class="selector-group">Lingua <select id="reportLanguage" aria-label="Lingua del report"><option value="it">ITA</option><option value="en">ENG</option></select></label><label class="selector-group">Mercato <select id="reportMarket" aria-label="Mercato da analizzare"><option value="Italia">Italia</option><option value="Inghilterra">Inghilterra</option><option value="Germania">Germania</option><option value="Francia">Francia</option></select></label></div><div class="chips"><button class="chip" data-q="Caffè specialty">Caffè specialty</button><button class="chip" data-q="Veicoli elettrici">Veicoli elettrici</button><button class="chip" data-q="Software CRM per PMI">CRM per PMI</button></div>`;
+function updateHeroSearch(){const el=document.getElementById('heroSearchArea');if(session.loggedIn){el.innerHTML=heroActiveHTML;document.getElementById('runBtn').addEventListener('click',runAnalysis);document.getElementById('query').addEventListener('keydown',e=>{if(e.key==='Enter')runAnalysis()});document.querySelectorAll('.chip').forEach(chip=>chip.addEventListener('click',()=>{document.getElementById('query').value=chip.dataset.q;runAnalysis()}))}else el.innerHTML=heroLockedHTML}
+function refreshDynamicLanguage(){
+  const lang=currentPageLanguage;
+  const el=document.getElementById('heroSearchArea');
+  if(!el) return;
+  translatePageText(el);
+  const reportLang=document.getElementById('reportLanguage');
+  if(reportLang) reportLang.value=lang;
+}
+
+
+function setAccountView(loggedIn){
+  const ids = ['funzioni','modelli','come-funziona','pricing','faq'];
+
+  if (loggedIn) {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.dataset.meridianPublicSection = '1';
+        el.style.setProperty('display','none','important');
+        el.setAttribute('aria-hidden','true');
+      }
+    });
+
+    document.querySelectorAll('.nav-links').forEach(el => {
+      el.style.removeProperty('display');
+      el.removeAttribute('aria-hidden');
+    });
+
+    document.body.classList.add('account-logged-in');
+  } else {
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.removeProperty('display');
+        el.removeAttribute('aria-hidden');
+      }
+    });
+
+    document.querySelectorAll('.nav-links').forEach(el => {
+      el.style.removeProperty('display');
+      el.removeAttribute('aria-hidden');
+    });
+
+    document.body.classList.remove('account-logged-in');
+  }
+}
+
+function updateNavAuth(){
+  const el=document.getElementById('navAuth');
+  setAccountView(!!session.loggedIn);
+  if(session.loggedIn){
+    el.innerHTML=`<div class="account-chip">● ${session.demo ? 'FREE TRIAL' : (session.plan || 'Account')}</div><button class="btn-ghost" id="logoutBtn">Logout</button>`;
+    document.getElementById('logoutBtn').addEventListener('click',logout);
+  }else{
+    el.innerHTML=`<button class="btn-ghost" id="loginBtn">Sign in</button><button class="btn-fill" id="registerBtn">Sign up</button>`;
+    document.getElementById('loginBtn').addEventListener('click',()=>openModal('login'));
+    document.getElementById('registerBtn').addEventListener('click',()=>openModal('register'));
+  }
+  updateHeroSearch();
+  refreshDynamicLanguage();
+}
+function logout(){
+  session={loggedIn:false,plan:null,token:null,email:null,paid:false,demo:false};
+  sessionStorage.removeItem('meridian_session');
+  window.location.reload();
+}
+let authMode='login'; // 'login' | 'register'
+
+function setAuthMode(mode){
+  authMode = mode === 'register' ? 'register' : 'login';
+  const isReg = authMode === 'register';
+  const title = document.getElementById('modalTitle');
+  const sub = document.getElementById('modalSub');
+  const submit = document.getElementById('modalSubmit');
+  const nameField = document.getElementById('nameField');
+  const confirmField = document.getElementById('confirmField');
+  const foot = document.getElementById('modalFoot');
+  const note = document.getElementById('modalNote');
+  const tabLogin = document.getElementById('tabLogin');
+  const tabRegister = document.getElementById('tabRegister');
+  const pw = document.getElementById('modalPassword');
+
+  if(title) title.textContent = isReg ? (t('Registrati') || 'Registrati') : t('Sign in');
+  if(sub) sub.textContent = isReg
+    ? (currentPageLanguage==='en' ? 'Create your free MarketLens account' : 'Crea il tuo account MarketLens gratuito')
+    : t('Accedi al tuo account MarketLens');
+  if(submit) submit.textContent = isReg
+    ? (currentPageLanguage==='en' ? 'Create account' : 'Crea account')
+    : t('Sign in');
+  if(nameField) nameField.style.display = isReg ? 'block' : 'none';
+  if(confirmField) confirmField.style.display = isReg ? 'block' : 'none';
+  if(pw) pw.autocomplete = isReg ? 'new-password' : 'current-password';
+  if(foot){
+    foot.innerHTML = isReg
+      ? (currentPageLanguage==='en'
+          ? 'Already have an account? <a id="switchToLogin">Sign in</a>'
+          : 'Hai già un account? <a id="switchToLogin">Accedi</a>')
+      : (currentPageLanguage==='en'
+          ? 'No account yet? <a id="switchToRegister">Sign up</a>'
+          : 'Non hai un account? <a id="switchToRegister">Registrati</a>');
+    const swReg = document.getElementById('switchToRegister');
+    const swLog = document.getElementById('switchToLogin');
+    if(swReg) swReg.addEventListener('click', ()=>setAuthMode('register'));
+    if(swLog) swLog.addEventListener('click', ()=>setAuthMode('login'));
+  }
+  if(note) note.textContent = isReg
+    ? (currentPageLanguage==='en'
+        ? 'Registration creates a Base account (free trial) with 3 analyses. No payment required.'
+        : 'La registrazione crea un account Base (prova gratuita) con 3 analisi. Nessun pagamento richiesto.')
+    : (currentPageLanguage==='en'
+        ? 'Sign in with your MarketLens account.'
+        : 'Accedi con il tuo account MarketLens.');
+  if(tabLogin) tabLogin.classList.toggle('active', !isReg);
+  if(tabRegister) tabRegister.classList.toggle('active', isReg);
+
+  const err = document.getElementById('authError');
+  if(err){ err.style.display='none'; err.textContent=''; }
+}
+
+function openModal(mode){
+  document.getElementById('modalOverlay').classList.add('active');
+  setAuthMode(mode || 'login');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('active')}
+
+async function registerWithBackend(){
+  const email = document.getElementById('modalEmail').value.trim().toLowerCase();
+  const password = document.getElementById('modalPassword').value;
+  const confirm = document.getElementById('modalPasswordConfirm')?.value || '';
+  const name = document.getElementById('modalName')?.value.trim() || '';
+  const submit = document.getElementById('modalSubmit');
+  const err = document.getElementById('authError');
+
+  if(!email || !password){
+    err.textContent = t('Inserisci email e password.');
+    err.style.display = 'block';
+    return;
+  }
+  if(password.length < 8){
+    err.textContent = currentPageLanguage==='en'
+      ? 'Password must be at least 8 characters.'
+      : 'La password deve avere almeno 8 caratteri.';
+    err.style.display = 'block';
+    return;
+  }
+  if(password !== confirm){
+    err.textContent = currentPageLanguage==='en'
+      ? 'Passwords do not match.'
+      : 'Le password non coincidono.';
+    err.style.display = 'block';
+    return;
+  }
+
+  submit.disabled = true;
+  submit.textContent = currentPageLanguage==='en' ? 'Creating…' : 'Creazione…';
+  err.style.display = 'none';
+
+  try{
+    const response = await fetch(API_ENDPOINT.replace(/\/?$/,'/')+'auth/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({email,password,name})
+    });
+    const raw = await response.text();
+    let data = {};
+    try{ data = raw ? JSON.parse(raw) : {}; }catch(_){
+      throw new Error(t('Risposta non valida dal Worker'));
+    }
+    if(!response.ok){
+      throw new Error(data.error || data.message || (currentPageLanguage==='en' ? 'Registration failed' : 'Registrazione non riuscita'));
+    }
+    const verifiedPlan = normalizePlan(data.plan || data.user?.plan) || 'Base';
+    const verifiedEmail = data.email || data.user?.email || email;
+    if(!data.token) throw new Error(currentPageLanguage==='en'
+      ? 'Registration succeeded but no session token was returned.'
+      : 'Registrazione riuscita ma il token di sessione non è stato restituito.');
+
+    session = {
+      loggedIn:true,
+      plan:verifiedPlan,
+      token:data.token,
+      email:verifiedEmail,
+      paid: verifiedPlan==='Pro' || verifiedPlan==='Business',
+      demo:false,
+      analysisCount: Number(data.user?.analysis_count || data.analysis_count || 0)
+    };
+    sessionStorage.setItem('meridian_session', JSON.stringify(session));
+    setAccountView(true);
+    updateNavAuth();
+    applyPlanGating();
+    document.querySelectorAll('.plan-card').forEach(c=>
+      c.classList.toggle('active-plan', c.dataset.plan===session.plan)
+    );
+    closeModal();
+    showToast(currentPageLanguage==='en'
+      ? `Account created — plan ${session.plan}.`
+      : `Account creato — piano ${session.plan}.`);
+    if (pendingCheckoutPlan) {
+      await resumePendingCheckout();
+      return;
+    }
+    try{
+      document.getElementById('results')?.classList.add('active');
+      renderDemoReport();
+      setTimeout(()=>document.getElementById('results')?.scrollIntoView({behavior:'smooth',block:'start'}),350);
+    }catch(e){ console.error(e); }
+  }catch(e){
+    err.textContent = e.message || (currentPageLanguage==='en' ? 'Registration error' : 'Errore di registrazione');
+    err.style.display = 'block';
+  }finally{
+    submit.disabled = false;
+    submit.textContent = currentPageLanguage==='en' ? 'Create account' : 'Crea account';
+  }
+}
+
+function handleAuthSubmit(){
+  if(authMode === 'register') registerWithBackend();
+  else loginWithBackend();
+}
+
+async function loginWithBackend(){
+  const email=document.getElementById('modalEmail').value.trim().toLowerCase();
+  const password=document.getElementById('modalPassword').value;
+  const submit=document.getElementById('modalSubmit');
+  const err=document.getElementById('authError');
+
+  if(!email||!password){
+    err.textContent=t('Inserisci email e password.');
+    err.style.display='block';
+    return;
+  }
+
+  submit.disabled=true;
+  submit.textContent=t('Verifica…');
+  err.style.display='none';
+
+  // ---- FASE 1: SOLO login/auth. Se qualcosa qui fallisce, è un vero errore di accesso.
+  let loginOk = false;
+  try{
+    const response=await fetch(API_ENDPOINT.replace(/\/?$/,'/')+'auth/login',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({email,password})
+    });
+
+    const raw=await response.text();
+    let data={};
+    try{ data=raw?JSON.parse(raw):{}; }catch(_){
+      throw new Error(`Risposta non valida dal Worker (${response.status}).`);
+    }
+
+    if(!response.ok){
+      throw new Error(data.error||data.message||`Errore di autenticazione (${response.status}).`);
+    }
+
+    const verifiedPlan=normalizePlan(data.plan||data.user?.plan||data.account?.plan);
+    const verifiedEmail=data.email||data.user?.email||data.account?.email||email;
+    const verifiedPaid=(data.paid===true)||(data.user?.paid===true)||(data.account?.paid===true)||verifiedPlan==='Pro'||verifiedPlan==='Business';
+
+    if(!data.token) throw new Error("Login riuscito ma il Worker non ha restituito il token di sessione.");
+    if(!verifiedPlan) throw new Error("Login riuscito ma il Worker non ha restituito un piano valido (Base, Pro o Business).");
+
+    session={ loggedIn:true, plan:verifiedPlan, token:data.token, email:verifiedEmail, paid:verifiedPaid, demo:data.demo===true||data.trial===true, analysisCount:Number(data.user?.analysis_count||data.analysis_count||0) };
+    sessionStorage.setItem('meridian_session',JSON.stringify(session));
+    loginOk = true;
+
+  }catch(e){
+    session={loggedIn:false,plan:null,token:null,email:null,paid:false,demo:false};
+    sessionStorage.removeItem('meridian_session');
+    err.textContent=e.message||'Errore di autenticazione.';
+    err.style.display='block';
+  }finally{
+    submit.disabled=false;
+    submit.textContent=t('Sign in');
+  }
+
+  if(!loginOk) return; // login fallito davvero: non tocchiamo nient'altro
+
+  // ---- FASE 2: aggiornamento UI dopo un login riuscito.
+  // Protetto a parte: se qualcosa qui va storto, NON deve annullare il login.
+  setAccountView(true);
+  updateNavAuth();
+  applyPlanGating();
+  document.querySelectorAll('.plan-card').forEach(c=>
+    c.classList.toggle('active-plan',c.dataset.plan===session.plan)
+  );
+  closeModal();
+  showToast(session.demo ? 'Prova gratuita attivata — hai 3 analisi demo.' : `Accesso effettuato — piano ${session.plan}.`);
+
+  if (pendingCheckoutPlan) {
+    await resumePendingCheckout();
+    return;
+  }
+
+  try{
+    document.getElementById('results')?.classList.add('active');
+    renderDemoReport();
+    setTimeout(()=>document.getElementById('results')?.scrollIntoView({behavior:'smooth',block:'start'}),350);
+  }catch(demoErr){
+    console.error('Anteprima demo non riuscita (login comunque valido):', demoErr);
+    showToast('Login riuscito, ma l\'anteprima demo ha avuto un problema: ' + (demoErr.message || demoErr));
+  }
+}
+
+document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target.id==='modalOverlay')closeModal()});
+document.getElementById('modalSubmit').addEventListener('click',handleAuthSubmit);
+document.getElementById('modalPassword').addEventListener('keydown',e=>{if(e.key==='Enter')handleAuthSubmit()});
+document.getElementById('modalPasswordConfirm')?.addEventListener('keydown',e=>{if(e.key==='Enter')handleAuthSubmit()});
+document.getElementById('tabLogin')?.addEventListener('click',()=>setAuthMode('login'));
+document.getElementById('tabRegister')?.addEventListener('click',()=>setAuthMode('register'));
+document.getElementById('switchToRegister')?.addEventListener('click',()=>setAuthMode('register'));
+
+function choosePlan(name){goToPricing();showToast(`Il piano ${name} richiede un abbonamento attivo. Completa il pagamento e poi accedi.`)}
+function restoreSession(){
+  try{
+    const saved=JSON.parse(sessionStorage.getItem('meridian_session')||'null');
+    const verifiedPlan=normalizePlan(saved?.plan);
+    if(saved?.loggedIn&&saved?.token&&verifiedPlan){
+      session={...saved,plan:verifiedPlan};
+    }else{
+      session={loggedIn:false,plan:null,token:null,email:null,paid:false,demo:false};
+      sessionStorage.removeItem('meridian_session');
+    }
+  }catch(e){
+    session={loggedIn:false,plan:null,token:null,email:null,paid:false,demo:false};
+    sessionStorage.removeItem('meridian_session');
+  }
+  setAccountView(!!session.loggedIn);
+  updateNavAuth();
+  applyPlanGating();
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.toggle('active-plan',c.dataset.plan===session.plan));
+
+  if (session.loggedIn) {
+    try{
+      document.getElementById('results')?.classList.add('active');
+      renderDemoReport();
+    }catch(e){
+      console.error('Anteprima demo non riuscita al reload:', e);
+    }
+  }
+}
+function goToPricing(){window.location.href='plans.html';}
+let toastTimer;function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3200)}
+const savedPageLanguage=document.getElementById('pageLanguage');
+if(savedPageLanguage){
+  savedPageLanguage.value=currentPageLanguage;
+  savedPageLanguage.addEventListener('change',e=>applyPageLanguage(e.target.value));
+}
+document.documentElement.lang=currentPageLanguage;
+translatePageText();
+
+async function handleCheckoutReturn() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const status = params.get('checkout');
+    const sessionId = params.get('session_id');
+
+    if (status === 'cancelled') {
+      showToast(currentPageLanguage === 'en'
+        ? 'Payment cancelled.'
+        : 'Pagamento annullato.');
+      // pulisci query string
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return;
+    }
+
+    if (status !== 'success' || !sessionId) return;
+
+    if (!session.loggedIn || !session.token || session.token === 'demo-local') {
+      showToast(currentPageLanguage === 'en'
+        ? 'Sign in to activate your paid plan.'
+        : 'Accedi per attivare il piano pagato.');
+      openModal('login');
+      return;
+    }
+
+    showToast(currentPageLanguage === 'en'
+      ? 'Confirming payment…'
+      : 'Conferma pagamento in corso…');
+
+    const endpoint = API_ENDPOINT.replace(/\/?$/, '/') + 'confirm-checkout';
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + session.token
+      },
+      body: JSON.stringify({ session_id: sessionId })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error || data.details || 'Conferma pagamento fallita');
+    }
+
+    const newPlan = normalizePlan(data.plan || data.user?.plan) || session.plan;
+    session.plan = newPlan;
+    session.paid = newPlan === 'Pro' || newPlan === 'Business';
+    session.demo = false;
+    session.analysisCount = 0;
+    if (data.token) session.token = data.token;
+    sessionStorage.setItem('meridian_session', JSON.stringify(session));
+
+    // Nascondi banner upgrade
+    document.getElementById('upgradeBanner')?.classList.remove('active');
+    document.body.classList.remove('show-upgrade-pricing');
+
+    updateNavAuth();
+    applyPlanGating();
+    document.querySelectorAll('.plan-card').forEach(c =>
+      c.classList.toggle('active-plan', c.dataset.plan === session.plan)
+    );
+
+    showToast(currentPageLanguage === 'en'
+      ? `Payment confirmed — plan ${newPlan} active. You can continue researching.`
+      : `Pagamento confermato — piano ${newPlan} attivo. Puoi continuare le ricerche.`);
+
+    // pulisci query string
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } catch (e) {
+    console.error('handleCheckoutReturn:', e);
+    showToast(e.message || 'Errore conferma pagamento');
+  }
+}
+
+restoreSession();
+applyPageLanguage(currentPageLanguage);
+
+const DEMO_TRIAL_LIMIT=3;
+function getDemoTrialCount(){return Number(localStorage.getItem('marketlens_demo_trial_count')||'0');}
+function incrementDemoTrialCount(){const next=getDemoTrialCount()+1;localStorage.setItem('marketlens_demo_trial_count',String(next));return next;}
+function startFreeTrial(){
+  // La prova gratuita è una DEMO locale: non chiama il Worker e non consuma credito API.
+  const remaining=Math.max(0,DEMO_TRIAL_LIMIT-getDemoTrialCount());
+  if(remaining<=0){
+    closeModal();
+    showToast('Hai esaurito le 3 analisi gratuite della demo. Scegli un piano per continuare.');
+    goToPricing();
+    return;
+  }
+  session={
+    loggedIn:true,
+    plan:'Base',
+    token:'demo-local',
+    email:'demo@marketlens.local',
+    paid:false,
+    demo:true
+  };
+  sessionStorage.setItem('meridian_session',JSON.stringify(session));
+  closeModal();
+  setAccountView(true);
+  updateNavAuth();
+  applyPlanGating();
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.toggle('active-plan',c.dataset.plan==='Base'));
+  showToast(`Prova gratuita attivata — hai ${remaining} analisi demo.`);
+  renderDemoReport();
+  document.getElementById('results')?.classList.add('active');
+  setTimeout(()=>document.getElementById('results')?.scrollIntoView({behavior:'smooth',block:'start'}),250);
+}
+function isFreeTrialExhausted(){
+  // session.demo = vecchia demo locale
+  if(session.demo && getDemoTrialCount() >= DEMO_TRIAL_LIMIT) return true;
+  // piano Base registrato: limite lato client (il server è la fonte di verità)
+  if(session.plan === 'Base' && !session.demo){
+    const used = Number(session.analysisCount || 0);
+    if(used >= DEMO_TRIAL_LIMIT) return true;
+  }
+  return false;
+}
+
+function promptUpgrade(){
+  const en = currentPageLanguage === 'en';
+  const title = en
+    ? 'You have used all 3 free analyses'
+    : 'Hai esaurito le 3 analisi gratuite';
+  const text = en
+    ? 'Your Base trial is over. To keep generating reports, choose Pro or Business below.'
+    : 'La prova Base è terminata. Per continuare a generare report scegli Pro o Business qui sotto.';
+
+  showToast(en
+    ? 'Free analyses exhausted — choose Pro or Business.'
+    : 'Analisi gratuite esaurite — scegli Pro o Business.');
+
+  // Solo il banner inline con Pro e Business (niente sezione Prezzi)
+  document.body.classList.remove('show-upgrade-pricing');
+  const pricing = document.getElementById('pricing');
+  if (pricing && document.body.classList.contains('account-logged-in')) {
+    pricing.style.setProperty('display', 'none', 'important');
+  }
+
+  const banner = document.getElementById('upgradeBanner');
+  if (banner) {
+    const tEl = document.getElementById('upgradeTitle');
+    const pEl = document.getElementById('upgradeText');
+    if (tEl) tEl.textContent = title;
+    if (pEl) pEl.textContent = text;
+    banner.classList.add('active');
+    setTimeout(() => banner.scrollIntoView({ behavior: 'smooth', block: 'center' }), 150);
+  }
+}
+
+async function runAnalysis(){
+  const queryEl=document.getElementById('query');
+  if(!queryEl) return;
+  const topic=queryEl.value.trim();
+  if(!topic) return;
+  if(!session.loggedIn||!session.token){
+    showToast(currentPageLanguage==='en'
+      ? 'Sign up or sign in to start analysing.'
+      : 'Registrati o accedi per iniziare ad analizzare.');
+    openModal('register');
+    return;
+  }
+  if(isFreeTrialExhausted()){
+    promptUpgrade();
+    return;
+  }
+  const runBtn=document.getElementById('runBtn');
+  const loading=document.getElementById('loading');
+  const results=document.getElementById('results');
+  const errorBox=document.getElementById('errorBox');
+  runBtn.disabled=true;
+  results.classList.remove('active');
+  errorBox.classList.remove('active');
+  loading.classList.add('active');
+  startLoadingAnimation();
+  try{
+    let data;
+    if(session.demo){
+      incrementDemoTrialCount();
+      renderDemoReport(topic);
+      loading.classList.remove('active');
+      results.classList.add('active');
+      results.scrollIntoView({behavior:'smooth',block:'start'});
+      return;
+    }else{
+      data=await fetchMarketAnalysis(topic);
+    }
+    renderReport(data);
+    loading.classList.remove('active');
+    results.classList.add('active');
+    results.scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(err){
+    console.error(err);
+    loading.classList.remove('active');
+    const msg = String(err.message||err);
+    if(msg.includes('FREE_TRIAL_EXHAUSTED') || msg.includes('3 analisi gratuite') || msg.includes('3 free')){
+      if(session.plan==='Base') session.analysisCount = DEMO_TRIAL_LIMIT;
+      sessionStorage.setItem('meridian_session', JSON.stringify(session));
+      promptUpgrade();
+      errorBox.textContent = currentPageLanguage==='en'
+        ? "⚠ Free trial limit reached (3 analyses). Choose a paid plan to continue."
+        : "⚠ Limite prova gratuita raggiunto (3 analisi). Scegli un piano a pagamento per continuare.";
+    }else{
+      errorBox.textContent=currentPageLanguage==='en'
+        ? "⚠ Error generating the report: "+msg+". Please try again in a moment."
+        : "⚠ Errore durante la generazione del report: "+msg+". Riprova tra qualche istante.";
+    }
+    errorBox.classList.add('active');
+  }finally{
+    stopLoadingAnimation();
+    if(runBtn) runBtn.disabled=false;
+  }
+}
+const API_ENDPOINT="https://meridian-api.nevoljicettore.workers.dev/";const RECENT_ENDPOINT=API_ENDPOINT.replace(/\/?$/,'/')+'recent';
+loadTicker();setInterval(loadTicker,60000);
+handleCheckoutReturn();
+async function fetchMarketAnalysis(topic){
+  const language=document.getElementById('reportLanguage')?.value||'it';
+  const market=document.getElementById('reportMarket')?.value||'Italia';
+  const response=await fetch(API_ENDPOINT,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json",
+      "Authorization":"Bearer "+session.token
+    },
+    body:JSON.stringify({topic,language,market})
+  });
+  const rawText=await response.text().catch(()=> "");
+  let payload={};
+  try{ payload=rawText?JSON.parse(rawText):{}; }catch(_){ payload={}; }
+
+  if(!response.ok){
+    const code=payload.code||'';
+    const errMsg=payload.error||payload.message||rawText||`API error ${response.status}`;
+    if(code==='FREE_TRIAL_EXHAUSTED' || response.status===403){
+      throw new Error(errMsg + (code?` [${code}]`:''));
+    }
+    throw new Error(errMsg);
+  }
+  if(payload.error) throw new Error(payload.error);
+
+  // aggiorna contatore analisi dal server
+  if(typeof payload.analysis_count === 'number'){
+    session.analysisCount = payload.analysis_count;
+    sessionStorage.setItem('meridian_session', JSON.stringify(session));
+  }
+
+  const textBlocks=(payload.content||[]).filter(b=>b.type==="text").map(b=>b.text);
+  if(!textBlocks.length) throw new Error(t("Nessuna risposta testuale ricevuta"));
+  let raw=textBlocks[textBlocks.length-1].trim();
+  raw=raw.replace(/^```json/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+  const firstBrace=raw.indexOf('{'), lastBrace=raw.lastIndexOf('}');
+  if(firstBrace===-1||lastBrace===-1) throw new Error(t("Formato risposta non valido"));
+  raw=raw.slice(firstBrace,lastBrace+1);
+  return JSON.parse(raw);
+}
+function renderDemoReport(topicOverride){
+  const en=currentPageLanguage==='en';
+  const demo = {
+    topic: en ? "Electric vehicles in Europe" : "Veicoli elettrici in Europa",
+    as_of: en ? "DEMO PREVIEW · illustrative data" : "ANTEPRIMA DEMO · dati illustrativi",
+    summary: en
+      ? "This is a preview of how MarketLens presents an analysis after sign-in. The data shown here is for demonstration purposes only and does not come from a real search."
+      : "Questa è un’anteprima del modo in cui MarketLens presenta un’analisi dopo il login. I dati mostrati qui sono puramente dimostrativi e non provengono da una ricerca reale.",
+    market_size_year: "2025",
+    market_size_value: "€ 186 mld",
+    market_size_unit: en ? "illustrative value" : "valore indicativo",
+    cagr: "12,8%",
+    forecast_year: "2030",
+    forecast_value: "€ 345 mld",
+    leading_segment: "Passenger EV",
+    trend_labels: ["2025","2026","2027","2028","2029","2030"],
+    trend_values: [186,208,234,264,300,345],
+    competitors: [
+      {name:"Tesla",share:22},{name:"Volkswagen",share:18},{name:"BMW",share:11},
+      {name:"Mercedes-Benz",share:9},{name:en?"Others":"Altri",share:40}
+    ],
+    segments: [
+      {name:"Passenger EV",value:62},{name:"Commercial EV",value:23},{name:"Two-wheelers",value:15}
+    ],
+    drivers: en ? [
+      "Growing adoption of electric vehicles across major European markets.",
+      "Expansion of public and private charging infrastructure.",
+      "Gradual decline in battery costs and increased driving range."
+    ] : [
+      "Adozione crescente dei veicoli elettrici nei principali mercati europei.",
+      "Espansione dell’infrastruttura di ricarica pubblica e privata.",
+      "Riduzione progressiva dei costi delle batterie e maggiore autonomia."
+    ],
+    risks: en ? [
+      "Competitive pressure and price wars among manufacturers.",
+      "Dependence on strategic raw materials and component availability.",
+      "Changes in incentives and regulation across individual countries."
+    ] : [
+      "Pressione competitiva e guerra dei prezzi tra produttori.",
+      "Dipendenza dalla disponibilità di materie prime e componenti strategici.",
+      "Evoluzione degli incentivi e della normativa nei singoli Paesi."
+    ],
+    sources: []
+  };
+  const query = document.getElementById('query');
+  if (topicOverride && String(topicOverride).trim()) demo.topic = String(topicOverride).trim();
+  if (query) query.value = demo.topic;
+  renderReport(demo);
+  const meta = document.getElementById('reportMeta');
+  if (meta) meta.innerHTML = en ? 'DEMO PREVIEW<br>example view' : 'ANTEPRIMA DEMO<br>esempio di visualizzazione';
+  const results = document.getElementById('results');
+  if (results) results.classList.add('active');
+}
+
+function renderReport(d){
+  d = filterReportByPlan(d || {});
+  document.getElementById('reportTitle').textContent=d.topic||'—';
+  document.getElementById('reportMeta').innerHTML=`${t('AGGIORNATO AL')}<br>${d.as_of||'—'}`;
+  const trialNote=document.getElementById('demoTrialNote');
+  if(trialNote){
+    trialNote.style.display=session.demo?'block':'none';
+    trialNote.textContent=session.demo
+      ? `Prova gratuita · ${Math.max(0,DEMO_TRIAL_LIMIT-getDemoTrialCount())} analisi demo rimanenti · dati illustrativi`
+      : '';
+  }
+  document.getElementById('summaryPanel').textContent=d.summary||'—';
+  document.getElementById('trendNote').textContent=`${d.market_size_year||''} → ${d.forecast_year||''}`;
+
+  const kpiGrid=document.getElementById('kpiGrid');
+  kpiGrid.innerHTML=`
+    <div class="kpi">
+      <div class="kpi-label">${t('Dimensione mercato')} (${d.market_size_year||'—'})</div>
+      <div class="kpi-value">${d.market_size_value||'—'}</div>
+      <div class="kpi-sub">${d.market_size_unit||''}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">${t('CAGR stimato')}</div>
+      <div class="kpi-value pos">${d.cagr||'—'}</div>
+      <div class="kpi-sub">${t('crescita annua composta')}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">${t('Proiezione')} (${d.forecast_year||'—'})</div>
+      <div class="kpi-value gold">${d.forecast_value||'—'}</div>
+      <div class="kpi-sub">${d.market_size_unit||''}</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">${t('Segmento leader')}</div>
+      <div class="kpi-value" style="font-size:19px;">${d.leading_segment||'—'}</div>
+      <div class="kpi-sub">${t('quota maggioritaria')}</div>
+    </div>`;
+
+  renderCharts(d);
+  document.getElementById('driversList').innerHTML=(d.drivers||[]).map(x=>`<li>${x}</li>`).join('');
+  document.getElementById('risksList').innerHTML=(d.risks||[]).map(x=>`<li>${x}</li>`).join('');
+
+  const sourcesList=document.getElementById('sourcesList');
+  sourcesList.innerHTML=(d.sources||[]).map(s=>`
+    <div class="source-row">
+      <span class="source-name">${s.name||t('Fonti')}</span>
+      <a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">${s.url?'↗ '+t('apri fonte'):''}</a>
+    </div>`).join('')
+    ||`<div class="source-row"><span class="source-name">${t('Nessuna fonte disponibile')}</span></div>`;
+
+  applyPlanGating();
+  translatePageText(document.getElementById('results'));
+}
+/**
+ * Privilegi per piano (allineati alle card Prezzi):
+ *
+ * Base (prova gratuita):
+ *   - Sintesi esecutiva + KPI
+ *   - Fonti verificabili
+ *   - Esportazione PDF
+ *   - Max 3 analisi
+ *   - NO grafici, NO trend/concorrenti, NO driver/rischi estesi
+ *
+ * Pro:
+ *   - Tutto Base
+ *   - Grafici, trend, concorrenti, segmentazione
+ *   - Driver e rischi
+ *   - Analisi illimitate
+ *
+ * Business:
+ *   - Tutto Pro (consulto completo + panorama competitivo)
+ *   - Analisi illimitate (pagamento singolo)
+ */
+function getPlanFeatures(plan) {
+  const p = normalizePlan(plan) || 'Base';
+
+  // Business = report completo
+  if (p === 'Business') {
+    return {
+      plan: p,
+      summary: true,
+      kpi: true,
+      sources: true,
+      pdf: true,
+      charts: true,          // grafici, trend, concorrenti, segmenti
+      driversRisks: true,    // driver e rischi
+      unlimited: true
+    };
+  }
+
+  // Pro = illimitato ma SENZA grafici / driver / rischi
+  if (p === 'Pro') {
+    return {
+      plan: p,
+      summary: true,
+      kpi: true,
+      sources: true,
+      pdf: true,
+      charts: false,
+      driversRisks: false,
+      unlimited: true
+    };
+  }
+
+  // Base = prova gratuita (max 3)
+  return {
+    plan: 'Base',
+    summary: true,
+    kpi: true,
+    sources: true,
+    pdf: true,
+    charts: false,
+    driversRisks: false,
+    unlimited: false
+  };
+}
+
+function applyPlanGating() {
+  const plan = normalizePlan(session.plan) || 'Base';
+  const features = getPlanFeatures(plan);
+
+  // Sezioni avanzate: solo Pro / Business
+  const advanced = [
+    { id: 'chartRow1', allow: features.charts },
+    { id: 'chartRow2', allow: features.charts },
+    { id: 'twoCol', allow: features.driversRisks }
+  ];
+
+  advanced.forEach(({ id, allow }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('locked-wrap');
+    const overlay = el.querySelector('.locked-overlay');
+    if (overlay) overlay.remove();
+    const inner = el.querySelector('.locked-content');
+    if (inner) {
+      while (inner.firstChild) el.appendChild(inner.firstChild);
+      inner.remove();
+    }
+    el.hidden = !allow;
+    el.style.display = allow ? '' : 'none';
+  });
+
+  // Fonti: incluse in tutti i piani a pagamento e Base
+  ['sourcesLabel', 'sourcesSection'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.hidden = !features.sources;
+    el.style.display = features.sources ? '' : 'none';
+  });
+
+  // PDF: Base+
+  const exportBtn = document.getElementById('exportBtn');
+  if (exportBtn) {
+    exportBtn.hidden = !features.pdf;
+    exportBtn.style.display = features.pdf ? 'inline-flex' : 'none';
+  }
+
+  // Nota piano Base sul report
+  let note = document.getElementById('planLimitNote');
+  if (!note) {
+    note = document.createElement('div');
+    note.id = 'planLimitNote';
+    note.style.cssText = 'display:none;margin:0 0 18px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--bg-soft);font-size:13px;color:var(--muted);';
+    const results = document.getElementById('results');
+    const header = results?.querySelector('.report-header');
+    if (header) header.insertAdjacentElement('afterend', note);
+  }
+  if (note) {
+    if (features.plan === 'Base') {
+      note.style.display = 'block';
+      note.textContent = currentPageLanguage === 'en'
+        ? 'Base plan: executive summary, KPIs, sources and PDF (3 analyses). Upgrade for more.'
+        : 'Piano Base: sintesi, KPI, fonti e PDF (3 analisi). Passa a un piano superiore per continuare.';
+    } else if (features.plan === 'Pro') {
+      note.style.display = 'block';
+      note.textContent = currentPageLanguage === 'en'
+        ? 'Pro plan: unlimited analyses, summary, KPIs, sources and PDF. Business unlocks charts and full competitive analysis.'
+        : 'Piano Pro: analisi illimitate, sintesi, KPI, fonti e PDF. Business sblocca grafici e analisi competitiva completa.';
+    } else {
+      note.style.display = 'none';
+      note.textContent = '';
+    }
+  }
+
+  document.body.dataset.plan = plan || 'none';
+}
+
+/** Filtra i dati del report in base al piano (niente di più di quanto incluso). */
+function filterReportByPlan(d) {
+  const features = getPlanFeatures(session.plan);
+  const out = { ...d };
+  if (!features.charts) {
+    out.trend_labels = [];
+    out.trend_values = [];
+    out.competitors = [];
+    out.segments = [];
+  }
+  if (!features.driversRisks) {
+    out.drivers = [];
+    out.risks = [];
+  }
+  if (!features.sources) {
+    out.sources = [];
+  }
+  return out;
+}
+
+function exportReportPDF(){window.print()}
+async function ensureChartJS(){
+  if(window.Chart) return true;
+  if(window.__marketlensChartLoader) return window.__marketlensChartLoader;
+  window.__marketlensChartLoader=new Promise(resolve=>{
+    const existing=document.querySelector('script[data-marketlens-chart]');
+    if(existing){
+      existing.addEventListener('load',()=>resolve(!!window.Chart),{once:true});
+      existing.addEventListener('error',()=>resolve(false),{once:true});
+      return;
+    }
+    const script=document.createElement('script');
+    script.src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js';
+    script.async=true;
+    script.dataset.marketlensChart='1';
+    script.onload=()=>resolve(!!window.Chart);
+    script.onerror=()=>resolve(false);
+    document.head.appendChild(script);
+  });
+  return window.__marketlensChartLoader;
+}
+
+function renderSimpleCharts(d){
+  const trend=document.getElementById('trendChart');
+  const comp=document.getElementById('competitorChart');
+  const seg=document.getElementById('segmentChart');
+  [trend,comp,seg].forEach(c=>{
+    if(!c) return;
+    const parent=c.parentElement;
+    c.style.display='none';
+    let fallback=parent.querySelector('.chart-fallback');
+    if(!fallback){
+      fallback=document.createElement('div');
+      fallback.className='chart-fallback';
+      fallback.style.cssText='height:100%;display:flex;flex-direction:column;justify-content:center;gap:10px;font-size:12px;color:#52667F;';
+      parent.appendChild(fallback);
+    }
+    fallback.innerHTML='';
+    const values=c===trend?(d.trend_values||[]):c===comp?(d.competitors||[]).map(x=>x.share):(d.segments||[]).map(x=>x.value);
+    const labels=c===trend?(d.trend_labels||[]):c===comp?(d.competitors||[]).map(x=>x.name):(d.segments||[]).map(x=>x.name);
+    values.forEach((v,i)=>{
+      const row=document.createElement('div');
+      row.innerHTML='<b style="display:inline-block;width:34%;font-size:11px;color:#071A3A;">'+(labels[i]||'')+'</b><span style="display:inline-block;width:'+Math.max(4,Math.min(62,Number(v)||0))+'%;height:10px;border-radius:999px;background:#1687FF;vertical-align:middle;"></span> <span style="font-size:11px;">'+(v??'')+'</span>';
+      fallback.appendChild(row);
+    });
+  });
+}
+
+async function renderCharts(d){
+  if(!await ensureChartJS()){
+    renderSimpleCharts(d);
+    return;
+  }
+  const trendCanvas=document.getElementById('trendChart');
+  const competitorCanvas=document.getElementById('competitorChart');
+  const segmentCanvas=document.getElementById('segmentChart');
+  if(!trendCanvas||!competitorCanvas||!segmentCanvas) return;
+  [trendCanvas,competitorCanvas,segmentCanvas].forEach(c=>{
+    c.style.display='';
+    const f=c.parentElement.querySelector('.chart-fallback');
+    if(f) f.remove();
+  });
+  Object.values(charts).forEach(c=>c&&c.destroy());
+  const gridColor='#D5E2F5',tickColor='#52667F',fontBody="'Inter', sans-serif";
+  const trendCtx=trendCanvas.getContext('2d');
+  const gradient=trendCtx.createLinearGradient(0,0,0,250);
+  gradient.addColorStop(0,'rgba(22,135,255,0.30)');
+  gradient.addColorStop(1,'rgba(22,135,255,0)');
+  charts.trend=new Chart(trendCtx,{type:'line',data:{labels:d.trend_labels||[],datasets:[{data:d.trend_values||[],borderColor:'#0759C9',backgroundColor:gradient,fill:true,tension:.35,pointRadius:3,pointBackgroundColor:'#0759C9',borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}},y:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}}}}});
+  const compColors=['#1687FF','#56D5FF','#0759C9','#7AB8FF','#B8CCE5'];
+  charts.competitor=new Chart(competitorCanvas,{type:'doughnut',data:{labels:(d.competitors||[]).map(c=>c.name),datasets:[{data:(d.competitors||[]).map(c=>c.share),backgroundColor:compColors,borderColor:'#FFFFFF',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#52667F',font:{family:fontBody,size:11},boxWidth:10,padding:12}}}}});
+  charts.segment=new Chart(segmentCanvas,{type:'bar',data:{labels:(d.segments||[]).map(s=>s.name),datasets:[{data:(d.segments||[]).map(s=>s.value),backgroundColor:'#1687FF',borderRadius:8,barThickness:32}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}},y:{grid:{display:false},ticks:{color:'#071A3A',font:{family:fontBody,size:12.5}}}}}});
+}
+
+let pendingCheckoutPlan = null;
+let checkoutInFlight = false;
+
+async function startCheckout(plan) {
+    const validPlans = ["Base", "Pro", "Business"];
+    if (!validPlans.includes(plan)) {
+        alert(currentPageLanguage === "en" ? "Invalid plan." : "Piano non valido.");
+        return;
+    }
+
+    // Prima del pagamento serve un account reale (non solo demo locale)
+    if (!session.loggedIn || !session.token || session.token === "demo-local") {
+        pendingCheckoutPlan = plan;
+        showToast(
+            currentPageLanguage === "en"
+                ? "Create an account to continue to payment."
+                : "Crea un account per procedere al pagamento."
+        );
+        openModal("register");
+        return;
+    }
+
+    if (checkoutInFlight) return;
+    checkoutInFlight = true;
+
+    const buttons = [
+        document.getElementById("upgradeBtnPro"),
+        document.getElementById("upgradeBtnBusiness"),
+        document.getElementById("checkout-pro"),
+        document.getElementById("checkout-business")
+    ].filter(Boolean);
+    const originalLabels = buttons.map((b) => b.textContent);
+    buttons.forEach((b) => {
+        b.disabled = true;
+        b.textContent = currentPageLanguage === "en" ? "Redirecting to Stripe…" : "Reindirizzamento a Stripe…";
+    });
+
+    showToast(
+        currentPageLanguage === "en"
+            ? "Opening Stripe checkout…"
+            : "Apertura pagamento Stripe…"
+    );
+
+    try {
+        const endpoint = (typeof API_ENDPOINT === "string" ? API_ENDPOINT : "https://meridian-api.nevoljicettore.workers.dev/")
+            .replace(/\/?$/, "/") + "create-checkout";
+
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": "Bearer " + session.token
+            },
+            body: JSON.stringify({
+                plan,
+                email: session.email || undefined
+            })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+            console.error("Errore Stripe:", data);
+            const parts = [
+              data.error,
+              data.details,
+              data.stripe_code ? `(${data.stripe_code})` : null,
+              data.message
+            ].filter(Boolean);
+            throw new Error(
+                parts.length
+                  ? parts.join(" — ")
+                  : `Errore HTTP ${response.status}`
+            );
+        }
+
+        const checkoutUrl = data.checkout_url || data.url;
+        if (!checkoutUrl) {
+            throw new Error(
+                currentPageLanguage === "en"
+                    ? "Payment URL not received from server."
+                    : "URL di pagamento non ricevuto dal server."
+            );
+        }
+
+        pendingCheckoutPlan = null;
+        // Reindirizza a Stripe Checkout
+        window.location.assign(checkoutUrl);
+    } catch (error) {
+        console.error("Checkout error:", error);
+        alert(
+            error?.message ||
+            (currentPageLanguage === "en"
+                ? "Unable to start payment. Please try again."
+                : "Impossibile avviare il pagamento. Riprova.")
+        );
+        buttons.forEach((b, i) => {
+            b.disabled = false;
+            b.textContent = originalLabels[i];
+        });
+    } finally {
+        checkoutInFlight = false;
+    }
+}
+
+async function resumePendingCheckout() {
+    if (!pendingCheckoutPlan || !session.loggedIn || !session.token) return;
+    const plan = pendingCheckoutPlan;
+    pendingCheckoutPlan = null;
+    showToast(
+        currentPageLanguage === "en"
+            ? "Account ready — continuing to payment…"
+            : "Account pronto — proseguiamo al pagamento…"
+    );
+    await startCheckout(plan);
+}
+</script>
+</body>
+</html>
