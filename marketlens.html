@@ -1590,6 +1590,175 @@ section.trust{display:none!important}
 #pricing .plan-card.featured .plan-cta{background:var(--primary)!important;border-color:var(--primary)!important;color:#fff!important;}
 #pricing .plan-card.featured .plan-cta:hover{background:var(--primary2)!important;border-color:var(--primary2)!important;color:#fff!important;}
 </style>
+<style>
+
+/* ===== FINAL PLAN REFINEMENTS ===== */
+#pricing .plan-cta,
+#pricing .plan-card .plan-cta{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  line-height:1.2 !important;
+}
+#pricing .plan-features li .ico{
+  position:relative !important;
+  z-index:0 !important;
+  width:20px !important;
+  height:20px !important;
+  min-width:20px !important;
+  flex:0 0 20px !important;
+  border-radius:50% !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:rgba(91,85,247,.18) !important;
+  color:var(--primary) !important;
+  font-size:10px !important;
+  font-weight:800 !important;
+  line-height:1 !important;
+}
+#pricing .plan-features li .ico::before{
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background:rgba(91,85,247,.07);
+  z-index:-1;
+}
+
+</style>
+
+<style>
+/* ===== FINAL MARKETLENS VISUAL POLISH ===== */
+.nav-links a{font-weight:700!important;}
+
+/* Hero illustration: same violet language as the site */
+.hero-visual{background:linear-gradient(145deg,#f8f7ff 0%,#f1efff 55%,#e8e5ff 100%)!important;}
+.hero-visual::before{background:#a39dff!important;opacity:.28!important;}
+.hero-visual::after{background:#756fff!important;opacity:.16!important;}
+.hero-visual svg rect:first-of-type{fill:#fbfaff!important;stroke:#dedbff!important;}
+
+/* AI square/logo */
+.ai-orb{display:flex!important;align-items:center!important;justify-content:center!important;color:#fff!important;}
+.ai-logo{font:800 11px Inter,sans-serif;letter-spacing:-.04em;color:#fff;}
+
+/* Number typography in How it works */
+#come-funziona .step-num{font-family:Inter,sans-serif!important;font-size:28px!important;font-weight:800!important;letter-spacing:-.06em!important;line-height:1!important;color:var(--primary)!important;}
+
+/* Pricing responsive: 3 -> 2 -> 1 cleanly, without squeezed cards */
+#pricing .pricing-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:stretch!important;}
+#pricing .plan-card{min-width:0!important;height:auto!important;min-height:440px!important;}
+@media(max-width:1050px){
+  #pricing .pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  #pricing .plan-card{min-height:430px!important;}
+}
+@media(max-width:700px){
+  #pricing .pricing-grid{grid-template-columns:1fr!important;}
+  #pricing .plan-card{min-height:0!important;}
+}
+
+/* FAQ accordion cards */
+#faq .faq-list{display:flex!important;flex-direction:column!important;gap:10px!important;}
+#faq .faq-item{border:1px solid var(--line)!important;border-radius:14px!important;background:var(--panel)!important;overflow:hidden!important;box-shadow:0 6px 18px rgba(28,31,55,.04)!important;}
+#faq .faq-q{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;padding:18px 20px!important;font-size:13px!important;font-weight:700!important;color:var(--text)!important;cursor:pointer!important;}
+#faq .faq-q .chev{width:28px!important;height:28px!important;min-width:28px!important;border-radius:50%!important;background:#ecebff!important;color:var(--primary)!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:18px!important;font-weight:500!important;line-height:1!important;transition:transform .2s ease,background .2s ease!important;}
+#faq .faq-a{display:grid!important;grid-template-rows:0fr!important;transition:grid-template-rows .25s ease!important;}
+#faq .faq-a p{overflow:hidden!important;margin:0!important;padding:0 20px!important;font-size:12px!important;line-height:1.7!important;color:var(--muted)!important;}
+#faq .faq-item.open .faq-a{grid-template-rows:1fr!important;}
+#faq .faq-item.open .faq-a p{padding:0 20px 19px!important;}
+#faq .faq-item.open .faq-q .chev{transform:rotate(45deg)!important;background:var(--primary)!important;color:#fff!important;}
+
+/* New FAQ visual */
+.faq-visual{background:linear-gradient(145deg,#f0efff,#ddd9ff)!important;display:flex!important;align-items:center!important;justify-content:center!important;position:relative!important;overflow:hidden!important;}
+.faq-visual::before{content:""!important;position:absolute!important;width:220px!important;height:220px!important;border-radius:50%!important;background:rgba(91,85,247,.13)!important;filter:blur(12px)!important;left:-60px!important;top:-60px!important;}
+.faq-visual::after{content:""!important;position:absolute!important;width:180px!important;height:180px!important;border-radius:50%!important;background:rgba(117,111,255,.12)!important;filter:blur(10px)!important;right:-45px!important;bottom:-45px!important;}
+.faq-visual-new{width:82%!important;padding:22px!important;border-radius:18px!important;background:rgba(255,255,255,.82)!important;border:1px solid rgba(91,85,247,.14)!important;box-shadow:0 20px 50px rgba(71,65,170,.14)!important;position:relative!important;z-index:2!important;backdrop-filter:blur(8px)!important;}
+.faq-visual-new-head,.faq-visual-new-foot{display:flex!important;justify-content:space-between!important;align-items:center!important;font:700 8px var(--mono)!important;letter-spacing:.08em!important;color:#777b8d!important;}
+.faq-visual-new-status{padding:5px 8px!important;border-radius:999px!important;background:#ecebff!important;color:var(--primary)!important;}
+.faq-visual-new-title{font-size:22px!important;font-weight:800!important;letter-spacing:-.04em!important;color:var(--text)!important;margin:18px 0 8px!important;}
+.faq-visual-new-chart{height:150px!important;position:relative!important;overflow:hidden!important;border-radius:12px!important;background:#f8f7ff!important;}
+.faq-visual-new-chart svg{width:100%!important;height:100%!important;position:relative!important;z-index:2!important;}
+.chart-grid-line{position:absolute!important;left:12px!important;right:12px!important;height:1px!important;background:#e4e2fa!important;z-index:1!important;}
+.chart-grid-line.line1{top:35px}.chart-grid-line.line2{top:75px}.chart-grid-line.line3{top:115px}
+.faq-visual-new-foot{margin-top:14px!important;font-family:Inter,sans-serif!important;font-size:10px!important;letter-spacing:0!important;}
+.faq-visual-new-foot b{color:var(--primary)!important;font-size:14px!important;}
+
+/* Remove the visual gap / standalone utility blocks between FAQ and the final CTA on the landing page.
+   They remain in the DOM for the report engine, but are hidden until the report workflow explicitly needs them. */
+#loading,#errorBox,#upgradeBanner,#results{display:none!important;}
+#results.active{display:block!important;}
+#loading.active,#errorBox.active,#upgradeBanner.active{display:block!important;}
+
+/* Keep the final CTA immediately after the FAQ area when no report is active. */
+.flow-final-cta{margin-top:0!important;}
+</style>
+<style>
+
+/* ===== READABILITY PASS ===== */
+body{font-size:15px!important;line-height:1.65!important}
+.nav-links,.nav-links a,.btn-ghost,.login,.btn-fill,.page-language,.flowpilot-back{font-size:13px!important}
+.brand{font-size:20px!important}
+.eyebrow,.section-tag{font-size:11px!important}
+h1.hero-title{font-size:clamp(48px,6vw,78px)!important}
+.hero-sub{font-size:16px!important;line-height:1.75!important}
+#query{font-size:15px!important}
+.search-locked-note{font-size:13px!important}
+.selector-group{font-size:11px!important}
+.selector-group select{font-size:12px!important}
+.chip{font-size:11px!important}
+.block-head h2{font-size:clamp(34px,4.5vw,50px)!important}
+.block-head p{font-size:14px!important;line-height:1.75!important}
+.feature-card h3{font-size:15px!important}
+.feature-card p{font-size:12px!important;line-height:1.7!important}
+.ai-banner strong{font-size:12px!important}
+.ai-banner span{font-size:10px!important}
+.model-card h3{font-size:14px!important}
+.model-card p{font-size:11px!important;line-height:1.7!important}
+.model-card .tag{font-size:9px!important}
+.step-num{font-size:13px!important}
+.step-card h3{font-size:15px!important}
+.step-card p{font-size:11px!important;line-height:1.7!important}
+#pricing .section-tag{font-size:11px!important}
+#pricing .block-head h2{font-size:clamp(38px,4.5vw,58px)!important}
+#pricing .block-head p{font-size:15px!important}
+#pricing .plan-name{font-size:17px!important}
+#pricing .plan-price{font-size:42px!important}
+#pricing .plan-price span{font-size:14px!important}
+#pricing .plan-desc{font-size:14px!important}
+#pricing .plan-features li{font-size:14px!important;line-height:1.55!important}
+#pricing .plan-cta{font-size:14px!important}
+#pricing .plan-badge{font-size:11px!important}
+.report-title{font-size:40px!important}
+.report-meta{font-size:11px!important}
+.summary-panel{font-size:14px!important}
+.kpi-label,.chart-card .chart-note{font-size:10px!important}
+.kpi-value{font-size:29px!important}
+.chart-card h3,.col-card h3{font-size:14px!important}
+.col-card li,.source-name{font-size:12px!important}
+.source-link{font-size:11px!important}
+.faq-q{font-size:14px!important}
+.faq-a p{font-size:12px!important;line-height:1.75!important}
+.flow-final-box h2{font-size:clamp(34px,4.5vw,50px)!important}
+.flow-final-box p{font-size:14px!important}
+.flow-final-box button{font-size:13px!important}
+.modal-box h2{font-size:23px!important}
+.modal-sub{font-size:12px!important}
+.modal-field label{font-size:11px!important}
+.modal-field input{font-size:12px!important}
+.modal-submit{font-size:12px!important}
+footer,footer .foot-note{font-size:11px!important}
+@media(max-width:640px){
+  body{font-size:14px!important}
+  h1.hero-title{font-size:43px!important}
+  .hero-sub{font-size:14px!important}
+  .block-head h2{font-size:34px!important}
+  .feature-card p,.model-card p,.step-card p,.faq-a p{font-size:12px!important}
+  #pricing .plan-price{font-size:38px!important}
+  #pricing .plan-features li{font-size:13px!important}
+}
+
+</style>
 </head>
 <body>
 <header class="nav">
@@ -1604,7 +1773,7 @@ section.trust{display:none!important}
 <button class="modal-close" id="modalClose">✕</button>
 <div class="auth-tabs" id="authTabs" style="display:flex;gap:8px;margin-bottom:18px;">
 <button class="btn-ghost auth-tab active" id="tabLogin" style="flex:1;padding:8px 12px;" type="button">Accedi</button>
-<button class="btn-ghost auth-tab" id="tabRegister" style="flex:1;padding:8px 12px;" type="button">Registrati</button>
+<button class="btn-ghost auth-tab" id="tabRegister" style="flex:1;padding:8px 12px;" type="button">Sign up</button>
 </div>
 <h2 id="modalTitle">Sign in</h2>
 <p class="modal-sub" id="modalSub">Accedi al tuo account MarketLens</p>
@@ -1621,7 +1790,7 @@ section.trust{display:none!important}
 <button class="modal-submit" id="modalSubmit">Sign in</button>
 <div id="authError" style="display:none;background:var(--coral-soft);border:1px solid var(--coral);border-radius:var(--r);padding:10px 12px;margin-top:12px;font-size:12.5px;color:#8A2E1D;"></div>
 <div class="modal-foot" id="modalFoot">
-      Non hai un account? <a id="switchToRegister">Registrati</a>
+      Non hai un account? <a id="switchToRegister">Sign up</a>
 </div>
 <p class="modal-note" id="modalNote">La registrazione crea un account Base (prova gratuita) con 3 analisi. Nessun pagamento richiesto.</p>
 </div>
@@ -1641,22 +1810,22 @@ section.trust{display:none!important}
 <svg aria-hidden="true" role="img" viewbox="0 0 620 470">
 <defs>
 <lineargradient id="heroMint" x1="0" x2="1" y1="0" y2="1">
-<stop offset="0" stop-color="#56D5FF" stop-opacity=".95"></stop>
-<stop offset="1" stop-color="#0759C9" stop-opacity=".7"></stop>
+<stop offset="0" stop-color="#9A95FF" stop-opacity=".95"></stop>
+<stop offset="1" stop-color="#5B55F7" stop-opacity=".7"></stop>
 </lineargradient>
 <lineargradient id="heroArea" x1="0" x2="0" y1="0" y2="1">
-<stop offset="0" stop-color="#1687FF" stop-opacity=".25"></stop>
-<stop offset="1" stop-color="#1687FF" stop-opacity="0"></stop>
+<stop offset="0" stop-color="#6B64F8" stop-opacity=".25"></stop>
+<stop offset="1" stop-color="#6B64F8" stop-opacity="0"></stop>
 </lineargradient>
 </defs>
 <rect fill="#FFFFFF" height="372" rx="26" stroke="#E4E9E7" width="552" x="34" y="48"></rect>
-<rect fill="#E3FBF1" height="78" rx="16" width="150" x="60" y="76"></rect>
+<rect fill="#EEEDFF" height="78" rx="16" width="150" x="60" y="76"></rect>
 <text fill="#5C6863" font-family="Inter, sans-serif" font-size="11" x="78" y="100">MARKET SIZE</text>
 <text fill="#121815" font-family="Inter, sans-serif" font-size="27" font-weight="800" x="78" y="132">€48.2B</text>
-<rect fill="#F6F9F8" height="78" rx="16" width="150" x="226" y="76"></rect>
+<rect fill="#F7F7FF" height="78" rx="16" width="150" x="226" y="76"></rect>
 <text fill="#5C6863" font-family="Inter, sans-serif" font-size="11" x="244" y="100">CAGR</text>
-<text fill="#0759C9" font-family="Inter, sans-serif" font-size="27" font-weight="800" x="244" y="132">+12.4%</text>
-<rect fill="#FFF3DE" height="78" rx="16" width="166" x="392" y="76"></rect>
+<text fill="#5B55F7" font-family="Inter, sans-serif" font-size="27" font-weight="800" x="244" y="132">+12.4%</text>
+<rect fill="#F0EFFF" height="78" rx="16" width="166" x="392" y="76"></rect>
 <text fill="#5C6863" font-family="Inter, sans-serif" font-size="11" x="410" y="100">FORECAST</text>
 <text fill="#121815" font-family="Inter, sans-serif" font-size="27" font-weight="800" x="410" y="132">€86.7B</text>
 <text fill="#121815" font-family="Inter, sans-serif" font-size="14" font-weight="700" x="60" y="190">Market growth trajectory</text>
@@ -1666,7 +1835,7 @@ section.trust{display:none!important}
 <line stroke="#E4E9E7" x1="60" x2="558" y1="250" y2="250"></line>
 <path d="M60 338 C105 328,120 315,155 320 S215 292,250 300 S305 270,340 278 S395 245,430 258 S490 210,558 220 L558 350 L60 350 Z" fill="url(#heroArea)"></path>
 <path d="M60 338 C105 328,120 315,155 320 S215 292,250 300 S305 270,340 278 S395 245,430 258 S490 210,558 220" fill="none" stroke="url(#heroMint)" stroke-linecap="round" stroke-width="5"></path>
-<circle cx="60" cy="338" fill="#0759C9" r="6"></circle><circle cx="155" cy="320" fill="#0759C9" r="6"></circle><circle cx="250" cy="300" fill="#0759C9" r="6"></circle><circle cx="340" cy="278" fill="#0759C9" r="6"></circle><circle cx="430" cy="258" fill="#0759C9" r="6"></circle><circle cx="558" cy="220" fill="#0759C9" r="7"></circle>
+<circle cx="60" cy="338" fill="#5B55F7" r="6"></circle><circle cx="155" cy="320" fill="#5B55F7" r="6"></circle><circle cx="250" cy="300" fill="#5B55F7" r="6"></circle><circle cx="340" cy="278" fill="#5B55F7" r="6"></circle><circle cx="430" cy="258" fill="#5B55F7" r="6"></circle><circle cx="558" cy="220" fill="#5B55F7" r="7"></circle>
 <text fill="#96A29C" font-family="JetBrains Mono, monospace" font-size="10" x="60" y="374">22</text>
 <text fill="#96A29C" font-family="JetBrains Mono, monospace" font-size="10" x="177" y="374">24</text>
 <text fill="#96A29C" font-family="JetBrains Mono, monospace" font-size="10" x="292" y="374">26</text>
@@ -1687,9 +1856,9 @@ section.trust{display:none!important}
 </main>
 <section class="block soft" id="modelli"><div class="wrap">
 <div class="block-head"><span class="section-tag">Modelli</span><h2>Il motore che genera ogni report.</h2><p>Trasparenza su come viene costruita ogni analisi, così sai esattamente cosa stai leggendo.</p></div>
-<div class="ai-banner"><div class="ai-orb"></div><div><strong>MarketLensAI — powered by ChatGPT luna</strong><span>Analisi contestuale, fonti e output localizzati per il mercato selezionato.</span></div></div>
+<div class="ai-banner"><div class="ai-orb"><span class="ai-logo">ML</span></div><div><strong>MarketLensAI</strong><span>Analisi contestuale, fonti e output localizzati per il mercato selezionato.</span></div></div>
 <div class="model-grid">
-<div class="model-card"><span class="tag">MarketLensAI</span><h3>MarketLensAI — powered by ChatGPT luna</h3><p>Il motore interpreta dati e contesto di mercato, crea una sintesi strutturata e adatta il report alla lingua e al mercato scelti.</p></div>
+<div class="model-card"><span class="tag">MarketLensAI</span><h3>MarketLensAI</h3><p>Il motore interpreta dati e contesto di mercato, crea una sintesi strutturata e adatta il report alla lingua e al mercato scelti.</p></div>
 <div class="model-card"><span class="tag">RICERCA</span><h3>Accesso al web in tempo reale</h3><p>Prima di scrivere, il modello interroga il web per raccogliere dati aggiornati su dimensione, crescita, concorrenti e segmenti — non si basa solo su conoscenza pregressa.</p></div>
 <div class="model-card"><span class="tag">VERIFICA</span><h3>Citazione delle fonti</h3><p>Ogni cifra riportata è collegata alla pagina da cui proviene. Ti consigliamo comunque di verificare sempre le fonti primarie prima di decisioni rilevanti.</p></div>
 </div>
@@ -1708,9 +1877,9 @@ section.trust{display:none!important}
 <section class="block soft" id="pricing"><div class="wrap">
 <div class="block-head"><span class="section-tag">Prezzi</span><h2>Un piano per ogni fase di crescita.</h2><p>Genera report di mercato con il livello di profondità che serve al tuo team. Cambia piano quando vuoi.</p></div>
 <div class="pricing-grid">
-<div class="plan-card" data-plan="Base"><div class="plan-name">Base</div><div class="plan-price">Gratuito<span> prova</span></div><div class="plan-desc">Prova gratuita: registrati e genera fino a 3 report, senza pagamento.</div><ul class="plan-features"><li><span class="ico">✓</span>3 produzioni demo incluse</li><li><span class="ico">✓</span>Sintesi esecutiva e KPI</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Esportazione PDF</li><li><span class="ico">✓</span>Solo registrazione — nessun pagamento</li></ul><button class="plan-cta" id="checkout-base" onclick="window.location.href='plans.html'">Inizia prova gratuita</button></div>
-<div class="plan-card featured" data-plan="Pro"><div class="plan-badge">Più scelto</div><div class="plan-name">Pro</div><div class="plan-price">11,99€<span> /mese</span></div><div class="plan-desc">Per un flusso di ricerca continuo su più mercati.</div><ul class="plan-features"><li><span class="ico">✓</span>Produzioni illimitate</li><li><span class="ico">✓</span>Sintesi esecutiva e KPI</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Esportazione PDF</li><li><span class="ico">✓</span>Vincolo di 2 mesi; 2° mese al 50% se disdici entro il 1°</li></ul><button class="plan-cta" id="checkout-pro" onclick="startCheckout('Pro')">Scegli Pro</button></div>
-<div class="plan-card" data-plan="Business"><div class="plan-name">Business</div><div class="plan-price">19,99€<span> singolo consulto</span></div><div class="plan-desc">Un'analisi approfondita pronta da condividere con il team.</div><ul class="plan-features"><li><span class="ico">✓</span>Consulto di mercato completo</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Esportazione PDF</li><li><span class="ico">✓</span>Grafici e panorama competitivo</li></ul><button class="plan-cta" id="checkout-business" onclick="startCheckout('Business')">Scegli Business</button></div>
+<div class="plan-card" data-plan="Base"><div class="plan-name">Base</div><div class="plan-price">Gratuito<span> prova</span></div><div class="plan-desc">Prova gratuita: registrati e genera fino a 3 report, senza pagamento.</div><ul class="plan-features"><li><span class="ico">✓</span>3 produzioni demo incluse</li><li><span class="ico">✓</span>Sintesi esecutiva e KPI</li><li><span class="ico">✓</span>Fonti verificabili con link</li></ul><button class="plan-cta" id="checkout-base" onclick="window.location.href='plans.html'">Inizia prova gratuita</button></div>
+<div class="plan-card featured" data-plan="Pro"><div class="plan-badge">Più scelto</div><div class="plan-name">Pro</div><div class="plan-price">11,99€<span> /mese</span></div><div class="plan-desc">Per un flusso di ricerca continuo su più mercati.</div><ul class="plan-features"><li><span class="ico">✓</span>Produzioni illimitate</li><li><span class="ico">✓</span>Sintesi esecutiva e KPI</li><li><span class="ico">✓</span>Fonti verificabili con link</li></ul><button class="plan-cta" id="checkout-pro" onclick="startCheckout('Pro')">Scegli Pro</button></div>
+<div class="plan-card" data-plan="Business"><div class="plan-name">Business</div><div class="plan-price">19,99€<span> singolo consulto</span></div><div class="plan-desc">Un'analisi approfondita pronta da condividere con il team.</div><ul class="plan-features"><li><span class="ico">✓</span>Consulto di mercato completo</li><li><span class="ico">✓</span>Fonti verificabili con link</li><li><span class="ico">✓</span>Grafici e panorama competitivo</li></ul><button class="plan-cta" id="checkout-business" onclick="startCheckout('Business')">Scegli Business</button></div>
 </div>
 </div></section>
 <main class="wrap">
@@ -1726,12 +1895,15 @@ section.trust{display:none!important}
 <div class="faq-item"><div class="faq-q">Quanto è affidabile un report generato automaticamente?<span class="chev">+</span></div><div class="faq-a"><p>È un ottimo punto di partenza per orientarsi rapidamente su un mercato, ma non sostituisce una due diligence completa: consigliamo di verificare sempre le fonti primarie prima di decisioni strategiche o di investimento importanti.</p></div></div>
 </div>
 </div>
-<div aria-label="Anteprima di un report MarketLens" class="faq-visual">
-<div class="faq-visual-card">
-<div class="faq-visual-top"><span>Market intelligence</span><span class="faq-visual-dot"></span></div>
-<div class="faq-visual-title">Panorama del mercato</div>
-<div class="faq-bars"><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span><span class="faq-bar"></span></div>
-<div class="faq-visual-foot"><span>Crescita prevista</span><b>+12,8% CAGR</b></div>
+<div aria-label="Illustrazione del flusso di analisi MarketLens" class="faq-visual">
+<div class="faq-visual-new">
+<div class="faq-visual-new-head"><span>MARKETLENS INSIGHT</span><span class="faq-visual-new-status">LIVE</span></div>
+<div class="faq-visual-new-title">Market signal</div>
+<div class="faq-visual-new-chart">
+<span class="chart-grid-line line1"></span><span class="chart-grid-line line2"></span><span class="chart-grid-line line3"></span>
+<svg viewBox="0 0 360 150" aria-hidden="true"><path d="M8 126 C45 119 58 108 91 111 S135 91 164 96 S208 69 238 78 S285 44 352 24" fill="none" stroke="#756FFF" stroke-width="5" stroke-linecap="round"/><circle cx="352" cy="24" r="7" fill="#756FFF"/></svg>
+</div>
+<div class="faq-visual-new-foot"><span>Market momentum</span><b>+12,8%</b></div>
 </div>
 </div>
 </div>
@@ -1745,8 +1917,8 @@ section.trust{display:none!important}
 <div class="upgrade-plan-card featured">
 <div class="up-name">Pro</div>
 <div class="up-price">11,99€<span> /mese</span></div>
-<div class="up-desc">Produzioni illimitate, sintesi, KPI, fonti e PDF. Ideale per ricerca continua.</div>
-<button class="plan-cta" id="upgradeBtnPro" onclick="startCheckout('Pro')" style="background:linear-gradient(135deg,#1687FF,#0759C9);color:#fff;border:none;" type="button">Scegli Pro</button>
+<div class="up-desc">Produzioni illimitate, sintesi, KPI e fonti. Ideale per ricerca continua.</div>
+<button class="plan-cta" id="upgradeBtnPro" onclick="startCheckout('Pro')" style="background:linear-gradient(135deg,#6B64F8,#5B55F7);color:#fff;border:none;" type="button">Scegli Pro</button>
 </div>
 <div class="upgrade-plan-card">
 <div class="up-name">Business</div>
@@ -1758,7 +1930,7 @@ section.trust{display:none!important}
 </div>
 <section id="results">
 <div class="demo-trial-note" id="demoTrialNote" style="display:none;background:var(--signal-soft);border:1px solid var(--line);border-radius:var(--r);padding:12px 16px;margin-bottom:18px;font-size:13px;color:var(--text);">Demo gratuita · dati illustrativi</div>
-<div class="report-header"><div><div class="section-label">Report generato</div><div class="report-title" id="reportTitle">—</div></div><div class="report-meta"><button class="btn-ghost" id="exportBtn" onclick="exportReportPDF()" style="display:none;margin-bottom:8px;">↓ Esporta PDF</button><div id="reportMeta">—</div></div></div>
+<div class="report-header"><div><div class="section-label">Report generato</div><div class="report-title" id="reportTitle">—</div></div><div class="report-meta"><div id="reportMeta">—</div></div></div>
 <div class="summary-panel" id="summaryPanel">—</div><div class="kpi-grid" id="kpiGrid"></div>
 <div class="chart-row" id="chartRow1"><div class="chart-card"><h3>Crescita del mercato</h3><div class="chart-note" id="trendNote">Storico e proiezione</div><div class="chart-holder"><canvas id="trendChart"></canvas></div></div><div class="chart-card"><h3>Quote di mercato</h3><div class="chart-note">Principali attori</div><div class="chart-holder"><canvas id="competitorChart"></canvas></div></div></div>
 <div class="chart-row" id="chartRow2" style="grid-template-columns:1fr;"><div class="chart-card"><h3>Segmentazione del mercato</h3><div class="chart-note">Ripartizione per segmento</div><div class="chart-holder" style="height:220px;"><canvas id="segmentChart"></canvas></div></div></div>
@@ -1789,7 +1961,7 @@ const PAGE_TRANSLATIONS = {
     "Funzioni":"Funzioni","Modelli":"Modelli","Come funziona":"Come funziona","Prezzi":"Prezzi","Piani":"Piani","FAQ":"FAQ",
     "Lingua":"Lingua","Lingua della pagina":"Lingua della pagina","Lingua del report":"Lingua del report",
     "Mercato":"Mercato","Mercato da analizzare":"Mercato da analizzare",
-    "Sign in":"Sign in","Sign up":"Registrati","Registrati":"Registrati","Crea account":"Crea account","Creazione…":"Creazione…","Logout":"Logout","Account":"Account","Prova gratuita — entra nella demo":"Prova gratuita — entra nella demo","Prova gratuita: nessun pagamento richiesto per la demo.":"Prova gratuita: nessun pagamento richiesto per la demo.",
+    "Sign in":"Sign in","Sign up":"Sign up","Registrati":"Sign up","Crea account":"Crea account","Creazione…":"Creazione…","Logout":"Logout","Account":"Account","Prova gratuita — entra nella demo":"Prova gratuita — entra nella demo","Prova gratuita: nessun pagamento richiesto per la demo.":"Prova gratuita: nessun pagamento richiesto per la demo.",
     "Accedi al tuo account MarketLens":"Accedi al tuo account MarketLens",
     "L'accesso viene verificato dal server e il piano viene controllato tramite pagamento attivo.":"L'accesso viene verificato dal server e il piano viene controllato tramite pagamento attivo.",
     "MarketLens verifica le credenziali sul Cloudflare Worker. Il livello del piano non può essere impostato dal browser: per Pro/Business viene controllato lo stato dell'abbonamento Stripe.":"MarketLens verifica le credenziali sul Cloudflare Worker. Il livello del piano non può essere impostato dal browser: per Pro/Business viene controllato lo stato dell'abbonamento Stripe.",
@@ -1852,7 +2024,7 @@ const PAGE_TRANSLATIONS = {
     "Italia":"Italia","Inghilterra":"Inghilterra","Germania":"Germania","Francia":"Francia",
     "Analizza →":"Analizza →","Accedi con un account MarketLens con un piano attivo per iniziare.":"Accedi con un account MarketLens con un piano attivo per iniziare.",
     "es. veicoli elettrici, integratori sportivi, software CRM...":"es. veicoli elettrici, integratori sportivi, software CRM...",
-    "MarketLensAI — powered by ChatGPT luna":"MarketLensAI — powered by ChatGPT luna",
+    "MarketLensAI":"MarketLensAI",
     "Market Intelligence — MarketLensAI powered by ChatGPT luna":"Market Intelligence — MarketLensAI powered by ChatGPT luna"
   },
   en: {
@@ -1922,7 +2094,7 @@ const PAGE_TRANSLATIONS = {
     "Italia":"Italy","Inghilterra":"England","Germania":"Germany","Francia":"France",
     "Analizza →":"Analyze →","Accedi con un account MarketLens con un piano attivo per iniziare.":"Sign in with a MarketLens account with an active plan to get started.",
     "es. veicoli elettrici, integratori sportivi, software CRM...":"e.g. electric vehicles, sports supplements, CRM software...",
-    "MarketLensAI — powered by ChatGPT luna":"MarketLensAI — powered by ChatGPT luna",
+    "MarketLensAI":"MarketLensAI",
     "Market Intelligence — MarketLensAI powered by ChatGPT luna":"Market Intelligence — MarketLensAI powered by ChatGPT luna"
   }
 };
@@ -2113,7 +2285,7 @@ function setAuthMode(mode){
           : 'Hai già un account? <a id="switchToLogin">Accedi</a>')
       : (currentPageLanguage==='en'
           ? 'No account yet? <a id="switchToRegister">Sign up</a>'
-          : 'Non hai un account? <a id="switchToRegister">Registrati</a>');
+          : 'Non hai un account? <a id="switchToRegister">Sign up</a>');
     const swReg = document.getElementById('switchToRegister');
     const swLog = document.getElementById('switchToLogin');
     if(swReg) swReg.addEventListener('click', ()=>setAuthMode('register'));
@@ -2883,7 +3055,6 @@ function filterReportByPlan(d) {
   return out;
 }
 
-function exportReportPDF(){window.print()}
 async function ensureChartJS(){
   if(window.Chart) return true;
   if(window.__marketlensChartLoader) return window.__marketlensChartLoader;
@@ -2925,7 +3096,7 @@ function renderSimpleCharts(d){
     const labels=c===trend?(d.trend_labels||[]):c===comp?(d.competitors||[]).map(x=>x.name):(d.segments||[]).map(x=>x.name);
     values.forEach((v,i)=>{
       const row=document.createElement('div');
-      row.innerHTML='<b style="display:inline-block;width:34%;font-size:11px;color:#071A3A;">'+(labels[i]||'')+'</b><span style="display:inline-block;width:'+Math.max(4,Math.min(62,Number(v)||0))+'%;height:10px;border-radius:999px;background:#1687FF;vertical-align:middle;"></span> <span style="font-size:11px;">'+(v??'')+'</span>';
+      row.innerHTML='<b style="display:inline-block;width:34%;font-size:11px;color:#071A3A;">'+(labels[i]||'')+'</b><span style="display:inline-block;width:'+Math.max(4,Math.min(62,Number(v)||0))+'%;height:10px;border-radius:999px;background:#6B64F8;vertical-align:middle;"></span> <span style="font-size:11px;">'+(v??'')+'</span>';
       fallback.appendChild(row);
     });
   });
@@ -2951,10 +3122,10 @@ async function renderCharts(d){
   const gradient=trendCtx.createLinearGradient(0,0,0,250);
   gradient.addColorStop(0,'rgba(22,135,255,0.30)');
   gradient.addColorStop(1,'rgba(22,135,255,0)');
-  charts.trend=new Chart(trendCtx,{type:'line',data:{labels:d.trend_labels||[],datasets:[{data:d.trend_values||[],borderColor:'#0759C9',backgroundColor:gradient,fill:true,tension:.35,pointRadius:3,pointBackgroundColor:'#0759C9',borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}},y:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}}}}});
-  const compColors=['#1687FF','#56D5FF','#0759C9','#7AB8FF','#B8CCE5'];
+  charts.trend=new Chart(trendCtx,{type:'line',data:{labels:d.trend_labels||[],datasets:[{data:d.trend_values||[],borderColor:'#5B55F7',backgroundColor:gradient,fill:true,tension:.35,pointRadius:3,pointBackgroundColor:'#5B55F7',borderWidth:2.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}},y:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}}}}});
+  const compColors=['#6B64F8','#9A95FF','#5B55F7','#7AB8FF','#B8CCE5'];
   charts.competitor=new Chart(competitorCanvas,{type:'doughnut',data:{labels:(d.competitors||[]).map(c=>c.name),datasets:[{data:(d.competitors||[]).map(c=>c.share),backgroundColor:compColors,borderColor:'#FFFFFF',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#52667F',font:{family:fontBody,size:11},boxWidth:10,padding:12}}}}});
-  charts.segment=new Chart(segmentCanvas,{type:'bar',data:{labels:(d.segments||[]).map(s=>s.name),datasets:[{data:(d.segments||[]).map(s=>s.value),backgroundColor:'#1687FF',borderRadius:8,barThickness:32}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}},y:{grid:{display:false},ticks:{color:'#071A3A',font:{family:fontBody,size:12.5}}}}}});
+  charts.segment=new Chart(segmentCanvas,{type:'bar',data:{labels:(d.segments||[]).map(s=>s.name),datasets:[{data:(d.segments||[]).map(s=>s.value),backgroundColor:'#6B64F8',borderRadius:8,barThickness:32}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:gridColor},ticks:{color:tickColor,font:{family:fontBody,size:11}}},y:{grid:{display:false},ticks:{color:'#071A3A',font:{family:fontBody,size:12.5}}}}}});
 }
 
 let pendingCheckoutPlan = null;
