@@ -127,6 +127,17 @@ a{text-decoration:none;color:inherit}
 .integration-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.provider-icon{width:34px;height:34px;border-radius:9px;background:#f1f1f6;display:grid;place-items:center;font-weight:800;color:#5b55f7}.status-dot{width:8px;height:8px;border-radius:50%;background:#c5c7d0}.status-dot.connected{background:#17956d}
 .integrations-warning{padding:13px;background:#f6f5ff;border:1px solid #e4e1ff;border-radius:10px;font-size:8px;color:#615ce1;line-height:1.6}
 
+.team-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.team-list{display:grid;gap:9px}
+.team-row{padding:13px 14px;border:1px solid #eff0f4;border-radius:10px;display:flex;align-items:center;gap:12px;background:#fff}
+.team-avatar{width:34px;height:34px;border-radius:10px;background:#efefff;color:var(--primary);display:grid;place-items:center;font-size:10px;font-weight:850;text-transform:uppercase;flex:0 0 auto}
+.team-main{min-width:0;flex:1}.team-name{font-size:9px;font-weight:800}.team-email{font-size:7px;color:#9699a7;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.team-role{font-size:7px;font-weight:850;text-transform:uppercase;padding:5px 7px;border-radius:6px;background:#f2f3f7;color:#666a79}
+.team-owner{background:#ecebff;color:#514bdd}.team-pending{background:#fff7e8;color:#a56b14}
+.seat-bar{height:7px;background:#eceef3;border-radius:20px;overflow:hidden;margin-top:9px}.seat-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),#8d88ff);border-radius:20px}
+.invite-result{display:none;margin-top:12px;padding:12px;border:1px solid #e2e0ff;background:#f7f6ff;border-radius:9px;font-size:8px;color:#5f5add;line-height:1.6}
+.invite-result.show{display:block}.invite-link{display:flex;gap:7px;margin-top:8px}.invite-link input{flex:1;min-width:0;border:1px solid #dedcfb;background:#fff;border-radius:7px;padding:8px;font-size:8px;color:#565a69}
+
 .paywall{position:fixed;inset:0;background:rgba(246,247,251,.94);z-index:180;display:none;place-items:center;padding:20px}.paywall.show{display:grid}.paywall-box{max-width:500px;text-align:center;padding:35px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.paywall-box h2{font-size:25px;margin:0 0 10px}.paywall-box p{font-size:10px;color:var(--muted);line-height:1.7}
 
 dialog{border:0;padding:0;border-radius:16px;width:min(520px,calc(100% - 28px));box-shadow:0 30px 100px rgba(15,16,25,.25)}dialog::backdrop{background:rgba(12,13,21,.55)}
@@ -136,9 +147,9 @@ dialog{border:0;padding:0;border-radius:16px;width:min(520px,calc(100% - 28px));
 .toast{position:fixed;right:20px;bottom:20px;background:#171925;color:#fff;padding:11px 14px;border-radius:9px;font-size:9px;opacity:0;transform:translateY(12px);transition:.2s;z-index:220}.toast.show{opacity:1;transform:none}
 .loader{position:fixed;inset:0;background:#f6f7fb;display:grid;place-items:center;z-index:250}.spin{width:35px;height:35px;border:3px solid #e4e5ec;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:auto}@keyframes spin{to{transform:rotate(360deg)}}
 
-@media(max-width:1200px){.department-grid{grid-template-columns:repeat(3,1fr)}.signal-columns,.project-grid,.automation-grid,.integration-grid{grid-template-columns:1fr 1fr}.luna-layout{grid-template-columns:1fr}}
+@media(max-width:1200px){.department-grid{grid-template-columns:repeat(3,1fr)}.signal-columns,.project-grid,.automation-grid,.integration-grid{grid-template-columns:1fr 1fr}.team-summary{grid-template-columns:1fr 1fr}.luna-layout{grid-template-columns:1fr}}
 @media(max-width:900px){.grid-2,.grid-2-equal,.analytics,.briefing-hero{grid-template-columns:1fr}.health{justify-self:start}.stats{grid-template-columns:1fr 1fr}}
-@media(max-width:740px){.app{display:block}.sidebar{position:static;width:100%;height:auto}.main{grid-column:auto}.topbar{position:static;height:auto;padding:12px 15px;align-items:flex-start}.content{padding:20px 14px}.signal-columns,.project-grid,.automation-grid,.integration-grid,.department-grid,.report-grid,.stats{grid-template-columns:1fr}.head{flex-direction:column;align-items:flex-start}.health{width:125px;height:125px}.market-search{flex-direction:column}.market-search button{height:38px}}
+@media(max-width:740px){.app{display:block}.sidebar{position:static;width:100%;height:auto}.main{grid-column:auto}.topbar{position:static;height:auto;padding:12px 15px;align-items:flex-start}.content{padding:20px 14px}.signal-columns,.project-grid,.automation-grid,.integration-grid,.department-grid,.report-grid,.stats,.team-summary{grid-template-columns:1fr}.head{flex-direction:column;align-items:flex-start}.health{width:125px;height:125px}.market-search{flex-direction:column}.market-search button{height:38px}.team-row{align-items:flex-start;flex-wrap:wrap}.invite-link{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -170,6 +181,7 @@ dialog{border:0;padding:0;border-radius:16px;width:min(520px,calc(100% - 28px));
   <button class="nav-btn" data-view="projects"><span class="nav-ico">▦</span>Progetti</button>
   <button class="nav-btn" data-view="automations"><span class="nav-ico">↻</span>Automazioni</button>
   <button class="nav-btn" data-view="departments"><span class="nav-ico">⌂</span>Reparti</button>
+  <button class="nav-btn" data-view="team"><span class="nav-ico">👥</span>Team</button>
   <button class="nav-btn" data-view="analytics"><span class="nav-ico">⌁</span>Analytics</button>
 
   <div class="nav-label">Intelligence</div>
@@ -333,6 +345,44 @@ dialog{border:0;padding:0;border-radius:16px;width:min(520px,calc(100% - 28px));
   </div>
 </section>
 
+
+<section class="view" id="view-team">
+  <div class="head">
+    <div>
+      <h1>Team</h1>
+      <p>Invita collaboratori nel workspace. Il limite dipende dal piano dell'azienda: Starter fino a 3 membri totali, Pro senza limite di posti.</p>
+    </div>
+    <button class="btn primary" id="inviteMemberBtn">+ Invita collaboratore</button>
+  </div>
+
+  <div class="team-summary">
+    <div class="card stat"><div class="stat-top"><span>Membri attivi</span><span class="stat-icon">👥</span></div><div class="stat-value" id="teamMembersCount">0</div><div class="stat-note">Incluso il proprietario</div></div>
+    <div class="card stat"><div class="stat-top"><span>Inviti pendenti</span><span class="stat-icon">✉</span></div><div class="stat-value" id="teamPendingCount">0</div><div class="stat-note">Occupano già un posto</div></div>
+    <div class="card stat"><div class="stat-top"><span>Posti disponibili</span><span class="stat-icon">＋</span></div><div class="stat-value" id="teamSeatsLeft">—</div><div class="stat-note" id="teamSeatsNote">In base al piano</div></div>
+    <div class="card stat"><div class="stat-top"><span>Piano workspace</span><span class="stat-icon">◆</span></div><div class="stat-value" id="teamPlanName" style="font-size:20px">—</div><div class="stat-note" id="teamPlanLimit">—</div></div>
+  </div>
+
+  <div class="card card-pad" style="margin-bottom:14px">
+    <div class="card-head">
+      <div><div class="card-title">Utilizzo posti</div><div class="card-sub" id="seatUsageText">0 posti utilizzati</div></div>
+      <button class="btn small" onclick="location.href='index.html#pricing'">Confronta piani</button>
+    </div>
+    <div class="seat-bar"><span id="seatUsageBar" style="width:0%"></span></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-pad">
+      <div class="card-head"><div><div class="card-title">Collaboratori</div><div class="card-sub">Persone che hanno accesso al workspace</div></div></div>
+      <div class="team-list" id="teamMembersList"></div>
+    </div>
+
+    <div class="card card-pad">
+      <div class="card-head"><div><div class="card-title">Inviti pendenti</div><div class="card-sub">Gli inviti scadono dopo 7 giorni</div></div></div>
+      <div class="team-list" id="teamInvitesList"></div>
+    </div>
+  </div>
+</section>
+
 <section class="view" id="view-analytics">
   <div class="head"><div><h1>Analytics</h1><p>KPI operativi, produttività, automazioni e salute del lavoro.</p></div></div>
   <div class="stats">
@@ -427,6 +477,37 @@ dialog{border:0;padding:0;border-radius:16px;width:min(520px,calc(100% - 28px));
 </form>
 </dialog>
 
+
+<dialog id="inviteDialog">
+<form class="dialog" id="inviteForm">
+  <div class="dialog-head">
+    <div><h2>Invita collaboratore</h2><p>L'invito usa un posto del piano finché rimane pendente.</p></div>
+    <button class="close" type="button" data-close>×</button>
+  </div>
+  <div class="form-grid">
+    <div class="field full"><label>Email</label><input id="inviteEmail" type="email" required placeholder="collaboratore@azienda.com"></div>
+    <div class="field full"><label>Reparto</label>
+      <select id="inviteDepartment">
+        <option value="">Nessun reparto</option>
+        <option value="finance">Finance</option>
+        <option value="hr">HR</option>
+        <option value="sales">Sales</option>
+        <option value="operations">Operations</option>
+        <option value="marketing">Marketing</option>
+      </select>
+    </div>
+  </div>
+  <div class="invite-result" id="inviteResult">
+    <div id="inviteResultText"></div>
+    <div class="invite-link">
+      <input id="inviteLink" readonly>
+      <button class="btn small" type="button" id="copyInviteLink">Copia link</button>
+    </div>
+  </div>
+  <div class="dialog-actions"><button class="btn" type="button" data-close>Chiudi</button><button class="btn primary" type="submit" id="sendInviteBtn">Invita</button></div>
+</form>
+</dialog>
+
 <dialog id="actionDialog">
 <form class="dialog" id="actionForm">
   <div class="dialog-head"><div><h2 id="actionDialogTitle">Prepara azione con Luna</h2><p>Luna crea la bozza; l’esecuzione richiede la tua approvazione.</p></div><button class="close" type="button" data-close>×</button></div>
@@ -450,12 +531,14 @@ const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const state={
   user:null,profile:null,subscription:null,marketlens:null,workspace:null,
   tasks:[],projects:[],workflows:[],events:[],signals:[],patterns:[],actions:[],integrations:[],
+  team:{members:[],invites:[],can_manage:false,plan:null,status:null,limit:0,seats:{members:0,pending:0,used:0}},
   briefing:null,aiEnabled:false
 };
 
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
 const flowPaid=()=>state.subscription&&["active","trialing"].includes(state.subscription.status)&&["starter","pro"].includes(String(state.subscription.plan||"").toLowerCase());
+const workspacePaid=()=>flowPaid()||(state.team&&["active","trialing"].includes(String(state.team.status||""))&&["starter","pro"].includes(String(state.team.plan||"").toLowerCase()));
 const marketPro=()=>state.marketlens&&["active","trialing"].includes(state.marketlens.status)&&["pro","business"].includes(String(state.marketlens.plan||"").toLowerCase());
 
 function toast(msg){
@@ -495,6 +578,8 @@ async function bootstrapWorkspace(){
       return;
     }
   }
+
+  if(!flowPaid()) return;
 
   const workspaceName=state.profile?.company_name||"Il mio workspace";
   const {data:w,error}=await db.from("workspaces").insert({owner_id:state.user.id,name:workspaceName}).select("*").single();
@@ -547,6 +632,122 @@ async function loadAccount(){
     ?"MarketLens Pro/Business attivo: ricerca web e report approfonditi sbloccati."
     :"MarketLens Base: analisi preliminare e approssimativa, come nella prova gratuita.";
 }
+
+
+async function acceptPendingInvite(){
+  const params=new URLSearchParams(location.search);
+  const urlToken=params.get("invite");
+  if(urlToken) sessionStorage.setItem("flowpilot_invite_token",urlToken);
+  const token=sessionStorage.getItem("flowpilot_invite_token");
+  if(!token) return null;
+
+  const {data,error}=await db.functions.invoke("workspace-team",{body:{action:"accept",invite_token:token}});
+  if(error||data?.error){
+    const code=data?.error||"invite_error";
+    if(code==="invite_email_mismatch") toast(`Questo invito è destinato a ${data.invited_email}.`);
+    else if(code==="invite_expired") toast("Questo invito è scaduto.");
+    else if(code==="seat_limit_reached") toast("Il workspace ha raggiunto il limite di collaboratori del piano.");
+    else if(code!=="invite_not_found_or_used") toast("Invito non accettato.");
+    return null;
+  }
+
+  sessionStorage.removeItem("flowpilot_invite_token");
+  history.replaceState({},document.title,location.pathname);
+  if(state.profile) state.profile.default_workspace_id=data.workspace_id;
+  toast("Invito accettato. Benvenuto nel workspace.");
+  return data.workspace_id;
+}
+
+async function loadTeam(){
+  if(!state.workspace) return;
+  const {data,error}=await db.functions.invoke("workspace-team",{body:{action:"list",workspace_id:state.workspace.id}});
+  if(error||!data||data.error){
+    console.warn("Team non disponibile",error||data?.error);
+    return;
+  }
+  state.team={
+    members:data.members||[],
+    invites:data.invites||[],
+    can_manage:!!data.can_manage,
+    plan:data.plan||null,
+    status:data.status||null,
+    limit:data.limit,
+    seats:data.seats||{members:0,pending:0,used:0}
+  };
+  if(state.team.plan){
+    $("flowPlan").textContent=`FlowPilot ${state.team.plan}`;
+  }
+  renderTeam();
+}
+
+function initials(name,email){
+  const src=(name||email||"?").trim();
+  const parts=src.split(/\s+/).filter(Boolean);
+  return (parts.length>1?(parts[0][0]+parts[1][0]):src.slice(0,2)).toUpperCase();
+}
+
+function roleLabel(member){
+  if(member.is_owner)return"Owner";
+  if(member.role==="admin")return"Admin";
+  if(member.role==="viewer")return"Viewer";
+  return"Collaboratore";
+}
+
+function renderTeam(){
+  const t=state.team||{};
+  const members=t.members||[],invites=t.invites||[],limit=t.limit;
+  const used=t.seats?.used??(members.length+invites.length);
+  const seatsLeft=limit===null?"∞":Math.max(0,(limit||0)-used);
+
+  $("teamMembersCount").textContent=members.length;
+  $("teamPendingCount").textContent=invites.length;
+  $("teamSeatsLeft").textContent=seatsLeft;
+  $("teamPlanName").textContent=(t.plan||"—").toUpperCase();
+  $("teamPlanLimit").textContent=limit===null?"Collaboratori illimitati":`Massimo ${limit||0} membri totali`;
+  $("teamSeatsNote").textContent=limit===null?"Nessun limite di posti":`${used}/${limit||0} posti già riservati`;
+  $("seatUsageText").textContent=limit===null?`${used} membri/inviti · piano senza limite`:`${used} di ${limit||0} posti utilizzati`;
+  $("seatUsageBar").style.width=limit===null?(used?Math.min(100,20+used*8):8)+"%":`${Math.min(100,limit?used/limit*100:0)}%`;
+
+  const inviteBtn=$("inviteMemberBtn");
+  const full=limit!==null&&used>=limit;
+  inviteBtn.disabled=!t.can_manage||full;
+  inviteBtn.textContent=full?"Limite raggiunto":"+ Invita collaboratore";
+  inviteBtn.title=!t.can_manage?"Solo il proprietario può invitare collaboratori.":full?"Passa a Pro per aggiungere altri collaboratori.":"";
+
+  $("teamMembersList").innerHTML=members.length?members.map(m=>{
+    const prof=m.profile||{};
+    const name=prof.full_name||prof.email||"Collaboratore";
+    const canRemove=t.can_manage&&!m.is_owner&&m.user_id!==state.user.id;
+    return `<div class="team-row">
+      <div class="team-avatar">${esc(initials(prof.full_name,prof.email))}</div>
+      <div class="team-main"><div class="team-name">${esc(name)}</div><div class="team-email">${esc(prof.email||"")}${m.department?` · ${esc(deptMeta[m.department]?.name||m.department)}`:""}</div></div>
+      <span class="team-role ${m.is_owner?"team-owner":""}">${roleLabel(m)}</span>
+      ${canRemove?`<button class="btn small danger" onclick="removeMember('${m.user_id}')">Rimuovi</button>`:""}
+    </div>`;
+  }).join(""):empty("Nessun collaboratore","Invita la prima persona nel workspace.");
+
+  $("teamInvitesList").innerHTML=invites.length?invites.map(i=>`<div class="team-row">
+    <div class="team-avatar">✉</div>
+    <div class="team-main"><div class="team-name">${esc(i.email)}</div><div class="team-email">${i.department?esc(deptMeta[i.department]?.name||i.department)+" · ":""}Scade ${fdate(i.expires_at)}</div></div>
+    <span class="team-role team-pending">In attesa</span>
+    ${t.can_manage?`<button class="btn small danger" onclick="revokeInvite('${i.id}')">Annulla</button>`:""}
+  </div>`).join(""):empty("Nessun invito pendente","Gli inviti inviati compariranno qui.");
+}
+
+async function removeMember(userId){
+  if(!confirm("Rimuovere questo collaboratore dal workspace?"))return;
+  const {data,error}=await db.functions.invoke("workspace-team",{body:{action:"remove_member",workspace_id:state.workspace.id,user_id:userId}});
+  if(error||data?.error)return toast("Impossibile rimuovere il collaboratore.");
+  await loadTeam();toast("Collaboratore rimosso.");
+}
+window.removeMember=removeMember;
+
+async function revokeInvite(inviteId){
+  const {data,error}=await db.functions.invoke("workspace-team",{body:{action:"revoke_invite",workspace_id:state.workspace.id,invite_id:inviteId}});
+  if(error||data?.error)return toast("Impossibile annullare l'invito.");
+  await loadTeam();toast("Invito annullato.");
+}
+window.revokeInvite=revokeInvite;
 
 async function loadWorkspaceData(){
   const wid=state.workspace.id;
@@ -725,7 +926,7 @@ function renderIntegrations(){
   }).join("");
 }
 
-function renderAll(){renderTasks();renderProjects();renderAutomations();renderDepartments();renderActions();renderAnalytics();renderIntegrations();renderSignals()}
+function renderAll(){renderTasks();renderProjects();renderAutomations();renderDepartments();renderActions();renderAnalytics();renderIntegrations();renderSignals();renderTeam()}
 
 async function toggleTask(id,status){
   const {error}=await db.from("tasks").update({status:status==="done"?"todo":"done"}).eq("id",id);
@@ -797,6 +998,55 @@ function integrationClick(provider,connected){
   toast(`Per ${provider} serve il relativo flusso OAuth server-side. La dashboard è già pronta a usarlo.`);
 }
 window.integrationClick=integrationClick;
+
+
+$("inviteMemberBtn").onclick=()=>{
+  const t=state.team||{};
+  const used=t.seats?.used||0;
+  if(!t.can_manage)return toast("Solo il proprietario del workspace può invitare collaboratori.");
+  if(t.limit!==null&&used>=t.limit){toast("Hai raggiunto il limite del piano Starter. Passa a Pro per collaboratori illimitati.");return}
+  $("inviteResult").classList.remove("show");
+  $("inviteLink").value="";
+  $("inviteDialog").showModal();
+};
+
+$("inviteForm").onsubmit=async e=>{
+  e.preventDefault();
+  $("sendInviteBtn").disabled=true;$("sendInviteBtn").textContent="Invio…";
+  const payload={
+    action:"invite",
+    workspace_id:state.workspace.id,
+    email:$("inviteEmail").value.trim(),
+    department:$("inviteDepartment").value||null,
+    role:"member",
+    origin:location.origin
+  };
+  const {data,error}=await db.functions.invoke("workspace-team",{body:payload});
+  $("sendInviteBtn").disabled=false;$("sendInviteBtn").textContent="Invita";
+
+  if(error||data?.error){
+    const code=data?.error||"invite_error";
+    if(code==="seat_limit_reached")toast(`Limite raggiunto: il piano ${data.plan||"Starter"} consente ${data.limit} membri totali.`);
+    else if(code==="already_member")toast("Questa persona è già nel workspace.");
+    else if(code==="invite_already_pending")toast("Esiste già un invito pendente per questa email.");
+    else toast("Invito non riuscito.");
+    return;
+  }
+
+  $("inviteResult").classList.add("show");
+  $("inviteLink").value=data.invite_url||"";
+  $("inviteResultText").textContent=data.email_sent
+    ?"Invito inviato via email. Puoi anche condividere il link qui sotto."
+    :"Invito creato. L'email automatica non è stata inviata: copia e condividi il link qui sotto.";
+  await loadTeam();
+  toast(data.email_sent?"Invito inviato.":"Invito creato: usa il link di condivisione.");
+};
+
+$("copyInviteLink").onclick=async()=>{
+  const value=$("inviteLink").value;if(!value)return;
+  try{await navigator.clipboard.writeText(value);toast("Link copiato.");}
+  catch(_){$("inviteLink").select();document.execCommand("copy");toast("Link copiato.");}
+};
 
 $("taskForm").onsubmit=async e=>{
   e.preventDefault();
@@ -905,15 +1155,35 @@ $("billingBtn").onclick=portal;$("paywallPortal").onclick=portal;
 $("logoutBtn").onclick=async()=>{await db.auth.signOut();location.href="index.html"};
 
 async function init(){
+  const inviteFromUrl=new URLSearchParams(location.search).get("invite");
+  if(inviteFromUrl)sessionStorage.setItem("flowpilot_invite_token",inviteFromUrl);
+
   const {data:{session}}=await db.auth.getSession();
-  if(!session){location.href="index.html";return}
+  if(!session){
+    if(inviteFromUrl)sessionStorage.setItem("flowpilot_invite_token",inviteFromUrl);
+    location.href="index.html";
+    return;
+  }
+
   state.user=session.user;
   try{
     await loadAccount();
-    if(!flowPaid()){
-      $("loader").style.display="none";$("paywall").classList.add("show");return;
-    }
+    await acceptPendingInvite();
     await bootstrapWorkspace();
+
+    if(!state.workspace){
+      $("loader").style.display="none";
+      $("paywall").classList.add("show");
+      return;
+    }
+
+    await loadTeam();
+    if(!workspacePaid()){
+      $("loader").style.display="none";
+      $("paywall").classList.add("show");
+      return;
+    }
+
     await loadWorkspaceData();
     await generateBriefing();
     renderAll();
