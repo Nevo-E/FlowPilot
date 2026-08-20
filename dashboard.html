@@ -1,186 +1,571 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
-  <title>Dashboard — FlowPilot</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.56.1/dist/umd/supabase.min.js"></script>
-  <style>
-    :root{--bg:#f6f7fb;--card:#fff;--text:#181a25;--muted:#74788a;--line:#e8e9ef;--primary:#5b55f7;--primary2:#7771ff;--green:#15966d;--amber:#d68618;--red:#d34c60;--sidebar:#11121b;--shadow:0 18px 52px rgba(27,29,49,.08)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
-    .app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}.sidebar{position:fixed;inset:0 auto 0 0;width:245px;padding:24px 16px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;z-index:40}.brand{display:flex;align-items:center;gap:11px;padding:0 8px 28px;font-weight:800;font-size:18px}.mark{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--primary2),#4943e3)}.mark:after{content:"";width:10px;height:10px;border:2px solid white;border-radius:3px;transform:rotate(45deg)}
-    .nav-label{padding:0 11px;margin:10px 0 8px;color:#747787;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.nav-button{width:100%;height:43px;border:0;border-radius:9px;background:transparent;color:#aaaebe;display:flex;align-items:center;gap:12px;padding:0 12px;text-align:left;font-size:12px;font-weight:650}.nav-button:hover,.nav-button.active{color:#fff;background:#22232f}.nav-icon{font-size:16px;width:18px;text-align:center}.sidebar-foot{margin-top:auto;padding:14px 9px;border-top:1px solid #2a2b35}.mini-user{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-company{color:#777b8a;font-size:9px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .main{grid-column:2;min-width:0}.topbar{height:72px;padding:0 30px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(246,247,251,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:30}.page-title{font-size:14px;font-weight:800}.top-actions{display:flex;align-items:center;gap:9px}.plan-pill{padding:7px 10px;border-radius:20px;background:#ecebff;color:#4e48dc;font-size:9px;font-weight:800;text-transform:uppercase}.ghost,.primary,.danger{height:36px;border-radius:8px;padding:0 13px;font-size:10px;font-weight:800}.ghost{border:1px solid var(--line);background:#fff;color:#5f6373}.primary{border:1px solid var(--primary);background:var(--primary);color:#fff;box-shadow:0 8px 20px rgba(91,85,247,.17)}.primary:hover{background:#4e48e6}.danger{border:1px solid #f0cbd1;background:#fff5f6;color:#b33d50}.content{padding:28px 30px 48px;max-width:1500px;margin:auto}.view{display:none}.view.active{display:block}.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}.head h1{font-size:28px;letter-spacing:-.045em;margin:0 0 6px}.head p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}.head-actions{display:flex;gap:8px}
-    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 7px 24px rgba(25,27,45,.035)}.stat{padding:18px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;font-weight:700}.stat-icon{width:28px;height:28px;border-radius:8px;background:#efefff;color:var(--primary);display:grid;place-items:center}.stat-value{font-size:27px;font-weight:800;letter-spacing:-.05em;margin:13px 0 4px}.stat-note{font-size:9px;color:#9699a7}.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.8fr);gap:16px}.card{padding:20px}.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.card-title{font-size:12px;font-weight:800}.card-kicker{font-size:9px;color:var(--muted);margin-top:4px}.link-button{border:0;background:transparent;color:var(--primary);font-size:9px;font-weight:800}.empty{padding:34px 16px;text-align:center;border:1px dashed #dfe1ea;border-radius:11px;color:#8a8e9e}.empty b{display:block;color:#4b4f5d;font-size:11px;margin-bottom:6px}.empty span{font-size:9px}.task-list,.workflow-list,.activity-list{display:grid;gap:9px}.task-row,.workflow-row,.activity-row{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid #eff0f4;border-radius:10px;background:#fff}.task-check{width:20px;height:20px;border-radius:6px;border:1px solid #d9dbe5;background:#fff;color:#fff;display:grid;place-items:center;flex:0 0 auto}.task-check.done{background:var(--green);border-color:var(--green)}.task-main,.workflow-main{min-width:0;flex:1}.task-title,.workflow-title{font-size:10px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.task-title.done{text-decoration:line-through;color:#989ba8}.task-meta,.workflow-meta{font-size:8px;color:#989baa;margin-top:4px}.badge{padding:5px 7px;border-radius:6px;font-size:8px;font-weight:800}.high{background:#fff0f2;color:#c74055}.medium{background:#fff7e8;color:#b97412}.low{background:#ecf9f4;color:#148263}.row-menu{border:0;background:#f5f6f9;border-radius:7px;height:28px;padding:0 9px;color:#666a79;font-size:9px;font-weight:700}.ai-card{background:linear-gradient(145deg,#171925,#252342);color:white;border:0;position:relative;overflow:hidden}.ai-card:after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:#6861ff;filter:blur(45px);opacity:.22;right:-55px;top:-70px}.ai-label{color:#a9a5ff;font-size:8px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;position:relative;z-index:1}.ai-card h3{font-size:17px;line-height:1.25;letter-spacing:-.035em;margin:12px 0 8px;position:relative;z-index:1}.ai-card p{font-size:10px;color:#aeb0bf;line-height:1.6;margin:0;position:relative;z-index:1}.progress{height:7px;background:#eeeeF3;border-radius:10px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),#8580ff);border-radius:10px}.activity-dot{width:8px;height:8px;border-radius:50%;background:#b5b2ff;flex:0 0 auto}.activity-main{flex:1;font-size:9px;line-height:1.4}.activity-time{font-size:8px;color:#9a9dac}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.filters{display:flex;gap:7px}.filter{border:1px solid var(--line);background:#fff;color:#7a7e8e;border-radius:8px;height:32px;padding:0 11px;font-size:9px;font-weight:750}.filter.active{background:#272936;color:#fff;border-color:#272936}.wide-list{display:grid;gap:10px}.wide-task,.wide-workflow{display:grid;grid-template-columns:auto minmax(160px,1fr) 120px 120px auto;align-items:center;gap:15px;padding:14px 16px}.wide-workflow{grid-template-columns:auto minmax(180px,1fr) 120px 100px auto}.switch{width:36px;height:20px;border-radius:20px;background:#d8dae3;border:0;padding:3px}.switch span{display:block;width:14px;height:14px;border-radius:50%;background:white;transition:.2s}.switch.on{background:var(--green)}.switch.on span{transform:translateX(16px)}
-    .paywall{display:none;position:fixed;inset:72px 0 0 245px;background:rgba(246,247,251,.94);backdrop-filter:blur(9px);z-index:25;align-items:center;justify-content:center;padding:24px}.paywall.show{display:flex}.paybox{width:min(760px,100%);background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);text-align:center}.pay-icon{width:54px;height:54px;margin:auto;border-radius:16px;background:#eeedff;color:var(--primary);display:grid;place-items:center;font-size:22px}.paybox h2{font-size:25px;letter-spacing:-.04em;margin:18px 0 8px}.paybox>p{color:var(--muted);font-size:11px;line-height:1.6;margin:0 auto 22px;max-width:470px}.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.plan{border:1px solid var(--line);border-radius:13px;padding:17px}.plan.pro{border-color:#a9a5ff;background:#fafaff}.plan-name{font-size:11px;font-weight:800}.plan-price{font-size:22px;font-weight:800;letter-spacing:-.05em;margin:9px 0}.plan-price small{font-size:9px;color:var(--muted);font-weight:500}.plan p{font-size:9px;color:var(--muted);line-height:1.5;height:28px}.plan button{width:100%}.syncing{display:none;margin:0 auto 18px;padding:10px;border-radius:9px;background:#fff7e8;color:#9c6819;font-size:10px}.syncing.show{display:block}
-    dialog{border:0;padding:0;border-radius:16px;width:min(500px,calc(100% - 30px));box-shadow:0 30px 100px rgba(15,16,25,.25)}dialog::backdrop{background:rgba(13,14,22,.55);backdrop-filter:blur(4px)}.dialog{padding:24px}.dialog-head{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px}.dialog h2{font-size:18px;margin:0 0 5px}.dialog p{margin:0;color:var(--muted);font-size:9px}.close{border:0;background:#f2f3f6;width:28px;height:28px;border-radius:7px;color:#777b89}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px;margin-bottom:12px}.field.full{grid-column:1/-1}.field label{font-size:9px;font-weight:800}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 11px;outline:0;background:#fff}.field textarea{min-height:78px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:#aaa6ff;box-shadow:0 0 0 3px #f0efff}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}.toast{position:fixed;right:22px;bottom:22px;z-index:100;background:#171925;color:#fff;padding:12px 15px;border-radius:9px;font-size:10px;opacity:0;transform:translateY(14px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}.loading{position:fixed;inset:0;background:#f6f7fb;display:grid;place-items:center;z-index:200}.loader{text-align:center;font-size:11px;color:var(--muted)}.spinner{width:34px;height:34px;border:3px solid #e4e4ee;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}@keyframes spin{to{transform:rotate(360deg)}}
-    @media(max-width:1050px){.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.wide-task{grid-template-columns:auto minmax(150px,1fr) 90px auto}.wide-task>*:nth-child(4){display:none}.wide-workflow{grid-template-columns:auto minmax(150px,1fr) 90px auto}.wide-workflow>*:nth-child(4){display:none}}
-    @media(max-width:760px){.app{display:block}.sidebar{position:fixed;inset:auto 0 0;width:auto;height:62px;padding:7px 10px;flex-direction:row;align-items:center}.brand,.nav-label,.sidebar-foot{display:none}.nav-button{width:auto;flex:1;height:47px;justify-content:center;padding:0;font-size:0}.nav-icon{font-size:18px}.main{grid-column:auto;padding-bottom:64px}.topbar{padding:0 16px;height:62px}.content{padding:20px 15px 36px}.head{align-items:flex-start;flex-direction:column}.head h1{font-size:23px}.stats{grid-template-columns:1fr 1fr;gap:9px}.stat{padding:14px}.stat-value{font-size:23px}.paywall{inset:62px 0 62px 0}.paybox{padding:22px}.plans{grid-template-columns:1fr}.plan p{height:auto}.wide-task,.wide-workflow{grid-template-columns:auto minmax(100px,1fr) auto;padding:12px}.wide-task>*:nth-child(3),.wide-workflow>*:nth-child(3){display:none}.top-actions .ghost{display:none}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlowPilot — Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.56.1/dist/umd/supabase.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7fb;--card:#fff;--text:#181a25;--muted:#74788a;--line:#e8e9ef;
+  --primary:#5b55f7;--primary2:#7771ff;--green:#15966d;--amber:#d68618;
+  --red:#d34c60;--sidebar:#11121b;--soft:#efefff;--shadow:0 18px 52px rgba(27,29,49,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:14px}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;padding:24px 16px;background:var(--sidebar);color:#fff;display:flex;flex-direction:column;z-index:40}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 26px;font-weight:800;font-size:18px}
+.mark{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--primary2),#4943e3)}
+.mark:after{content:"";width:10px;height:10px;border:2px solid white;border-radius:3px;transform:rotate(45deg)}
+.nav-label{padding:0 11px;margin:10px 0 8px;color:#747787;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+.nav-button{width:100%;height:43px;border:0;border-radius:9px;background:transparent;color:#aaaebe;display:flex;align-items:center;gap:12px;padding:0 12px;text-align:left;font-size:12px;font-weight:650}
+.nav-button:hover,.nav-button.active{color:#fff;background:#22232f}
+.nav-icon{font-size:16px;width:18px;text-align:center}
+.sidebar-foot{margin-top:auto;padding:14px 9px;border-top:1px solid #2a2b35}
+.mini-user{font-size:11px;font-weight:700}.mini-company{color:#777b8a;font-size:9px;margin-top:4px}
+.main{grid-column:2;min-width:0}
+.topbar{height:72px;padding:0 30px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(246,247,251,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:30}
+.page-title{font-size:14px;font-weight:800}
+.top-actions{display:flex;align-items:center;gap:9px}
+.plan-pill,.market-pill{padding:7px 10px;border-radius:20px;font-size:9px;font-weight:800;text-transform:uppercase}
+.plan-pill{background:#ecebff;color:#4e48dc}
+.market-pill{background:#eaf8f2;color:#147c5e}
+.ghost,.primary,.danger{height:36px;border-radius:8px;padding:0 13px;font-size:10px;font-weight:800}
+.ghost{border:1px solid var(--line);background:#fff;color:#5f6373}
+.primary{border:1px solid var(--primary);background:var(--primary);color:#fff}
+.danger{border:1px solid #f0cbd1;background:#fff5f6;color:#b33d50}
+.content{padding:28px 30px 48px;max-width:1500px;margin:auto}
+.view{display:none}.view.active{display:block}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.head h1{font-size:28px;letter-spacing:-.045em;margin:0 0 6px}.head p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}
+.head-actions{display:flex;gap:8px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.stat,.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 7px 24px rgba(25,27,45,.035)}
+.stat{padding:18px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:9px;font-weight:700}
+.stat-icon{width:28px;height:28px;border-radius:8px;background:#efefff;color:var(--primary);display:grid;place-items:center}
+.stat-value{font-size:27px;font-weight:800;letter-spacing:-.05em;margin:13px 0 4px}.stat-note{font-size:9px;color:#9699a7}
+.grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,.8fr);gap:16px}.card{padding:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.card-title{font-size:12px;font-weight:800}.card-kicker{font-size:9px;color:var(--muted);margin-top:4px}
+.task-list,.activity-list,.wide-list,.project-grid,.automation-grid{display:grid;gap:10px}
+.project-grid,.automation-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.task-row,.activity-row{display:flex;align-items:center;gap:12px;padding:11px;border:1px solid #eff0f4;border-radius:10px;background:#fff}
+.task-check{width:20px;height:20px;border-radius:6px;border:1px solid #d9dbe5;background:#fff;color:#fff;display:grid;place-items:center}.task-check.done{background:var(--green);border-color:var(--green)}
+.task-main{min-width:0;flex:1}.task-title{font-size:10px;font-weight:750}.task-title.done{text-decoration:line-through;color:#989ba8}.task-meta{font-size:8px;color:#989baa;margin-top:4px}
+.badge{padding:5px 7px;border-radius:6px;font-size:8px;font-weight:800}.high{background:#fff0f2;color:#c74055}.medium{background:#fff7e8;color:#b97412}.low{background:#ecf9f4;color:#148263}
+.row-menu{border:0;background:#f5f6f9;border-radius:7px;height:28px;padding:0 9px;color:#666a79;font-size:9px;font-weight:700}
+.ai-card{background:linear-gradient(145deg,#171925,#252342);color:white;border:0;position:relative;overflow:hidden}.ai-label{color:#a9a5ff;font-size:8px;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.ai-card h3{font-size:17px;line-height:1.25;margin:12px 0 8px}.ai-card p{font-size:10px;color:#aeb0bf;line-height:1.6;margin:0}
+.project-card,.automation-card{padding:18px}.project-card h3,.automation-card h3{font-size:13px;margin:0 0 7px}.project-card p,.automation-card p{font-size:10px;color:var(--muted);line-height:1.6;margin:0 0 14px}
+.progress{height:7px;background:#eeeef3;border-radius:10px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),#8580ff)}
+.switch{width:36px;height:20px;border-radius:20px;background:#d8dae3;border:0;padding:3px}.switch span{display:block;width:14px;height:14px;border-radius:50%;background:white;transition:.2s}.switch.on{background:var(--green)}.switch.on span{transform:translateX(16px)}
+.wide-task{display:grid;grid-template-columns:auto minmax(180px,1fr) 100px 110px auto;align-items:center;gap:14px;padding:14px 16px}
+.analytics-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}.metric-list{display:grid;gap:13px}.metric-row{padding:13px;border:1px solid #eff0f4;border-radius:10px}.metric-row strong{display:block;font-size:17px;margin-top:5px}.metric-row span{font-size:9px;color:var(--muted)}
+.chart{height:260px;display:flex;align-items:flex-end;gap:12px;padding-top:25px}.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}.bar{width:70%;min-height:8px;background:#dcdafe;border-radius:6px 6px 2px 2px}.chart-label{font-size:8px;color:#9a9dac;margin-top:8px}
+.market-shell{display:grid;gap:16px}.market-hero{background:linear-gradient(145deg,#171925,#29285a);color:white;border:0}.market-hero h2{font-size:22px;margin:7px 0 8px}.market-hero p{color:#b2b4c2;font-size:10px;line-height:1.6}
+.market-search{display:flex;gap:8px;margin-top:16px}.market-search input{flex:1;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:white;border-radius:9px;padding:11px;outline:0}.market-search input::placeholder{color:#9699ab}
+.market-search button{border:0;background:white;color:#25263a;border-radius:9px;padding:0 16px;font-size:10px;font-weight:800}
+.market-tier{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:14px;border-radius:11px;background:#f8f8fc;border:1px solid var(--line)}
+.market-tier strong{font-size:11px}.market-tier span{font-size:9px;color:var(--muted)}
+.market-report{display:none;gap:14px}.market-report.show{display:grid}
+.report-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.report-card{padding:16px;background:#fff;border:1px solid var(--line);border-radius:12px}.report-card span{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.report-card strong{display:block;font-size:19px;margin-top:7px}.report-card p{font-size:9px;color:var(--muted);line-height:1.55}
+.deep-only.locked{filter:blur(4px);user-select:none;pointer-events:none;position:relative}
+.deep-lock{padding:18px;border:1px dashed #bbb8ff;background:#f7f6ff;border-radius:12px;color:#5550dd;font-size:10px;font-weight:700}
+.approx-note{padding:11px 13px;border-radius:9px;background:#fff7e8;color:#9c6819;font-size:9px}
+dialog{border:0;padding:0;border-radius:16px;width:min(500px,calc(100% - 30px));box-shadow:0 30px 100px rgba(15,16,25,.25)}
+dialog::backdrop{background:rgba(13,14,22,.55)}
+.dialog{padding:24px}.dialog-head{display:flex;justify-content:space-between;margin-bottom:18px}.dialog h2{margin:0 0 5px;font-size:18px}.dialog p{margin:0;color:var(--muted);font-size:9px}
+.close{border:0;background:#f2f3f6;width:28px;height:28px;border-radius:7px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px;margin-bottom:12px}.field.full{grid-column:1/-1}.field label{font-size:9px;font-weight:800}
+.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 11px;background:#fff}.field textarea{min-height:78px}.dialog-actions{display:flex;justify-content:flex-end;gap:8px}
+.toast{position:fixed;right:22px;bottom:22px;z-index:100;background:#171925;color:#fff;padding:12px 15px;border-radius:9px;font-size:10px;opacity:0;transform:translateY(14px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:none}
+.loading{position:fixed;inset:0;background:#f6f7fb;display:grid;place-items:center;z-index:200}.spinner{width:34px;height:34px;border:3px solid #e4e4ee;border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:auto}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:1100px){.stats,.project-grid,.automation-grid,.report-grid{grid-template-columns:1fr 1fr}.grid,.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.app{display:block}.sidebar{position:static;width:100%;height:auto}.main{grid-column:auto}.topbar{position:static;padding:12px 16px;height:auto;gap:10px;align-items:flex-start}.top-actions{flex-wrap:wrap}.content{padding:20px 15px}.stats,.project-grid,.automation-grid,.report-grid{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.market-search{flex-direction:column}.market-search button{height:38px}.wide-task{grid-template-columns:auto 1fr auto}.wide-task>*:nth-child(3),.wide-task>*:nth-child(4){display:none}}
+</style>
 </head>
 <body>
-  <div class="loading" id="loading"><div class="loader"><div class="spinner"></div>Caricamento del workspace…</div></div>
-  <div class="app">
-    <aside class="sidebar">
-      <a class="brand" href="index.html"><span class="mark"></span>FlowPilot</a>
-      <div class="nav-label">Workspace</div>
-      <button class="nav-button active" data-view="overview"><span class="nav-icon">⌂</span>Panoramica</button>
-      <button class="nav-button" data-view="tasks"><span class="nav-icon">✓</span>Task</button>
-      <button class="nav-button" data-view="workflows"><span class="nav-icon">⌘</span>Workflow</button>
-      <div class="nav-label">Account</div>
-      <button class="nav-button" id="billingNav"><span class="nav-icon">◫</span>Piano e fatturazione</button>
-      <div class="sidebar-foot"><div class="mini-user" id="sideUser">—</div><div class="mini-company" id="sideCompany">—</div></div>
-    </aside>
+<div class="loading" id="loading"><div><div class="spinner"></div><div style="margin-top:10px;color:#74788a;font-size:10px">Caricamento workspace…</div></div></div>
 
-    <main class="main">
-      <header class="topbar">
-        <div class="page-title" id="topTitle">Panoramica</div>
-        <div class="top-actions"><span class="plan-pill" id="planPill">Verifica piano</span><button class="ghost" id="billingButton">Gestisci piano</button><button class="ghost" id="logoutButton">Esci</button></div>
-      </header>
+<div class="app">
+<aside class="sidebar">
+  <a class="brand" href="index.html"><span class="mark"></span>FlowPilot</a>
+  <div class="nav-label">Workspace</div>
+  <button class="nav-button active" data-view="overview"><span class="nav-icon">⌂</span>Panoramica</button>
+  <button class="nav-button" data-view="tasks"><span class="nav-icon">✓</span>Task</button>
+  <button class="nav-button" data-view="projects"><span class="nav-icon">▦</span>Progetti</button>
+  <button class="nav-button" data-view="automations"><span class="nav-icon">↻</span>Automazioni</button>
+  <button class="nav-button" data-view="analytics"><span class="nav-icon">⌁</span>Analytics</button>
+  <button class="nav-button" data-view="market"><span class="nav-icon">◉</span>Market Intelligence</button>
+  <div class="nav-label">Account</div>
+  <button class="nav-button" id="billingNav"><span class="nav-icon">◫</span>Piano e fatturazione</button>
+  <div class="sidebar-foot"><div class="mini-user" id="sideUser">—</div><div class="mini-company" id="sideCompany">—</div></div>
+</aside>
 
-      <div class="content">
-        <section class="view active" id="view-overview">
-          <div class="head"><div><h1 id="welcome">Buongiorno.</h1><p>Qui trovi ciò che richiede attenzione e lo stato dei tuoi processi.</p></div><div class="head-actions"><button class="ghost" data-open="workflowDialog">+ Workflow</button><button class="primary" data-open="taskDialog">+ Nuovo task</button></div></div>
-          <div class="stats">
-            <div class="stat"><div class="stat-top"><span>TASK APERTI</span><span class="stat-icon">✓</span></div><div class="stat-value" id="openTasks">0</div><div class="stat-note">Attività ancora da completare</div></div>
-            <div class="stat"><div class="stat-top"><span>IN CORSO</span><span class="stat-icon">↗</span></div><div class="stat-value" id="progressTasks">0</div><div class="stat-note">Task in lavorazione</div></div>
-            <div class="stat"><div class="stat-top"><span>WORKFLOW ATTIVI</span><span class="stat-icon">⌘</span></div><div class="stat-value" id="activeWorkflows">0</div><div class="stat-note">Automazioni abilitate</div></div>
-            <div class="stat"><div class="stat-top"><span>COMPLETAMENTO</span><span class="stat-icon">◎</span></div><div class="stat-value" id="completionRate">0%</div><div class="stat-note">Percentuale task conclusi</div></div>
-          </div>
-          <div class="grid">
-            <div class="card"><div class="card-head"><div><div class="card-title">Priorità di oggi</div><div class="card-kicker">I task più importanti del workspace</div></div><button class="link-button" data-go="tasks">Vedi tutti →</button></div><div class="task-list" id="overviewTasks"></div></div>
-            <div style="display:grid;gap:16px;align-content:start"><div class="card ai-card"><div class="ai-label">FlowPilot focus</div><h3 id="focusTitle">Il workspace è pronto.</h3><p id="focusText">Aggiungi i primi task per ricevere una priorità operativa.</p></div><div class="card"><div class="card-head"><div><div class="card-title">Attività recente</div><div class="card-kicker">Ultimi aggiornamenti</div></div></div><div class="activity-list" id="activityList"></div></div></div>
-          </div>
-        </section>
-
-        <section class="view" id="view-tasks">
-          <div class="head"><div><h1>Task</h1><p>Organizza, assegna una priorità e porta avanti il lavoro quotidiano.</p></div><button class="primary" data-open="taskDialog">+ Nuovo task</button></div>
-          <div class="toolbar"><div class="filters" id="taskFilters"><button class="filter active" data-filter="all">Tutti</button><button class="filter" data-filter="todo">Da fare</button><button class="filter" data-filter="in_progress">In corso</button><button class="filter" data-filter="done">Completati</button></div></div>
-          <div class="wide-list" id="tasksList"></div>
-        </section>
-
-        <section class="view" id="view-workflows">
-          <div class="head"><div><h1>Workflow</h1><p>Crea processi riutilizzabili, attivali e controlla ogni esecuzione.</p></div><button class="primary" data-open="workflowDialog">+ Nuovo workflow</button></div>
-          <div class="wide-list" id="workflowsList"></div>
-        </section>
-      </div>
-    </main>
+<main class="main">
+<header class="topbar">
+  <div class="page-title" id="topTitle">Panoramica</div>
+  <div class="top-actions">
+    <span class="plan-pill" id="planPill">FlowPilot</span>
+    <span class="market-pill" id="marketPill">MarketLens Base</span>
+    <button class="ghost" id="billingButton">Gestisci piano</button>
+    <button class="ghost" id="logoutButton">Esci</button>
   </div>
+</header>
 
-  <div class="paywall" id="paywall"><div class="paybox"><div class="pay-icon">◆</div><h2>Attiva il workspace FlowPilot</h2><p>Il tuo account è stato creato. Per usare task, workflow e dashboard operativa serve un abbonamento attivo verificato tramite Stripe.</p><div class="syncing" id="syncing">Pagamento ricevuto. Sto sincronizzando il tuo abbonamento…</div><div class="plans"><div class="plan"><div class="plan-name">Starter</div><div class="plan-price">€19,99 <small>/ mese</small></div><p>Task, progetti, dashboard e automazioni base.</p><button class="ghost" data-checkout="starter">Scegli Starter</button></div><div class="plan pro"><div class="plan-name">Pro</div><div class="plan-price">€49,99 <small>/ mese</small></div><p>Automazioni avanzate, priorità operative e MarketLens base.</p><button class="primary" data-checkout="pro">Scegli Pro →</button></div></div></div></div>
+<div class="content">
+<section class="view active" id="view-overview">
+  <div class="head">
+    <div><h1 id="welcome">Buongiorno.</h1><p>Qui trovi task, progetti, automazioni e insight operativi.</p></div>
+    <div class="head-actions"><button class="ghost" data-open="projectDialog">+ Progetto</button><button class="primary" data-open="taskDialog">+ Nuovo task</button></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-top"><span>TASK APERTI</span><span class="stat-icon">✓</span></div><div class="stat-value" id="openTasks">0</div><div class="stat-note">Attività ancora da completare</div></div>
+    <div class="stat"><div class="stat-top"><span>PROGETTI ATTIVI</span><span class="stat-icon">▦</span></div><div class="stat-value" id="activeProjects">0</div><div class="stat-note">Progetti in lavorazione</div></div>
+    <div class="stat"><div class="stat-top"><span>AUTOMAZIONI</span><span class="stat-icon">↻</span></div><div class="stat-value" id="activeWorkflows">0</div><div class="stat-note">Workflow abilitati</div></div>
+    <div class="stat"><div class="stat-top"><span>COMPLETAMENTO</span><span class="stat-icon">◎</span></div><div class="stat-value" id="completionRate">0%</div><div class="stat-note">Task conclusi</div></div>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="card-head"><div><div class="card-title">Priorità di oggi</div><div class="card-kicker">I task più importanti del workspace</div></div></div><div class="task-list" id="overviewTasks"></div></div>
+    <div class="card ai-card"><div class="ai-label">FlowPilot AI</div><h3 id="focusTitle">Workspace pronto.</h3><p id="focusText">Aggiungi attività e progetti per ottenere insight operativi.</p></div>
+  </div>
+</section>
 
-  <dialog id="taskDialog"><form class="dialog" id="taskForm"><div class="dialog-head"><div><h2>Nuovo task</h2><p>Aggiungi un'attività al workspace.</p></div><button class="close" type="button" data-close>×</button></div><div class="form-grid"><div class="field full"><label>Titolo</label><input id="taskTitle" maxlength="180" required placeholder="Es. Preparare report mensile"></div><div class="field full"><label>Descrizione</label><textarea id="taskDescription" maxlength="1000" placeholder="Dettagli utili per completare il task"></textarea></div><div class="field"><label>Priorità</label><select id="taskPriority"><option value="low">Bassa</option><option value="medium" selected>Media</option><option value="high">Alta</option></select></div><div class="field"><label>Scadenza</label><input id="taskDue" type="date"></div><div class="field full"><label>Workflow collegato</label><select id="taskWorkflow"><option value="">Nessuno</option></select></div></div><div class="dialog-actions"><button class="ghost" type="button" data-close>Annulla</button><button class="primary" type="submit">Crea task</button></div></form></dialog>
+<section class="view" id="view-tasks">
+  <div class="head"><div><h1>Task</h1><p>Gestisci attività, priorità, scadenze e collegamenti ai progetti.</p></div><button class="primary" data-open="taskDialog">+ Nuovo task</button></div>
+  <div class="wide-list" id="tasksList"></div>
+</section>
 
-  <dialog id="workflowDialog"><form class="dialog" id="workflowForm"><div class="dialog-head"><div><h2>Nuovo workflow</h2><p>Definisci un processo operativo riutilizzabile.</p></div><button class="close" type="button" data-close>×</button></div><div class="form-grid"><div class="field full"><label>Nome</label><input id="workflowName" maxlength="120" required placeholder="Es. Approvazione contenuti"></div><div class="field full"><label>Descrizione</label><textarea id="workflowDescription" maxlength="600" placeholder="Cosa deve fare questo workflow?"></textarea></div><div class="field"><label>Avvio</label><select id="workflowTrigger"><option value="manual">Manuale</option><option value="schedule">Programmato</option><option value="event">Al verificarsi di un evento</option></select></div><div class="field"><label>Azione</label><select id="workflowAction"><option value="task">Crea task</option><option value="notification">Invia notifica</option><option value="report">Genera report</option><option value="approval">Richiedi approvazione</option></select></div></div><div class="dialog-actions"><button class="ghost" type="button" data-close>Annulla</button><button class="primary" type="submit">Crea workflow</button></div></form></dialog>
-  <div class="toast" id="toast"></div>
+<section class="view" id="view-projects">
+  <div class="head"><div><h1>Progetti</h1><p>Raggruppa il lavoro per iniziativa, obiettivo e stato di avanzamento.</p></div><button class="primary" data-open="projectDialog">+ Nuovo progetto</button></div>
+  <div class="project-grid" id="projectsGrid"></div>
+</section>
 
-  <script>
-    const SUPABASE_URL="https://qahjmbgnhpfvqymtkdtc.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY="sb_publishable_T9RVsQ4qifGJGUFZPj_TRg_bEBPVo4p";
-    const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
-    const state={user:null,profile:null,subscription:null,tasks:[],workflows:[],activities:[],filter:"all"};
-    const $=id=>document.getElementById(id);
-    const paid=()=>state.subscription&&["active","trialing"].includes(state.subscription.status)&&["starter","pro"].includes(state.subscription.plan);
-    const escapeHtml=value=>String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
-    const formatDate=value=>value?new Intl.DateTimeFormat("it-IT",{day:"2-digit",month:"short"}).format(new Date(value)):"Nessuna scadenza";
-    const timeAgo=value=>{const minutes=Math.floor((Date.now()-new Date(value))/60000);if(minutes<1)return"ora";if(minutes<60)return`${minutes} min fa`;const hours=Math.floor(minutes/60);if(hours<24)return`${hours} h fa`;return`${Math.floor(hours/24)} g fa`};
-    function toast(message){const el=$("toast");el.textContent=message;el.classList.add("show");clearTimeout(window.fpToast);window.fpToast=setTimeout(()=>el.classList.remove("show"),2600)}
-    function empty(title,text){return`<div class="empty"><b>${escapeHtml(title)}</b><span>${escapeHtml(text)}</span></div>`}
+<section class="view" id="view-automations">
+  <div class="head"><div><h1>Automazioni</h1><p>Crea workflow riutilizzabili, attivali e controlla quante volte vengono eseguiti.</p></div><button class="primary" data-open="workflowDialog">+ Nuova automazione</button></div>
+  <div class="automation-grid" id="automationsGrid"></div>
+</section>
 
-    async function loadAccount(){
-      const [{data:profile},{data:subscription}]=await Promise.all([
-        db.from("profiles").select("*").maybeSingle(),
-        db.from("subscriptions").select("*").maybeSingle()
-      ]);
-      state.profile=profile;state.subscription=subscription;
-      const name=profile?.full_name||state.user.email?.split("@")[0]||"Utente";
-      $("sideUser").textContent=name;$("sideCompany").textContent=profile?.company_name||state.user.email;
-      $("welcome").textContent=`Buongiorno, ${name.split(" ")[0]}.`;
-      $("planPill").textContent=paid()?`${subscription.plan} · ${subscription.status}`:"Piano non attivo";
-      $("paywall").classList.toggle("show",!paid());
-    }
+<section class="view" id="view-analytics">
+  <div class="head"><div><h1>Analytics</h1><p>Misura produttività, andamento dei progetti e automazione del lavoro.</p></div></div>
+  <div class="stats">
+    <div class="stat"><div class="stat-top"><span>TASK TOTALI</span><span class="stat-icon">✓</span></div><div class="stat-value" id="analyticsTasks">0</div><div class="stat-note">Nel workspace</div></div>
+    <div class="stat"><div class="stat-top"><span>COMPLETATI</span><span class="stat-icon">◎</span></div><div class="stat-value" id="analyticsDone">0</div><div class="stat-note">Task conclusi</div></div>
+    <div class="stat"><div class="stat-top"><span>RUN AUTOMAZIONI</span><span class="stat-icon">↻</span></div><div class="stat-value" id="analyticsRuns">0</div><div class="stat-note">Esecuzioni complessive</div></div>
+    <div class="stat"><div class="stat-top"><span>PROGRESSO MEDIO</span><span class="stat-icon">▦</span></div><div class="stat-value" id="analyticsProgress">0%</div><div class="stat-note">Progetti</div></div>
+  </div>
+  <div class="analytics-grid">
+    <div class="card">
+      <div class="card-title">Distribuzione attività</div>
+      <div class="chart" id="analyticsChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">KPI operativi</div>
+      <div class="metric-list" id="metricList"></div>
+    </div>
+  </div>
+</section>
 
-    async function waitForWebhook(){
-      if(!new URLSearchParams(location.search).has("checkout"))return;
-      $("syncing").classList.add("show");
-      for(let i=0;i<10&&!paid();i++){
-        await new Promise(resolve=>setTimeout(resolve,1500));
-        await loadAccount();
-      }
-      if(paid()){
-        history.replaceState({},"",location.pathname);
-        $("syncing").classList.remove("show");
-        toast("Abbonamento attivo. Benvenuto in FlowPilot!");
-      }else toast("La verifica richiede ancora qualche istante. Ricarica la pagina tra poco.");
-    }
+<section class="view" id="view-market">
+  <div class="head"><div><h1>Market Intelligence</h1><p>Analisi di mercato integrata in FlowPilot, con profondità legata al tuo piano MarketLens.</p></div></div>
+  <div class="market-shell">
+    <div class="card market-hero">
+      <div class="ai-label">MarketLens Intelligence</div>
+      <h2>Analizza un mercato prima di prendere una decisione.</h2>
+      <p>Gli utenti senza MarketLens Pro ricevono una sintesi indicativa in stile prova gratuita. Gli utenti MarketLens Pro/Business ricevono una struttura di report estesa e approfondita.</p>
+      <div class="market-search">
+        <input id="marketQuery" placeholder="Es. software CRM per PMI in Italia">
+        <button id="runMarketBtn">Analizza →</button>
+      </div>
+    </div>
+    <div class="market-tier"><div><strong id="marketTierTitle">MarketLens Base</strong><span id="marketTierText">Analisi sintetica e approssimativa.</span></div><button class="ghost" onclick="window.location.href='marketlens.html'">Apri MarketLens</button></div>
+    <div class="market-report" id="marketReport"></div>
+  </div>
+</section>
+</div>
+</main>
+</div>
 
-    async function loadWorkspace(){
-      if(!paid())return;
-      const [taskResult,workflowResult,activityResult]=await Promise.all([
-        db.from("tasks").select("*").order("created_at",{ascending:false}),
-        db.from("workflows").select("*").order("created_at",{ascending:false}),
-        db.from("activity_log").select("*").order("created_at",{ascending:false}).limit(8)
-      ]);
-      if(taskResult.error||workflowResult.error)toast("Impossibile caricare alcuni dati del workspace.");
-      state.tasks=taskResult.data||[];state.workflows=workflowResult.data||[];state.activities=activityResult.data||[];render();
-    }
+<dialog id="taskDialog">
+<form class="dialog" id="taskForm">
+  <div class="dialog-head"><div><h2>Nuovo task</h2><p>Aggiungi un'attività al workspace.</p></div><button class="close" type="button" data-close>×</button></div>
+  <div class="form-grid">
+    <div class="field full"><label>Titolo</label><input id="taskTitle" required></div>
+    <div class="field full"><label>Descrizione</label><textarea id="taskDescription"></textarea></div>
+    <div class="field"><label>Priorità</label><select id="taskPriority"><option value="low">Bassa</option><option value="medium" selected>Media</option><option value="high">Alta</option></select></div>
+    <div class="field"><label>Scadenza</label><input id="taskDue" type="date"></div>
+    <div class="field"><label>Progetto</label><select id="taskProject"><option value="">Nessuno</option></select></div>
+    <div class="field"><label>Automazione</label><select id="taskWorkflow"><option value="">Nessuna</option></select></div>
+  </div>
+  <div class="dialog-actions"><button class="ghost" type="button" data-close>Annulla</button><button class="primary" type="submit">Crea task</button></div>
+</form>
+</dialog>
 
-    function taskRow(task,wide=false){
-      const done=task.status==="done";const priority={high:"Alta",medium:"Media",low:"Bassa"}[task.priority];
-      if(!wide)return`<div class="task-row"><button class="task-check ${done?"done":""}" onclick="toggleTask('${task.id}','${task.status}')">${done?"✓":""}</button><div class="task-main"><div class="task-title ${done?"done":""}">${escapeHtml(task.title)}</div><div class="task-meta">${formatDate(task.due_date)}</div></div><span class="badge ${task.priority}">${priority}</span></div>`;
-      return`<div class="card wide-task"><button class="task-check ${done?"done":""}" onclick="toggleTask('${task.id}','${task.status}')">${done?"✓":""}</button><div class="task-main"><div class="task-title ${done?"done":""}">${escapeHtml(task.title)}</div><div class="task-meta">${escapeHtml(task.description||"Nessuna descrizione")}</div></div><span class="badge ${task.priority}">${priority}</span><span class="task-meta">${formatDate(task.due_date)}</span><button class="row-menu" onclick="deleteTask('${task.id}')">Elimina</button></div>`;
-    }
+<dialog id="projectDialog">
+<form class="dialog" id="projectForm">
+  <div class="dialog-head"><div><h2>Nuovo progetto</h2><p>Crea una nuova iniziativa da monitorare.</p></div><button class="close" type="button" data-close>×</button></div>
+  <div class="form-grid">
+    <div class="field full"><label>Nome</label><input id="projectName" required></div>
+    <div class="field full"><label>Descrizione</label><textarea id="projectDescription"></textarea></div>
+    <div class="field"><label>Stato</label><select id="projectStatus"><option value="active">Attivo</option><option value="paused">In pausa</option><option value="completed">Completato</option></select></div>
+    <div class="field"><label>Scadenza</label><input id="projectDue" type="date"></div>
+  </div>
+  <div class="dialog-actions"><button class="ghost" type="button" data-close>Annulla</button><button class="primary" type="submit">Crea progetto</button></div>
+</form>
+</dialog>
 
-    function workflowRow(item,wide=false){
-      const trigger={manual:"Manuale",schedule:"Programmato",event:"Evento"}[item.trigger_type];
-      if(!wide)return`<div class="workflow-row"><div class="stat-icon">⌘</div><div class="workflow-main"><div class="workflow-title">${escapeHtml(item.name)}</div><div class="workflow-meta">${trigger} · ${item.run_count} esecuzioni</div></div><button class="row-menu" onclick="runWorkflow('${item.id}',${item.run_count})">Esegui</button></div>`;
-      return`<div class="card wide-workflow"><button class="switch ${item.enabled?"on":""}" onclick="toggleWorkflow('${item.id}',${item.enabled})"><span></span></button><div class="workflow-main"><div class="workflow-title">${escapeHtml(item.name)}</div><div class="workflow-meta">${escapeHtml(item.description||"Nessuna descrizione")}</div></div><span class="task-meta">${trigger}</span><span class="task-meta">${item.run_count} esecuzioni</span><div><button class="row-menu" onclick="runWorkflow('${item.id}',${item.run_count})">Esegui</button> <button class="row-menu" onclick="deleteWorkflow('${item.id}')">Elimina</button></div></div>`;
-    }
+<dialog id="workflowDialog">
+<form class="dialog" id="workflowForm">
+  <div class="dialog-head"><div><h2>Nuova automazione</h2><p>Definisci trigger e azione del workflow.</p></div><button class="close" type="button" data-close>×</button></div>
+  <div class="form-grid">
+    <div class="field full"><label>Nome</label><input id="workflowName" required></div>
+    <div class="field full"><label>Descrizione</label><textarea id="workflowDescription"></textarea></div>
+    <div class="field"><label>Trigger</label><select id="workflowTrigger"><option value="manual">Manuale</option><option value="schedule">Programmato</option><option value="event">Evento</option></select></div>
+    <div class="field"><label>Azione</label><select id="workflowAction"><option value="task">Crea task</option><option value="notification">Invia notifica</option><option value="report">Genera report</option><option value="approval">Richiedi approvazione</option></select></div>
+  </div>
+  <div class="dialog-actions"><button class="ghost" type="button" data-close>Annulla</button><button class="primary" type="submit">Crea automazione</button></div>
+</form>
+</dialog>
 
-    function render(){
-      const open=state.tasks.filter(t=>t.status!=="done");const inProgress=state.tasks.filter(t=>t.status==="in_progress");const done=state.tasks.filter(t=>t.status==="done");
-      $("openTasks").textContent=open.length;$("progressTasks").textContent=inProgress.length;$("activeWorkflows").textContent=state.workflows.filter(w=>w.enabled).length;$("completionRate").textContent=state.tasks.length?`${Math.round(done.length/state.tasks.length*100)}%`:"0%";
-      const priorityRank={high:0,medium:1,low:2};
-      const priorities=[...open].sort((a,b)=>priorityRank[a.priority]-priorityRank[b.priority]).slice(0,5);
-      $("overviewTasks").innerHTML=priorities.length?priorities.map(t=>taskRow(t)).join(""):empty("Nessun task aperto","Crea il primo task per iniziare.");
-      const filtered=state.filter==="all"?state.tasks:state.tasks.filter(t=>t.status===state.filter);
-      $("tasksList").innerHTML=filtered.length?filtered.map(t=>taskRow(t,true)).join(""):empty("Nessun task in questa vista","Cambia filtro o crea una nuova attività.");
-      $("workflowsList").innerHTML=state.workflows.length?state.workflows.map(w=>workflowRow(w,true)).join(""):empty("Nessun workflow","Crea un processo e rendi il lavoro ripetibile.");
-      $("activityList").innerHTML=state.activities.length?state.activities.map(a=>`<div class="activity-row"><span class="activity-dot"></span><div class="activity-main">${escapeHtml(a.message)}</div><span class="activity-time">${timeAgo(a.created_at)}</span></div>`).join(""):empty("Nessuna attività","Gli aggiornamenti appariranno qui.");
-      const urgent=open.filter(t=>t.priority==="high");$("focusTitle").textContent=urgent.length?`${urgent.length} priorità alte richiedono attenzione.`:open.length?"Il carico di lavoro è sotto controllo.":"Tutto completato.";$("focusText").textContent=urgent.length?`Parti da “${urgent[0].title}” e completa poi gli altri task ad alta priorità.`:open.length?"Prosegui dai task in corso prima di aprire nuove attività.":"Puoi pianificare il prossimo workflow operativo.";
-      $("taskWorkflow").innerHTML=`<option value="">Nessuno</option>`+state.workflows.map(w=>`<option value="${w.id}">${escapeHtml(w.name)}</option>`).join("");
-    }
+<div class="toast" id="toast"></div>
 
-    async function logActivity(kind,message){await db.from("activity_log").insert({user_id:state.user.id,kind,message})}
-    async function toggleTask(id,status){const next=status==="done"?"todo":"done";const task=state.tasks.find(t=>t.id===id);const {error}=await db.from("tasks").update({status:next}).eq("id",id);if(error)return toast("Aggiornamento non riuscito.");await logActivity("task",`${next==="done"?"Completato":"Riaperto"}: ${task.title}`);await loadWorkspace()}
-    async function deleteTask(id){if(!confirm("Eliminare questo task?"))return;const {error}=await db.from("tasks").delete().eq("id",id);if(error)return toast("Eliminazione non riuscita.");await loadWorkspace();toast("Task eliminato.")}
-    async function toggleWorkflow(id,enabled){const {error}=await db.from("workflows").update({enabled:!enabled}).eq("id",id);if(error)return toast("Aggiornamento non riuscito.");await loadWorkspace()}
-    async function runWorkflow(id,count){const item=state.workflows.find(w=>w.id===id);const {error}=await db.from("workflows").update({run_count:count+1,last_run_at:new Date().toISOString()}).eq("id",id);if(error)return toast("Esecuzione non riuscita.");await logActivity("workflow",`Eseguito workflow: ${item.name}`);await loadWorkspace();toast("Workflow eseguito.")}
-    async function deleteWorkflow(id){if(!confirm("Eliminare questo workflow?"))return;const {error}=await db.from("workflows").delete().eq("id",id);if(error)return toast("Eliminazione non riuscita.");await loadWorkspace();toast("Workflow eliminato.")}
+<script>
+const SUPABASE_URL="https://qahjmbgnhpfvqymtkdtc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_T9RVsQ4qifGJGUFZPj_TRg_bEBPVo4p";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-    async function openCheckout(plan){const {data,error}=await db.functions.invoke("create-checkout",{body:{plan}});if(error||!data?.url)return toast(data?.error||"Checkout non disponibile.");location.href=data.url}
-    async function openBilling(){if(!state.profile?.stripe_customer_id)return toast("Scegli prima un piano.");const {data,error}=await db.functions.invoke("create-portal");if(error||!data?.url)return toast(data?.error||"Portale non disponibile.");location.href=data.url}
+const state={
+  user:null,profile:null,subscription:null,marketlens:null,
+  tasks:[],projects:[],workflows:[],activities:[]
+};
 
-    document.querySelectorAll("[data-view]").forEach(button=>button.onclick=()=>{document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b===button));document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));$(`view-${button.dataset.view}`).classList.add("active");$("topTitle").textContent={overview:"Panoramica",tasks:"Task",workflows:"Workflow"}[button.dataset.view]});
-    document.querySelectorAll("[data-go]").forEach(button=>button.onclick=()=>document.querySelector(`[data-view="${button.dataset.go}"]`).click());
-    document.querySelectorAll("[data-open]").forEach(button=>button.onclick=()=>{if(paid())$(button.dataset.open).showModal()});
-    document.querySelectorAll("[data-close]").forEach(button=>button.onclick=()=>button.closest("dialog").close());
-    document.querySelectorAll("[data-checkout]").forEach(button=>button.onclick=()=>openCheckout(button.dataset.checkout));
-    $("taskFilters").onclick=e=>{const button=e.target.closest("[data-filter]");if(!button)return;state.filter=button.dataset.filter;document.querySelectorAll("[data-filter]").forEach(b=>b.classList.toggle("active",b===button));render()};
-    $("taskForm").onsubmit=async e=>{e.preventDefault();const payload={user_id:state.user.id,title:$("taskTitle").value.trim(),description:$("taskDescription").value.trim(),priority:$("taskPriority").value,due_date:$("taskDue").value||null,workflow_id:$("taskWorkflow").value||null};const {error}=await db.from("tasks").insert(payload);if(error)return toast("Creazione non riuscita.");await logActivity("task",`Creato task: ${payload.title}`);e.target.reset();$("taskDialog").close();await loadWorkspace();toast("Task creato.")};
-    $("workflowForm").onsubmit=async e=>{e.preventDefault();const payload={user_id:state.user.id,name:$("workflowName").value.trim(),description:$("workflowDescription").value.trim(),trigger_type:$("workflowTrigger").value,action_type:$("workflowAction").value};const {error}=await db.from("workflows").insert(payload);if(error)return toast("Creazione non riuscita.");await logActivity("workflow",`Creato workflow: ${payload.name}`);e.target.reset();$("workflowDialog").close();await loadWorkspace();toast("Workflow creato.")};
-    $("billingButton").onclick=openBilling;$("billingNav").onclick=openBilling;$("logoutButton").onclick=async()=>{await db.auth.signOut();location.href="index.html"};
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+const flowPaid=()=>state.subscription&&["active","trialing"].includes(state.subscription.status)&&["starter","pro"].includes(String(state.subscription.plan||"").toLowerCase());
+const marketPro=()=>state.marketlens&&["active","trialing"].includes(state.marketlens.status)&&["pro","business"].includes(String(state.marketlens.plan||"").toLowerCase());
 
-    async function init(){
-      const {data:{session}}=await db.auth.getSession();
-      if(!session){location.replace("index.html");return}
-      state.user=session.user;await loadAccount();await waitForWebhook();await loadWorkspace();$("loading").style.display="none";
-    }
-    init();
-  </script>
+function toast(msg){
+  const el=$("toast");el.textContent=msg;el.classList.add("show");
+  clearTimeout(window.fpToast);window.fpToast=setTimeout(()=>el.classList.remove("show"),2500);
+}
+
+function empty(title,text){
+  return `<div style="padding:28px;text-align:center;border:1px dashed #dfe1ea;border-radius:11px;color:#8a8e9e"><b style="display:block;color:#4b4f5d;margin-bottom:6px">${esc(title)}</b><span style="font-size:9px">${esc(text)}</span></div>`;
+}
+
+function formatDate(v){
+  if(!v)return"—";
+  return new Intl.DateTimeFormat("it-IT",{day:"2-digit",month:"short",year:"numeric"}).format(new Date(v));
+}
+
+async function loadAccount(){
+  const [profileRes,subRes,marketRes]=await Promise.all([
+    db.from("profiles").select("*").maybeSingle(),
+    db.from("subscriptions").select("*").maybeSingle(),
+    db.from("marketlens_entitlements").select("*").maybeSingle()
+  ]);
+  state.profile=profileRes.data;
+  state.subscription=subRes.data;
+  state.marketlens=marketRes.data;
+
+  const name=state.profile?.full_name||state.user.email?.split("@")[0]||"Utente";
+  $("sideUser").textContent=name;
+  $("sideCompany").textContent=state.profile?.company_name||state.user.email;
+  $("welcome").textContent=`Buongiorno, ${name.split(" ")[0]}.`;
+
+  $("planPill").textContent=flowPaid()?`FlowPilot ${state.subscription.plan}`:"FlowPilot non attivo";
+
+  if(marketPro()){
+    $("marketPill").textContent=`MarketLens ${state.marketlens.plan}`;
+    $("marketTierTitle").textContent=`MarketLens ${state.marketlens.plan.toUpperCase()} attivo`;
+    $("marketTierText").textContent="Report approfonditi e dettagliati sbloccati.";
+  }else{
+    $("marketPill").textContent="MarketLens Base";
+    $("marketTierTitle").textContent="MarketLens Base / prova";
+    $("marketTierText").textContent="Analisi sintetica, indicativa e approssimativa.";
+  }
+}
+
+async function loadWorkspace(){
+  if(!flowPaid())return;
+  const [tasksRes,projectsRes,workflowsRes,activityRes]=await Promise.all([
+    db.from("tasks").select("*").order("created_at",{ascending:false}),
+    db.from("projects").select("*").order("created_at",{ascending:false}),
+    db.from("workflows").select("*").order("created_at",{ascending:false}),
+    db.from("activity_log").select("*").order("created_at",{ascending:false}).limit(8)
+  ]);
+  state.tasks=tasksRes.data||[];
+  state.projects=projectsRes.data||[];
+  state.workflows=workflowsRes.data||[];
+  state.activities=activityRes.data||[];
+  render();
+}
+
+function taskRow(t,wide=false){
+  const done=t.status==="done";
+  const priority={high:"Alta",medium:"Media",low:"Bassa"}[t.priority]||t.priority;
+  const project=state.projects.find(p=>p.id===t.project_id);
+  if(!wide){
+    return `<div class="task-row"><button class="task-check ${done?"done":""}" onclick="toggleTask('${t.id}','${t.status}')">${done?"✓":""}</button><div class="task-main"><div class="task-title ${done?"done":""}">${esc(t.title)}</div><div class="task-meta">${project?esc(project.name)+" · ":""}${formatDate(t.due_date)}</div></div><span class="badge ${t.priority}">${priority}</span></div>`;
+  }
+  return `<div class="card wide-task"><button class="task-check ${done?"done":""}" onclick="toggleTask('${t.id}','${t.status}')">${done?"✓":""}</button><div class="task-main"><div class="task-title ${done?"done":""}">${esc(t.title)}</div><div class="task-meta">${esc(t.description||"Nessuna descrizione")}</div></div><span class="badge ${t.priority}">${priority}</span><span class="task-meta">${project?esc(project.name):"Senza progetto"}</span><button class="row-menu" onclick="deleteTask('${t.id}')">Elimina</button></div>`;
+}
+
+function renderProjects(){
+  $("projectsGrid").innerHTML=state.projects.length?state.projects.map(p=>{
+    const related=state.tasks.filter(t=>t.project_id===p.id);
+    const done=related.filter(t=>t.status==="done").length;
+    const progress=related.length?Math.round(done/related.length*100):p.progress||0;
+    return `<article class="card project-card"><h3>${esc(p.name)}</h3><p>${esc(p.description||"Nessuna descrizione")}</p><div class="task-meta">${p.status==="active"?"Attivo":p.status==="paused"?"In pausa":"Completato"} · ${formatDate(p.due_date)}</div><div class="progress"><span style="width:${progress}%"></span></div><div class="task-meta">${progress}% completato · ${related.length} task</div></article>`;
+  }).join(""):empty("Nessun progetto","Crea il primo progetto per organizzare il lavoro.");
+}
+
+function renderAutomations(){
+  $("automationsGrid").innerHTML=state.workflows.length?state.workflows.map(w=>`
+  <article class="card automation-card">
+    <div style="display:flex;justify-content:space-between;gap:10px;align-items:start">
+      <div><h3>${esc(w.name)}</h3><p>${esc(w.description||"Nessuna descrizione")}</p></div>
+      <button class="switch ${w.enabled?"on":""}" onclick="toggleWorkflow('${w.id}',${w.enabled})"><span></span></button>
+    </div>
+    <div class="task-meta">${esc(w.trigger_type)} → ${esc(w.action_type)} · ${w.run_count||0} esecuzioni</div>
+    <div style="margin-top:12px;display:flex;gap:6px"><button class="row-menu" onclick="runWorkflow('${w.id}',${w.run_count||0})">Esegui</button><button class="row-menu" onclick="deleteWorkflow('${w.id}')">Elimina</button></div>
+  </article>`).join(""):empty("Nessuna automazione","Crea il primo workflow automatico.");
+}
+
+function renderAnalytics(){
+  const total=state.tasks.length;
+  const done=state.tasks.filter(t=>t.status==="done").length;
+  const runs=state.workflows.reduce((s,w)=>s+(w.run_count||0),0);
+  const avgProject=state.projects.length?Math.round(state.projects.reduce((sum,p)=>{
+    const rel=state.tasks.filter(t=>t.project_id===p.id);
+    return sum+(rel.length?rel.filter(t=>t.status==="done").length/rel.length*100:(p.progress||0));
+  },0)/state.projects.length):0;
+
+  $("analyticsTasks").textContent=total;
+  $("analyticsDone").textContent=done;
+  $("analyticsRuns").textContent=runs;
+  $("analyticsProgress").textContent=`${avgProject}%`;
+
+  const groups=[
+    ["Da fare",state.tasks.filter(t=>t.status==="todo").length],
+    ["In corso",state.tasks.filter(t=>t.status==="in_progress").length],
+    ["Completati",done]
+  ];
+  const max=Math.max(1,...groups.map(x=>x[1]));
+  $("analyticsChart").innerHTML=groups.map(([label,val])=>`<div class="chart-col"><div class="bar" style="height:${Math.max(8,val/max*90)}%"></div><div class="chart-label">${label}<br><b>${val}</b></div></div>`).join("");
+
+  $("metricList").innerHTML=`
+    <div class="metric-row"><span>Tasso completamento</span><strong>${total?Math.round(done/total*100):0}%</strong></div>
+    <div class="metric-row"><span>Automazioni attive</span><strong>${state.workflows.filter(w=>w.enabled).length}</strong></div>
+    <div class="metric-row"><span>Progetti attivi</span><strong>${state.projects.filter(p=>p.status==="active").length}</strong></div>
+    <div class="metric-row"><span>Task alta priorità aperti</span><strong>${state.tasks.filter(t=>t.priority==="high"&&t.status!=="done").length}</strong></div>
+  `;
+}
+
+function render(){
+  const open=state.tasks.filter(t=>t.status!=="done");
+  const done=state.tasks.filter(t=>t.status==="done");
+  $("openTasks").textContent=open.length;
+  $("activeProjects").textContent=state.projects.filter(p=>p.status==="active").length;
+  $("activeWorkflows").textContent=state.workflows.filter(w=>w.enabled).length;
+  $("completionRate").textContent=state.tasks.length?`${Math.round(done.length/state.tasks.length*100)}%`:"0%";
+
+  const rank={high:0,medium:1,low:2};
+  $("overviewTasks").innerHTML=open.length?[...open].sort((a,b)=>rank[a.priority]-rank[b.priority]).slice(0,6).map(t=>taskRow(t)).join(""):empty("Nessun task aperto","Il workspace è libero.");
+  $("tasksList").innerHTML=state.tasks.length?state.tasks.map(t=>taskRow(t,true)).join(""):empty("Nessun task","Crea la prima attività.");
+
+  const urgent=open.filter(t=>t.priority==="high");
+  $("focusTitle").textContent=urgent.length?`${urgent.length} attività ad alta priorità.`:open.length?"Il carico è sotto controllo.":"Tutto completato.";
+  $("focusText").textContent=urgent.length?`Conviene iniziare da “${urgent[0].title}”.`:open.length?"Completa i task in corso prima di aprirne altri.":"Puoi concentrarti su nuovi progetti o automazioni.";
+
+  $("taskProject").innerHTML=`<option value="">Nessuno</option>`+state.projects.map(p=>`<option value="${p.id}">${esc(p.name)}</option>`).join("");
+  $("taskWorkflow").innerHTML=`<option value="">Nessuna</option>`+state.workflows.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join("");
+
+  renderProjects();
+  renderAutomations();
+  renderAnalytics();
+}
+
+async function logActivity(kind,message){
+  await db.from("activity_log").insert({user_id:state.user.id,kind,message});
+}
+
+async function toggleTask(id,status){
+  const next=status==="done"?"todo":"done";
+  const task=state.tasks.find(t=>t.id===id);
+  const {error}=await db.from("tasks").update({status:next}).eq("id",id);
+  if(error)return toast("Aggiornamento non riuscito.");
+  await logActivity("task",`${next==="done"?"Completato":"Riaperto"}: ${task?.title||"task"}`);
+  await loadWorkspace();
+}
+
+async function deleteTask(id){
+  if(!confirm("Eliminare questo task?"))return;
+  const {error}=await db.from("tasks").delete().eq("id",id);
+  if(error)return toast("Eliminazione non riuscita.");
+  await loadWorkspace();
+}
+
+async function toggleWorkflow(id,enabled){
+  const {error}=await db.from("workflows").update({enabled:!enabled}).eq("id",id);
+  if(error)return toast("Aggiornamento non riuscito.");
+  await loadWorkspace();
+}
+
+async function runWorkflow(id,count){
+  const item=state.workflows.find(w=>w.id===id);
+  const {error}=await db.from("workflows").update({run_count:(count||0)+1,last_run_at:new Date().toISOString()}).eq("id",id);
+  if(error)return toast("Esecuzione non riuscita.");
+  await logActivity("workflow",`Automazione eseguita: ${item?.name||"workflow"}`);
+  await loadWorkspace();
+  toast("Automazione eseguita.");
+}
+
+async function deleteWorkflow(id){
+  if(!confirm("Eliminare questa automazione?"))return;
+  const {error}=await db.from("workflows").delete().eq("id",id);
+  if(error)return toast("Eliminazione non riuscita.");
+  await loadWorkspace();
+}
+
+function demoMarketReport(topic,deep){
+  const seed=[...topic].reduce((a,c)=>a+c.charCodeAt(0),0);
+  const size=(1.2+(seed%70)/10).toFixed(1);
+  const cagr=(5+(seed%140)/10).toFixed(1);
+  const opportunity=62+(seed%31);
+  const competition=["Bassa","Media","Medio-alta","Alta"][seed%4];
+
+  if(!deep){
+    return `
+      <div class="approx-note">Questa è una stima indicativa in stile prova gratuita MarketLens. I valori sono approssimativi e non sostituiscono un report MarketLens Pro.</div>
+      <div class="report-grid">
+        <div class="report-card"><span>Opportunità</span><strong>${opportunity}/100</strong><p>Indicatore sintetico calcolato su segnali generali.</p></div>
+        <div class="report-card"><span>Crescita stimata</span><strong>+${cagr}%</strong><p>Stima orientativa, non una previsione verificata.</p></div>
+        <div class="report-card"><span>Competizione</span><strong>${competition}</strong><p>Valutazione qualitativa semplificata.</p></div>
+      </div>
+      <div class="card"><div class="card-title">Sintesi</div><p style="font-size:10px;color:#74788a;line-height:1.7">Il mercato “${esc(topic)}” mostra segnali potenzialmente interessanti, ma questa vista base fornisce solo un quadro preliminare. Per dimensioni, segmentazione, competitor, driver, rischi e fonti serve MarketLens Pro.</p></div>
+      <div class="deep-lock">🔒 Report approfondito disponibile con MarketLens Pro o Business.</div>
+    `;
+  }
+
+  return `
+    <div class="report-grid">
+      <div class="report-card"><span>Market size</span><strong>€${size}B</strong><p>Dimensione stimata del mercato target.</p></div>
+      <div class="report-card"><span>CAGR</span><strong>+${cagr}%</strong><p>Crescita annua composta stimata.</p></div>
+      <div class="report-card"><span>Opportunity score</span><strong>${opportunity}/100</strong><p>Attrattività combinata del mercato.</p></div>
+    </div>
+    <div class="card"><div class="card-title">Executive summary</div><p style="font-size:10px;color:#74788a;line-height:1.75">Il mercato “${esc(topic)}” presenta una combinazione di crescita, frammentazione competitiva e opportunità di differenziazione. La priorità strategica è identificare segmenti con domanda crescente e pressione competitiva inferiore alla media, validando pricing, canali e posizionamento prima di scalare.</p></div>
+    <div class="report-grid">
+      <div class="report-card"><span>Segmento leader</span><strong>Mid-market</strong><p>Domanda forte, ticket medio interessante e bisogno di efficienza.</p></div>
+      <div class="report-card"><span>Competizione</span><strong>${competition}</strong><p>Presenza di operatori consolidati e spazi per specializzazione verticale.</p></div>
+      <div class="report-card"><span>Forecast 3 anni</span><strong>+${(Number(cagr)*3.1).toFixed(1)}%</strong><p>Proiezione indicativa cumulata sul periodo.</p></div>
+    </div>
+    <div class="analytics-grid">
+      <div class="card"><div class="card-title">Driver principali</div><div class="metric-list">
+        <div class="metric-row"><span>Digitalizzazione processi</span><strong>Alta</strong></div>
+        <div class="metric-row"><span>Pressione su efficienza operativa</span><strong>Alta</strong></div>
+        <div class="metric-row"><span>Adozione AI</span><strong>In accelerazione</strong></div>
+      </div></div>
+      <div class="card"><div class="card-title">Rischi</div><div class="metric-list">
+        <div class="metric-row"><span>Concorrenza</span><strong>${competition}</strong></div>
+        <div class="metric-row"><span>Commoditizzazione</span><strong>Media</strong></div>
+        <div class="metric-row"><span>Costo acquisizione</span><strong>Da monitorare</strong></div>
+      </div></div>
+    </div>
+    <div class="card"><div class="card-title">Competitor & posizionamento</div><p style="font-size:10px;color:#74788a;line-height:1.75">Il report Pro dovrebbe confrontare i principali concorrenti su quota, pricing, proposition, feature, canali e punti deboli. In questa dashboard la struttura è già predisposta; per dati reali e fonti verificabili va collegata al motore MarketLens server-side.</p></div>
+    <div class="card"><div class="card-title">Raccomandazioni operative</div><p style="font-size:10px;color:#74788a;line-height:1.75">1. Validare il segmento con maggiore crescita. 2. Confrontare almeno 5 concorrenti diretti. 3. Testare pricing e proposition. 4. Collegare gli insight ai progetti FlowPilot per trasformare l'analisi in attività operative.</p></div>
+  `;
+}
+
+$("runMarketBtn").onclick=()=>{
+  const q=$("marketQuery").value.trim();
+  if(!q)return toast("Inserisci un mercato da analizzare.");
+  const deep=marketPro();
+  $("marketReport").innerHTML=demoMarketReport(q,deep);
+  $("marketReport").classList.add("show");
+  toast(deep?"Report MarketLens Pro generato.":"Analisi base generata.");
+};
+
+document.querySelectorAll(".nav-button[data-view]").forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll(".nav-button[data-view]").forEach(x=>x.classList.toggle("active",x===btn));
+    document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===`view-${btn.dataset.view}`));
+    $("topTitle").textContent=btn.textContent.trim();
+    window.scrollTo(0,0);
+  };
+});
+
+document.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>$(btn.dataset.open).showModal());
+document.querySelectorAll("[data-close]").forEach(btn=>btn.onclick=()=>btn.closest("dialog").close());
+
+$("taskForm").onsubmit=async e=>{
+  e.preventDefault();
+  const {error}=await db.from("tasks").insert({
+    user_id:state.user.id,
+    title:$("taskTitle").value.trim(),
+    description:$("taskDescription").value.trim(),
+    priority:$("taskPriority").value,
+    due_date:$("taskDue").value||null,
+    project_id:$("taskProject").value||null,
+    workflow_id:$("taskWorkflow").value||null
+  });
+  if(error)return toast(error.message);
+  $("taskDialog").close();e.target.reset();await loadWorkspace();toast("Task creato.");
+};
+
+$("projectForm").onsubmit=async e=>{
+  e.preventDefault();
+  const {error}=await db.from("projects").insert({
+    user_id:state.user.id,
+    name:$("projectName").value.trim(),
+    description:$("projectDescription").value.trim(),
+    status:$("projectStatus").value,
+    due_date:$("projectDue").value||null
+  });
+  if(error)return toast(error.message);
+  $("projectDialog").close();e.target.reset();await loadWorkspace();toast("Progetto creato.");
+};
+
+$("workflowForm").onsubmit=async e=>{
+  e.preventDefault();
+  const {error}=await db.from("workflows").insert({
+    user_id:state.user.id,
+    name:$("workflowName").value.trim(),
+    description:$("workflowDescription").value.trim(),
+    trigger_type:$("workflowTrigger").value,
+    action_type:$("workflowAction").value
+  });
+  if(error)return toast(error.message);
+  $("workflowDialog").close();e.target.reset();await loadWorkspace();toast("Automazione creata.");
+};
+
+async function openPortal(){
+  const {data,error}=await db.functions.invoke("create-portal");
+  if(error||!data?.url)return toast("Portale pagamenti non disponibile.");
+  location.href=data.url;
+}
+$("billingButton").onclick=openPortal;
+$("billingNav").onclick=openPortal;
+
+$("logoutButton").onclick=async()=>{
+  await db.auth.signOut();
+  location.href="index.html";
+};
+
+async function init(){
+  const {data:{session}}=await db.auth.getSession();
+  if(!session){location.href="index.html";return}
+  state.user=session.user;
+  await loadAccount();
+  await loadWorkspace();
+  $("loading").style.display="none";
+}
+init();
+</script>
 </body>
 </html>
