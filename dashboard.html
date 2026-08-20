@@ -564,45 +564,28 @@ document.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>$(b.dataset.op
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>b.closest("dialog").close());
 
 async function bootstrapWorkspace(){
-  if(state.profile?.default_workspace_id){
-    const {data}=await db.from("workspaces").select("*").eq("id",state.profile.default_workspace_id).maybeSingle();
-    if(data){state.workspace=data;return}
+  // Il bootstrap viene risolto lato server: così owner/membership non dipendono
+  // dalle policy RLS del browser e gli account paganti vengono inizializzati sempre.
+  const {data,error}=await db.functions.invoke("workspace-bootstrap",{body:{}});
+
+  if(error||!data?.workspace){
+    console.warn("Workspace bootstrap non riuscito",error||data);
+    return;
   }
 
-  const {data:membership}=await db.from("workspace_members").select("workspace_id").limit(1).maybeSingle();
-  if(membership?.workspace_id){
-    const {data:w}=await db.from("workspaces").select("*").eq("id",membership.workspace_id).maybeSingle();
-    if(w){
-      state.workspace=w;
-      await db.from("profiles").update({default_workspace_id:w.id}).eq("user_id",state.user.id);
-      return;
-    }
+  state.workspace=data.workspace;
+
+  // Manteniamo allineato anche il profilo locale.
+  if(state.profile){
+    state.profile.default_workspace_id=data.workspace.id;
   }
 
-  if(!flowPaid()) return;
-
-  const workspaceName=state.profile?.company_name||"Il mio workspace";
-  const {data:w,error}=await db.from("workspaces").insert({owner_id:state.user.id,name:workspaceName}).select("*").single();
-  if(error)throw error;
-  state.workspace=w;
-
-  const {error:memberError}=await db.from("workspace_members").insert({workspace_id:w.id,user_id:state.user.id,role:"owner"});
-  if(memberError)throw memberError;
-
-  await db.from("departments").insert([
-    {workspace_id:w.id,name:"Finance",slug:"finance"},
-    {workspace_id:w.id,name:"HR",slug:"hr"},
-    {workspace_id:w.id,name:"Sales",slug:"sales"},
-    {workspace_id:w.id,name:"Operations",slug:"operations"},
-    {workspace_id:w.id,name:"Marketing",slug:"marketing"}
-  ]);
-
-  await db.from("profiles").update({default_workspace_id:w.id}).eq("user_id",state.user.id);
+  // Sposta eventuali dati legacy dell'utente nel workspace appena risolto.
   await Promise.all([
-    db.from("tasks").update({workspace_id:w.id}).eq("user_id",state.user.id).is("workspace_id",null),
-    db.from("projects").update({workspace_id:w.id}).eq("user_id",state.user.id).is("workspace_id",null),
-    db.from("workflows").update({workspace_id:w.id}).eq("user_id",state.user.id).is("workspace_id",null),
-    db.from("activity_log").update({workspace_id:w.id}).eq("user_id",state.user.id).is("workspace_id",null)
+    db.from("tasks").update({workspace_id:data.workspace.id}).eq("user_id",state.user.id).is("workspace_id",null),
+    db.from("projects").update({workspace_id:data.workspace.id}).eq("user_id",state.user.id).is("workspace_id",null),
+    db.from("workflows").update({workspace_id:data.workspace.id}).eq("user_id",state.user.id).is("workspace_id",null),
+    db.from("activity_log").update({workspace_id:data.workspace.id}).eq("user_id",state.user.id).is("workspace_id",null)
   ]);
 }
 
@@ -712,7 +695,7 @@ function renderTeam(){
   const full=limit!==null&&used>=limit;
   inviteBtn.disabled=!t.can_manage||full;
   inviteBtn.textContent=full?"Limite raggiunto":"+ Invita collaboratore";
-  inviteBtn.title=!t.can_manage?"Solo il proprietario può invitare collaboratori.":full?"Passa a Pro per aggiungere altri collaboratori.":"";
+  inviteBtn.title=!t.can_manage?"Solo il proprietario o un admin può invitare collaboratori.":full?"Passa a Pro per aggiungere altri collaboratori.":"";
 
   $("teamMembersList").innerHTML=members.length?members.map(m=>{
     const prof=m.profile||{};
@@ -1003,7 +986,7 @@ window.integrationClick=integrationClick;
 $("inviteMemberBtn").onclick=()=>{
   const t=state.team||{};
   const used=t.seats?.used||0;
-  if(!t.can_manage)return toast("Solo il proprietario del workspace può invitare collaboratori.");
+  if(!t.can_manage)return toast("Solo il proprietario o un admin del workspace può invitare collaboratori.");
   if(t.limit!==null&&used>=t.limit){toast("Hai raggiunto il limite del piano Starter. Passa a Pro per collaboratori illimitati.");return}
   $("inviteResult").classList.remove("show");
   $("inviteLink").value="";
