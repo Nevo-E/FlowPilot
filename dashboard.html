@@ -1002,7 +1002,7 @@ $("inviteForm").onsubmit=async e=>{
     email:$("inviteEmail").value.trim(),
     department:$("inviteDepartment").value||null,
     role:"member",
-    origin:location.origin
+    base_url:new URL(".", location.href).href
   };
   const {data,error}=await db.functions.invoke("workspace-team",{body:payload});
   $("sendInviteBtn").disabled=false;$("sendInviteBtn").textContent="Invita";
