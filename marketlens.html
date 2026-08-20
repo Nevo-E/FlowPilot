@@ -1759,6 +1759,153 @@ footer,footer .foot-note{font-size:11px!important}
 }
 
 </style>
+<style>
+
+/* Final visual fixes */
+.hero-visual-label{
+  display:none !important;
+}
+
+#modelli .ai-orb,
+#modelli .ai-orb .ml-logo,
+#modelli .ai-orb span{
+  color:#fff !important;
+}
+
+#modelli .ai-orb{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  color:#fff !important;
+}
+
+#modelli .ai-orb .ml-logo{
+  color:#fff !important;
+  font-weight:800 !important;
+}
+
+/* FAQ accordion: answers are hidden by default and expand directly underneath */
+#faq .faq-item{
+  overflow:hidden !important;
+}
+
+#faq .faq-a{
+  display:grid !important;
+  grid-template-rows:0fr !important;
+  opacity:0 !important;
+  max-height:0 !important;
+  overflow:hidden !important;
+  padding:0 !important;
+  transition:grid-template-rows .28s ease, opacity .2s ease, max-height .28s ease !important;
+}
+
+#faq .faq-a > *{
+  min-height:0 !important;
+  overflow:hidden !important;
+}
+
+#faq .faq-item.open .faq-a,
+#faq .faq-item.active .faq-a,
+#faq .faq-item.is-open .faq-a{
+  grid-template-rows:1fr !important;
+  opacity:1 !important;
+  max-height:500px !important;
+}
+
+#faq .faq-item.open .faq-a > *,
+#faq .faq-item.active .faq-a > *,
+#faq .faq-item.is-open .faq-a > *{
+  min-height:auto !important;
+}
+
+#faq .faq-q{
+  cursor:pointer !important;
+  user-select:none !important;
+}
+
+#faq .faq-q .plus,
+#faq .faq-q .faq-plus{
+  transition:transform .25s ease !important;
+}
+
+#faq .faq-item.open .plus,
+#faq .faq-item.active .plus,
+#faq .faq-item.is-open .plus,
+#faq .faq-item.open .faq-plus,
+#faq .faq-item.active .faq-plus,
+#faq .faq-item.is-open .faq-plus{
+  transform:rotate(45deg) !important;
+}
+
+/* FAQ visual: intentionally different from the hero — abstract market bars/dashboard */
+#faq .faq-visual{
+  background:
+    radial-gradient(circle at 75% 20%, rgba(117,111,255,.24), transparent 28%),
+    linear-gradient(145deg,#17182a,#302d62) !important;
+  position:relative !important;
+  overflow:hidden !important;
+}
+
+#faq .faq-visual::before{
+  content:"" !important;
+  position:absolute !important;
+  width:260px !important;
+  height:260px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  background:transparent !important;
+  left:-90px !important;
+  bottom:-100px !important;
+  opacity:1 !important;
+}
+
+#faq .faq-visual::after{
+  content:"" !important;
+  position:absolute !important;
+  width:150px !important;
+  height:150px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(255,255,255,.09) !important;
+  background:transparent !important;
+  right:-35px !important;
+  top:-30px !important;
+  opacity:1 !important;
+}
+
+/* New FAQ visual treatment: dashboard/chart instead of a second hero-like illustration */
+#faq .faq-visual-card{
+  background:rgba(255,255,255,.96) !important;
+  border:1px solid rgba(255,255,255,.18) !important;
+  box-shadow:0 24px 60px rgba(0,0,0,.22) !important;
+}
+
+#faq .faq-bars{
+  height:145px !important;
+  display:flex !important;
+  align-items:flex-end !important;
+  gap:10px !important;
+}
+
+#faq .faq-bar{
+  width:14px !important;
+  border-radius:5px 5px 2px 2px !important;
+  background:linear-gradient(180deg,#8b86ff,#5b55f7) !important;
+}
+
+#faq .faq-bar:nth-child(1){height:38%!important}
+#faq .faq-bar:nth-child(2){height:56%!important}
+#faq .faq-bar:nth-child(3){height:43%!important}
+#faq .faq-bar:nth-child(4){height:72%!important}
+#faq .faq-bar:nth-child(5){height:61%!important}
+#faq .faq-bar:nth-child(6){height:88%!important}
+#faq .faq-bar:nth-child(7){height:76%!important}
+
+#faq .faq-visual-dot{
+  background:#5b55f7 !important;
+  box-shadow:0 0 0 6px rgba(91,85,247,.13) !important;
+}
+
+</style>
 </head>
 <body>
 <header class="nav">
@@ -1806,7 +1953,7 @@ footer,footer .foot-note{font-size:11px!important}
 <div class="search-shell" id="heroSearchArea"></div>
 </div>
 <div aria-label="Dashboard di market intelligence" class="hero-visual">
-<div class="hero-visual-label">LIVE MARKET INTELLIGENCE</div>
+
 <svg aria-hidden="true" role="img" viewbox="0 0 620 470">
 <defs>
 <lineargradient id="heroMint" x1="0" x2="1" y1="0" y2="1">
@@ -3273,5 +3420,48 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const faq = document.querySelector('#faq');
+  if (!faq) return;
+
+  const items = faq.querySelectorAll('.faq-item');
+  items.forEach((item) => {
+    const question = item.querySelector('.faq-q');
+    const answer = item.querySelector('.faq-a');
+    if (!question || !answer) return;
+
+    question.setAttribute('role', 'button');
+    question.setAttribute('tabindex', '0');
+
+    const toggle = () => {
+      const willOpen = !item.classList.contains('open');
+
+      items.forEach((other) => {
+        other.classList.remove('open', 'active', 'is-open');
+        const otherQ = other.querySelector('.faq-q');
+        if (otherQ) otherQ.setAttribute('aria-expanded', 'false');
+      });
+
+      if (willOpen) {
+        item.classList.add('open');
+        question.setAttribute('aria-expanded', 'true');
+      }
+    };
+
+    question.addEventListener('click', toggle);
+    question.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+
+    question.setAttribute('aria-expanded', 'false');
+  });
+});
+</script>
+
 </body>
 </html>
