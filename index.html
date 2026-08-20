@@ -17,6 +17,8 @@
 
 <title>FlowPilot — AI Workflow Intelligence</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.56.1/dist/umd/supabase.min.js"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -1740,7 +1742,7 @@ button{
   display:grid;
 
   grid-template-columns:
-    repeat(3,1fr);
+    repeat(2,minmax(0,1fr));
 
   gap:15px;
 
@@ -2356,6 +2358,35 @@ footer{
   cursor:pointer;
 
 }
+
+.signup-only{display:none}
+.modal.signup-mode .signup-only{display:block}
+.modal-switch{
+  margin-top:14px;
+  text-align:center;
+  font-size:10px;
+  color:#858999;
+}
+.modal-switch button{
+  border:0;
+  background:transparent;
+  color:var(--primary);
+  font-weight:800;
+  cursor:pointer;
+  padding:2px 4px;
+}
+.auth-error{
+  display:none;
+  margin-top:12px;
+  padding:9px 11px;
+  border-radius:7px;
+  color:#a63145;
+  background:#fff1f3;
+  font-size:9px;
+  line-height:1.45;
+}
+.auth-error.show{display:block}
+.modal-submit:disabled{opacity:.62;cursor:wait}
 
 
 /* =====================================================
@@ -3819,7 +3850,7 @@ footer{
 
         <div class="price-number">
 
-          €0
+          €19,99
 
           <small>
             / mese
@@ -3828,7 +3859,7 @@ footer{
         </div>
 
         <div class="price-note">
-          Per iniziare senza carta di credito
+          Tutto il necessario per partire
         </div>
 
 
@@ -3854,9 +3885,9 @@ footer{
 
 
         <button
-          onclick="showToast('Registrazione Starter — pronta per essere collegata.')"
+          onclick="startPlan('starter')"
         >
-          Inizia gratis
+          Scegli Starter →
         </button>
 
       </article>
@@ -3883,10 +3914,10 @@ footer{
 
         <div class="price-number">
 
-          €29
+          €49,99
 
           <small>
-            / utente / mese
+            / mese
           </small>
 
         </div>
@@ -3936,70 +3967,13 @@ footer{
 
 
         <button
-          onclick="selectFlowPilotPlan('pro')"
+          onclick="startPlan('pro')"
         >
           Inizia con Pro →
         </button>
 
       </article>
 
-
-      <!-- BUSINESS -->
-
-      <article class="price">
-
-        <h3>
-          Business
-        </h3>
-
-
-        <p class="price-desc">
-          Per organizzazioni con processi complessi.
-        </p>
-
-
-        <div class="price-number">
-          Custom
-        </div>
-
-
-        <div class="price-note">
-          Configurazione su misura
-        </div>
-
-
-        <ul>
-
-          <li>
-            Workspace multipli
-          </li>
-
-          <li>
-            Workflow personalizzati
-          </li>
-
-          <li>
-            Controlli e ruoli avanzati
-          </li>
-
-          <li>
-            Supporto prioritario
-          </li>
-
-          <li>
-            API e integrazioni
-          </li>
-
-        </ul>
-
-
-        <button
-          onclick="showToast('Contatto Business — presto disponibile.')"
-        >
-          Parla con noi
-        </button>
-
-      </article>
 
     </div>
 
@@ -4162,7 +4136,7 @@ footer{
 
         <button class="faq-q">
 
-          Posso provarlo gratuitamente?
+          Posso cambiare piano?
 
           <span>
             ＋
@@ -4172,9 +4146,9 @@ footer{
 
         <div class="faq-a">
 
-          Sì. Il piano Starter è pensato per iniziare
-          senza costi e capire come organizzare
-          il proprio workspace.
+          Sì. Puoi gestire, cambiare o annullare
+          l'abbonamento dal portale pagamenti accessibile
+          direttamente dalla dashboard.
 
         </div>
 
@@ -4195,10 +4169,9 @@ footer{
 
         <div class="faq-a">
 
-          Il prodotto è progettato per rendere visibili
-          permessi, workflow e attività. Nella versione
-          production verranno aggiunti autenticazione,
-          gestione dei ruoli, audit log e policy di sicurezza.
+          Sì. Autenticazione, dati e permessi sono gestiti
+          con policy di sicurezza per account; lo stato del
+          piano viene verificato dal server prima di consentire le operazioni.
 
         </div>
 
@@ -4315,7 +4288,7 @@ footer{
   id="loginModal"
 >
 
-  <div class="modal">
+  <div class="modal" id="authCard">
 
     <button
       class="close"
@@ -4325,12 +4298,12 @@ footer{
     </button>
 
 
-    <h2>
+    <h2 id="authTitle">
       Accedi a FlowPilot
     </h2>
 
 
-    <p>
+    <p id="authSubtitle">
       Accedi al tuo workspace aziendale.
     </p>
 
@@ -4345,6 +4318,36 @@ footer{
         id="loginEmail"
         type="email"
         placeholder="nome@azienda.com"
+      >
+
+    </div>
+
+    <div class="field signup-only">
+
+      <label>
+        Nome e cognome
+      </label>
+
+      <input
+        id="signupName"
+        type="text"
+        placeholder="Mario Rossi"
+        autocomplete="name"
+      >
+
+    </div>
+
+    <div class="field signup-only">
+
+      <label>
+        Azienda
+      </label>
+
+      <input
+        id="signupCompany"
+        type="text"
+        placeholder="Nome azienda"
+        autocomplete="organization"
       >
 
     </div>
@@ -4372,6 +4375,13 @@ footer{
       Accedi →
     </button>
 
+    <div class="auth-error" id="authError"></div>
+
+    <div class="modal-switch">
+      <span id="authSwitchText">Non hai un account?</span>
+      <button id="authSwitch" type="button">Sign up</button>
+    </div>
+
   </div>
 
 </div>
@@ -4393,10 +4403,16 @@ footer{
    STATE
 ===================================================== */
 
-let currentFlowPilotPlan =
-  localStorage.getItem(
-    "flowpilot_plan"
-  ) || "starter";
+const SUPABASE_URL = "https://qahjmbgnhpfvqymtkdtc.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_T9RVsQ4qifGJGUFZPj_TRg_bEBPVo4p";
+const flowpilot = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+let currentFlowPilotPlan = "none";
+let authMode = "login";
+let pendingPlan = sessionStorage.getItem("flowpilot_pending_plan");
 
 
 /* =====================================================
@@ -4495,12 +4511,54 @@ const modalSubmit =
     "modalSubmit"
   );
 
+const authCard = document.getElementById("authCard");
+const authTitle = document.getElementById("authTitle");
+const authSubtitle = document.getElementById("authSubtitle");
+const authSwitch = document.getElementById("authSwitch");
+const authSwitchText = document.getElementById("authSwitchText");
+const authError = document.getElementById("authError");
+
+function setAuthMode(mode){
+  authMode = mode;
+  const signup = mode === "signup";
+  authCard.classList.toggle("signup-mode", signup);
+  authTitle.textContent = signup ? "Crea il tuo account" : "Accedi a FlowPilot";
+  authSubtitle.textContent = signup
+    ? "Crea il workspace e scegli il piano più adatto."
+    : "Accedi al tuo workspace aziendale.";
+  modalSubmit.textContent = signup ? "Crea account →" : "Accedi →";
+  authSwitchText.textContent = signup ? "Hai già un account?" : "Non hai un account?";
+  authSwitch.textContent = signup ? "Accedi" : "Sign up";
+  authError.classList.remove("show");
+}
+
+function openAuth(mode = "login"){
+  setAuthMode(mode);
+  modal.classList.add("show");
+}
+
+function readableAuthError(message){
+  if(message.includes("Invalid login credentials")) return "Email o password non corretti.";
+  if(message.includes("User already registered")) return "Esiste già un account con questa email.";
+  if(message.includes("Password should be")) return "La password deve contenere almeno 6 caratteri.";
+  return message;
+}
+
+function displayAuthError(message){
+  authError.textContent = readableAuthError(message);
+  authError.classList.add("show");
+}
+
 
 loginBtn.onclick = ()=>{
-
-  modal.classList.add("show");
-
+  if(loginBtn.dataset.authenticated === "true"){
+    window.location.href = "dashboard.html";
+    return;
+  }
+  openAuth("login");
 };
+
+authSwitch.onclick = ()=> setAuthMode(authMode === "login" ? "signup" : "login");
 
 
 closeModal.onclick = ()=>{
@@ -4524,7 +4582,7 @@ modal.addEventListener(
 );
 
 
-modalSubmit.onclick = ()=>{
+modalSubmit.onclick = async ()=>{
 
   const email =
     document
@@ -4539,7 +4597,10 @@ modalSubmit.onclick = ()=>{
       .trim();
 
 
-  if(!email || !password){
+  const fullName = document.getElementById("signupName").value.trim();
+  const companyName = document.getElementById("signupCompany").value.trim();
+
+  if(!email || !password || (authMode === "signup" && (!fullName || !companyName))){
 
     showToast(
       "Inserisci email e password."
@@ -4550,14 +4611,72 @@ modalSubmit.onclick = ()=>{
   }
 
 
-  modal.classList.remove("show");
+  authError.classList.remove("show");
+  modalSubmit.disabled = true;
+  modalSubmit.textContent = authMode === "signup" ? "Creazione..." : "Accesso...";
 
+  try{
+    if(authMode === "signup"){
+      const { data, error } = await flowpilot.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{ full_name:fullName, company_name:companyName },
+          emailRedirectTo:`${window.location.origin}/dashboard.html`
+        }
+      });
+      if(error) throw error;
+      if(!data.session){
+        showToast("Controlla la tua email per confermare l'account.");
+        modal.classList.remove("show");
+        return;
+      }
+    }else{
+      const { error } = await flowpilot.auth.signInWithPassword({ email, password });
+      if(error) throw error;
+    }
 
-  showToast(
-    "Accesso pronto per essere collegato al backend."
-  );
+    modal.classList.remove("show");
+    if(pendingPlan){
+      await beginCheckout(pendingPlan);
+    }else{
+      window.location.href = "dashboard.html";
+    }
+  }catch(error){
+    displayAuthError(error.message || "Accesso non riuscito.");
+  }finally{
+    modalSubmit.disabled = false;
+    modalSubmit.textContent = authMode === "signup" ? "Crea account →" : "Accedi →";
+  }
 
 };
+
+async function beginCheckout(plan){
+  const { data:{ session } } = await flowpilot.auth.getSession();
+  if(!session){
+    pendingPlan = plan;
+    sessionStorage.setItem("flowpilot_pending_plan", plan);
+    openAuth("signup");
+    return;
+  }
+
+  showToast("Apertura del pagamento sicuro...");
+  const { data, error } = await flowpilot.functions.invoke("create-checkout", {
+    body:{ plan }
+  });
+  if(error || !data?.url){
+    showToast(data?.error || "Pagamento non disponibile. Riprova tra poco.");
+    return;
+  }
+  sessionStorage.removeItem("flowpilot_pending_plan");
+  window.location.href = data.url;
+}
+
+function startPlan(plan){
+  pendingPlan = plan;
+  sessionStorage.setItem("flowpilot_pending_plan", plan);
+  beginCheckout(plan);
+}
 
 
 /* =====================================================
@@ -4649,40 +4768,7 @@ function runMarketAnalysis(){
 ===================================================== */
 
 function selectFlowPilotPlan(plan){
-
-  currentFlowPilotPlan =
-    plan;
-
-
-  localStorage.setItem(
-    "flowpilot_plan",
-    plan
-  );
-
-
-  if(plan === "pro"){
-
-    showToast(
-      "Piano FlowPilot Pro selezionato. MarketLens base + 5% Business inclusi."
-    );
-
-
-    setTimeout(()=>{
-
-      go("marketlens");
-
-    },700);
-
-
-    return;
-
-  }
-
-
-  showToast(
-    "Piano FlowPilot selezionato."
-  );
-
+  startPlan(plan);
 }
 
 
@@ -4784,7 +4870,26 @@ document.addEventListener(
    INITIALIZATION
 ===================================================== */
 
+async function initializeAuth(){
+  const { data:{ session } } = await flowpilot.auth.getSession();
+  if(!session) return;
+
+  loginBtn.textContent = "Dashboard";
+  loginBtn.dataset.authenticated = "true";
+
+  const { data:subscription } = await flowpilot
+    .from("subscriptions")
+    .select("plan,status")
+    .maybeSingle();
+
+  if(subscription && ["active","trialing"].includes(subscription.status)){
+    currentFlowPilotPlan = subscription.plan;
+    checkMarketLensAccess();
+  }
+}
+
 checkMarketLensAccess();
+initializeAuth();
 
 </script>
 
