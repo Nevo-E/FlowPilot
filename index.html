@@ -2,7 +2,6 @@
 <html lang="it">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
@@ -28,2345 +27,1169 @@
 >
 
 <style>
-
-/* =====================================================
-   VARIABLES
-===================================================== */
-
 :root{
-
   --bg:#f7f8fc;
   --card:#ffffff;
-
   --text:#171925;
   --muted:#73778a;
-
   --line:#e7e9ef;
-
   --primary:#5b55f7;
   --primary2:#756fff;
-
   --dark:#11121b;
-
   --green:#17956d;
-
-  --shadow:
-    0 18px 55px rgba(28,31,55,.08);
-
+  --shadow:0 18px 55px rgba(28,31,55,.08);
   --radius:15px;
-
 }
 
-
-/* =====================================================
-   RESET
-===================================================== */
-
-*{
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 
 body{
-
   margin:0;
-
   background:var(--bg);
-
   color:var(--text);
-
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-size:14px;
-
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-button{
-  font:inherit;
-}
-
-
-/* =====================================================
-   WRAPPER
-===================================================== */
+a{text-decoration:none;color:inherit}
+button{font:inherit}
 
 .wrap{
-
-  width:min(
-    1120px,
-    calc(100% - 40px)
-  );
-
+  width:min(1120px,calc(100% - 40px));
   margin:auto;
-
 }
 
-
-/* =====================================================
-   NAVBAR
-===================================================== */
-
+/* NAVBAR */
 .nav{
-
   height:72px;
-
   display:flex;
-
   align-items:center;
-
-  border-bottom:
-    1px solid rgba(231,233,239,.8);
-
-  background:
-    rgba(247,248,252,.86);
-
-  backdrop-filter:
-    blur(16px);
-
+  border-bottom:1px solid rgba(231,233,239,.8);
+  background:rgba(247,248,252,.86);
+  backdrop-filter:blur(16px);
   position:sticky;
-
   top:0;
-
   z-index:100;
-
 }
 
 .nav-inner{
-
-  width:min(
-    1180px,
-    calc(100% - 40px)
-  );
-
+  width:min(1180px,calc(100% - 40px));
   margin:auto;
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
-
   gap:25px;
-
 }
 
 .brand{
-
   display:flex;
-
   align-items:center;
-
   gap:10px;
-
   font-weight:800;
-
   font-size:18px;
-
   letter-spacing:-.03em;
-
 }
 
 .brand-mark{
-
   width:30px;
   height:30px;
-
   border-radius:9px;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--primary2),
-      #4842e7
-    );
-
+  background:linear-gradient(135deg,var(--primary2),#4842e7);
   position:relative;
-
   display:grid;
-
   place-items:center;
-
   color:#fff;
-
 }
 
 .brand-mark:after{
-
   content:"";
-
   width:10px;
   height:10px;
-
-  border:
-    2px solid #fff;
-
+  border:2px solid #fff;
   border-radius:3px;
-
-  transform:
-    rotate(45deg);
-
+  transform:rotate(45deg);
 }
 
 .nav-links{
-
   display:flex;
-
   align-items:center;
-
   gap:28px;
-
   color:#6f7384;
-
   font-size:11px;
-
   font-weight:600;
-
 }
 
-.nav-links a{
-
-  transition:.2s ease;
-
-}
-
-.nav-links a:hover{
-
-  color:var(--primary);
-
-}
-
-
-/*
-  MARKETLENS NAVBAR LINK
-
-  IMPORTANTE:
-  Non porta a marketlens.html.
-  Porta alla sezione della homepage.
-*/
-
-.nav-links .marketlens-link{
-
-  color:#625ced;
-
-}
-
-.nav-links .marketlens-link:hover{
-
-  color:#4943dd;
-
-}
-
+.nav-links a{transition:.2s ease}
+.nav-links a:hover{color:var(--primary)}
+.nav-links .marketlens-link{color:#625ced}
+.nav-links .marketlens-link:hover{color:#4943dd}
 
 .nav-actions{
-
   display:flex;
-
   align-items:center;
-
   gap:9px;
-
 }
 
 .login{
-
   border:0;
-
   background:transparent;
-
   color:#666a7a;
-
   font-size:11px;
-
   font-weight:600;
-
   padding:9px 10px;
-
   cursor:pointer;
-
 }
 
 .nav-cta{
-
   border:0;
-
   background:var(--primary);
-
   color:#fff;
-
   border-radius:8px;
-
   padding:10px 14px;
-
   font-size:11px;
-
   font-weight:700;
-
   cursor:pointer;
-
-  box-shadow:
-    0 6px 18px rgba(91,85,247,.2);
-
+  box-shadow:0 6px 18px rgba(91,85,247,.2);
 }
 
-.nav-cta:hover{
+.nav-cta:hover{background:#4c46e5}
 
-  background:#4c46e5;
-
-}
-
-
-/* =====================================================
-   TICKER
-===================================================== */
-
+/* TICKER */
 .ticker{
-
   overflow:hidden;
-
-  border-bottom:
-    1px solid var(--line);
-
+  border-bottom:1px solid var(--line);
   background:#fff;
-
   height:34px;
-
 }
 
 .ticker-track{
-
   height:100%;
-
   display:flex;
-
   align-items:center;
-
   gap:42px;
-
   white-space:nowrap;
-
-  animation:
-    tickerMove 28s linear infinite;
-
+  animation:tickerMove 28s linear infinite;
 }
 
 .ticker-track span{
-
   color:#858998;
-
   font-size:8px;
-
   text-transform:uppercase;
-
   letter-spacing:.12em;
-
 }
 
-.ticker-track b{
-
-  color:#6b66e9;
-
-}
+.ticker-track b{color:#6b66e9}
 
 @keyframes tickerMove{
-
-  from{
-    transform:translateX(0);
-  }
-
-  to{
-    transform:translateX(-45%);
-  }
-
+  from{transform:translateX(0)}
+  to{transform:translateX(-45%)}
 }
 
-
-/* =====================================================
-   HERO
-===================================================== */
-
+/* HERO */
 .hero{
-
-  padding:
-    88px 0 72px;
-
+  padding:88px 0 72px;
   text-align:center;
-
   position:relative;
-
   overflow:hidden;
-
 }
 
 .hero:before{
-
   content:"";
-
   position:absolute;
-
   width:580px;
-
   height:300px;
-
   background:#716cf4;
-
   filter:blur(120px);
-
   opacity:.11;
-
   left:50%;
-
   top:40px;
-
-  transform:
-    translateX(-50%);
-
+  transform:translateX(-50%);
   pointer-events:none;
-
 }
 
 .eyebrow{
-
   color:var(--primary);
-
   text-transform:uppercase;
-
   letter-spacing:.15em;
-
   font-size:9px;
-
   font-weight:800;
-
   margin-bottom:15px;
-
 }
 
 .hero h1{
-
-  font-size:
-    clamp(42px,7vw,76px);
-
+  font-size:clamp(42px,7vw,76px);
   line-height:.98;
-
   letter-spacing:-.065em;
-
-  margin:
-    0 auto 23px;
-
+  margin:0 auto 23px;
   max-width:900px;
-
   position:relative;
-
 }
 
 .hero h1 .accent{
-
-  background:
-    linear-gradient(
-      100deg,
-      #5b55f7,
-      #8b86ff
-    );
-
+  background:linear-gradient(100deg,#5b55f7,#8b86ff);
   -webkit-background-clip:text;
-
   background-clip:text;
-
   color:transparent;
-
 }
 
 .hero-sub{
-
   max-width:650px;
-
   margin:auto;
-
   color:#777b8d;
-
   font-size:14px;
-
   line-height:1.75;
-
 }
 
 .hero-buttons{
-
   display:flex;
-
   justify-content:center;
-
   gap:10px;
-
   margin-top:28px;
-
 }
 
 .hero-cta{
-
   border:0;
-
   background:var(--primary);
-
   color:#fff;
-
   border-radius:8px;
-
   padding:13px 19px;
-
   font-size:11px;
-
   font-weight:700;
-
   cursor:pointer;
-
-  box-shadow:
-    0 6px 18px rgba(91,85,247,.2);
-
+  box-shadow:0 6px 18px rgba(91,85,247,.2);
 }
 
-.hero-cta:hover{
-
-  background:#4c46e5;
-
-}
+.hero-cta:hover{background:#4c46e5}
 
 .hero-cta.secondary{
-
   background:#fff;
-
   color:#343747;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   box-shadow:none;
-
 }
 
-
-/* =====================================================
-   DEMO
-===================================================== */
-
+/* DEMO */
 .demo-wrap{
-
-  margin:
-    45px auto 0;
-
+  margin:45px auto 0;
   max-width:920px;
-
   position:relative;
-
 }
 
 .demo{
-
   background:#11121b;
-
-  border:
-    1px solid #2a2b38;
-
+  border:1px solid #2a2b38;
   border-radius:18px;
-
   padding:10px;
-
-  box-shadow:
-    0 35px 90px rgba(20,21,33,.2);
-
+  box-shadow:0 35px 90px rgba(20,21,33,.2);
   text-align:left;
-
 }
 
 .demo-bar{
-
   height:33px;
-
   display:flex;
-
   align-items:center;
-
   gap:6px;
-
   padding:0 8px;
-
   color:#7d8192;
-
   font-size:9px;
-
 }
 
 .dot{
-
   width:7px;
   height:7px;
-
   border-radius:50%;
-
   background:#414351;
-
 }
 
 .demo-window{
-
   background:#f8f8fb;
-
   border-radius:11px;
-
   min-height:300px;
-
   display:grid;
-
   grid-template-columns:145px 1fr;
-
   overflow:hidden;
-
 }
 
 .demo-side{
-
   background:#14151e;
-
   color:#9296a6;
-
   padding:17px 12px;
-
 }
 
 .demo-brand{
-
   color:#fff;
-
   font-weight:800;
-
   font-size:11px;
-
   margin-bottom:22px;
-
 }
 
 .demo-nav{
-
   padding:8px 9px;
-
   border-radius:6px;
-
   font-size:9px;
-
   margin:3px 0;
-
 }
 
 .demo-nav.active{
-
   background:#292a3a;
-
   color:#fff;
-
 }
 
-.demo-main{
-
-  padding:22px;
-
-}
+.demo-main{padding:22px}
 
 .demo-main-top{
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
 }
 
 .mini-title{
-
   font-size:17px;
-
   font-weight:800;
-
 }
 
 .mini-btn{
-
   background:var(--primary);
-
   color:#fff;
-
   border:0;
-
   border-radius:6px;
-
   padding:7px 9px;
-
   font-size:8px;
-
 }
 
 .mini-stats{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
+  grid-template-columns:repeat(4,1fr);
   gap:8px;
-
   margin:18px 0;
-
 }
 
 .mini-stat{
-
   background:#fff;
-
-  border:
-    1px solid #e9eaf0;
-
+  border:1px solid #e9eaf0;
   border-radius:7px;
-
   padding:10px;
-
 }
 
 .mini-stat span{
-
   font-size:7px;
-
   color:#9296a4;
-
 }
 
 .mini-stat strong{
-
   display:block;
-
   font-size:15px;
-
   margin-top:4px;
-
 }
 
 .demo-lower{
-
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns:1fr 1fr;
   gap:8px;
-
 }
 
 .mini-card{
-
   background:#fff;
-
-  border:
-    1px solid #e9eaf0;
-
+  border:1px solid #e9eaf0;
   border-radius:7px;
-
   padding:14px;
-
 }
 
 .mini-card h4{
-
   margin:0 0 13px;
-
   font-size:10px;
-
 }
 
 .mini-line{
-
   height:7px;
-
   border-radius:5px;
-
   background:#eceef3;
-
   margin:8px 0;
-
 }
 
-.mini-line.w1{
-  width:88%;
-}
-
-.mini-line.w2{
-  width:72%;
-}
-
-.mini-line.w3{
-  width:54%;
-}
+.mini-line.w1{width:88%}
+.mini-line.w2{width:72%}
+.mini-line.w3{width:54%}
 
 .ai-card{
-
-  background:
-    linear-gradient(
-      145deg,
-      #17182a,
-      #29285a
-    );
-
+  background:linear-gradient(145deg,#17182a,#29285a);
   color:#fff;
-
 }
 
 .ai-card p{
-
   color:#b3b5c5;
-
   font-size:8px;
-
   line-height:1.6;
-
 }
 
-
-/* =====================================================
-   STATS
-===================================================== */
-
+/* STATS */
 .stats{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  border:
-    1px solid var(--line);
-
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);
   border-radius:15px;
-
   background:#fff;
-
   overflow:hidden;
-
   margin-bottom:55px;
-
 }
 
 .stat{
-
   padding:20px;
-
   text-align:center;
-
-  border-right:
-    1px solid var(--line);
-
+  border-right:1px solid var(--line);
 }
 
-.stat:last-child{
-
-  border-right:0;
-
-}
+.stat:last-child{border-right:0}
 
 .stat strong{
-
   display:block;
-
   font-size:13px;
-
   margin-bottom:5px;
-
 }
 
 .stat span{
-
   color:#9296a4;
-
   font-size:9px;
-
 }
 
-
-/* =====================================================
-   GENERAL SECTIONS
-===================================================== */
-
-.section{
-
-  padding:
-    90px 0;
-
-}
+/* GENERAL */
+.section{padding:90px 0}
 
 .section-head{
-
   max-width:700px;
-
   margin-bottom:40px;
-
 }
 
 .section-label{
-
   color:var(--primary);
-
   text-transform:uppercase;
-
   letter-spacing:.12em;
-
   font-size:9px;
-
   font-weight:800;
-
   margin-bottom:12px;
-
 }
 
 .section-head h2{
-
   font-size:42px;
-
   line-height:1.05;
-
   letter-spacing:-.055em;
-
   margin:0 0 14px;
-
 }
 
 .section-head p{
-
   color:#777b8d;
-
   font-size:12px;
-
   line-height:1.75;
-
 }
 
-
-/* =====================================================
-   FEATURES
-===================================================== */
-
+/* FEATURES */
 .feature-grid{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:15px;
-
 }
 
 .feature{
-
   background:#fff;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:15px;
-
   padding:25px;
-
-  box-shadow:
-    var(--shadow);
-
+  box-shadow:var(--shadow);
 }
 
 .feature-icon{
-
   width:35px;
-
   height:35px;
-
   border-radius:9px;
-
   background:#ecebff;
-
   color:var(--primary);
-
   display:grid;
-
   place-items:center;
-
   font-weight:800;
-
   margin-bottom:18px;
-
 }
 
 .feature h3{
-
   font-size:14px;
-
   margin:0 0 8px;
-
 }
 
 .feature p{
-
   color:#858998;
-
   font-size:10px;
-
   line-height:1.7;
-
   margin:0;
-
 }
 
-
-/* =====================================================
-   DARK AI SECTION
-===================================================== */
-
+/* DARK AI */
 .dark-section{
-
-  background:
-    linear-gradient(
-      145deg,
-      #11121b,
-      #1e1f32
-    );
-
+  background:linear-gradient(145deg,#11121b,#1e1f32);
   color:#fff;
-
 }
 
 .dark-grid{
-
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns:1fr 1fr;
   gap:45px;
-
   align-items:center;
-
 }
 
-.dark-section .section-label{
-
-  color:#a9a6ff;
-
-}
+.dark-section .section-label{color:#a9a6ff}
 
 .dark-copy h2{
-
   font-size:42px;
-
   line-height:1.05;
-
   letter-spacing:-.055em;
-
   margin:0 0 15px;
-
 }
 
 .dark-copy p{
-
   color:#aeb0bf;
-
   font-size:12px;
-
   line-height:1.75;
-
   max-width:570px;
-
 }
 
 .ai-models{
-
   display:grid;
-
   gap:10px;
-
 }
 
 .model{
-
   display:flex;
-
   align-items:center;
-
   gap:12px;
-
   padding:15px;
-
-  background:
-    rgba(255,255,255,.05);
-
-  border:
-    1px solid rgba(255,255,255,.08);
-
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
   border-radius:11px;
-
 }
 
 .model-icon{
-
   width:35px;
-
   height:35px;
-
   display:grid;
-
   place-items:center;
-
   border-radius:9px;
-
-  background:
-    rgba(117,111,255,.16);
-
+  background:rgba(117,111,255,.16);
   color:#aaa6ff;
-
 }
 
 .model strong{
-
   display:block;
-
   font-size:10px;
-
   margin-bottom:4px;
-
 }
 
 .model span{
-
   display:block;
-
   color:#85889a;
-
   font-size:8px;
-
   line-height:1.6;
-
 }
 
-
-/* =====================================================
-   WORKFLOW
-===================================================== */
-
+/* WORKFLOW */
 .steps{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  border:
-    1px solid var(--line);
-
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);
   border-radius:15px;
-
   overflow:hidden;
-
   background:#fff;
-
 }
 
 .step{
-
   padding:25px;
-
-  border-right:
-    1px solid var(--line);
-
+  border-right:1px solid var(--line);
 }
 
-.step:last-child{
-
-  border-right:0;
-
-}
+.step:last-child{border-right:0}
 
 .step .num{
-
   color:var(--primary);
-
   font-size:10px;
-
   font-weight:800;
-
   margin-bottom:40px;
-
 }
 
 .step h3{
-
   font-size:13px;
-
   margin:0 0 8px;
-
 }
 
 .step p{
-
   color:#858998;
-
   font-size:9px;
-
   line-height:1.7;
-
   margin:0;
-
 }
 
-
-/* =====================================================
-   MARKETLENS
-===================================================== */
-
+/* MARKETLENS */
 .marketlens-section{
-
-  padding:
-    105px 0;
-
+  padding:105px 0;
   background:#fff;
-
-  border-top:
-    1px solid var(--line);
-
-  border-bottom:
-    1px solid var(--line);
-
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
 }
-
-
-/*
-  Questa è la sezione che appare quando
-  l'utente clicca "MarketLens" nella navbar.
-*/
 
 .marketlens-header{
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:flex-end;
-
   gap:30px;
-
   margin-bottom:35px;
-
 }
 
 .marketlens-header h2{
-
   font-size:42px;
-
   line-height:1;
-
   letter-spacing:-.06em;
-
-  margin:
-    0 0 12px;
-
+  margin:0 0 12px;
 }
 
 .marketlens-header p{
-
   max-width:600px;
-
   color:#777b8d;
-
   font-size:11px;
-
   line-height:1.7;
-
   margin:0;
-
 }
 
 .marketlens-badge{
-
   background:#ecebff;
-
   color:var(--primary);
-
   border-radius:7px;
-
   padding:7px 10px;
-
   font-size:8px;
-
   font-weight:800;
-
   white-space:nowrap;
-
 }
-
-
-/*
-  GRID PRINCIPALE
-*/
 
 .marketlens-grid{
-
   display:grid;
-
-  grid-template-columns:
-    1.5fr 1fr;
-
+  grid-template-columns:1.5fr 1fr;
   gap:15px;
-
 }
-
-
-/*
-  DASHBOARD MARKETLENS
-*/
 
 .marketlens-main,
 .marketlens-card{
-
   background:#fff;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:15px;
-
-  box-shadow:
-    var(--shadow);
-
+  box-shadow:var(--shadow);
 }
 
-.marketlens-main{
-
-  padding:25px;
-
-}
+.marketlens-main{padding:25px}
 
 .marketlens-top{
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
   margin-bottom:25px;
-
 }
 
 .marketlens-title{
-
   font-size:14px;
-
   font-weight:800;
-
 }
 
 .marketlens-subtitle{
-
   font-size:8px;
-
   color:#999cab;
-
   margin-top:4px;
-
 }
 
 .marketlens-search{
-
   display:flex;
-
   gap:8px;
-
   margin-bottom:20px;
-
 }
 
 .marketlens-search input{
-
   flex:1;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:8px;
-
   padding:11px;
-
   outline:none;
-
   font:inherit;
-
   font-size:10px;
-
 }
 
 .marketlens-search input:focus{
-
   border-color:#aaa6ff;
-
-  box-shadow:
-    0 0 0 3px #f0efff;
-
+  box-shadow:0 0 0 3px #f0efff;
 }
 
 .marketlens-search button{
-
   border:0;
-
   background:var(--primary);
-
   color:#fff;
-
   border-radius:8px;
-
-  padding:
-    0 16px;
-
+  padding:0 16px;
   font-size:10px;
-
   font-weight:700;
-
   cursor:pointer;
-
 }
 
-.marketlens-search button:hover{
-
-  background:#4c46e5;
-
-}
+.marketlens-search button:hover{background:#4c46e5}
 
 .marketlens-metrics{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:10px;
-
 }
 
 .marketlens-metric{
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:10px;
-
   padding:14px;
-
 }
 
 .marketlens-metric span{
-
   display:block;
-
   color:#9498a6;
-
   font-size:7px;
-
   text-transform:uppercase;
-
   letter-spacing:.1em;
-
 }
 
 .marketlens-metric strong{
-
   display:block;
-
   font-size:19px;
-
   margin-top:7px;
-
 }
 
 .marketlens-metric small{
-
   color:var(--green);
-
   font-size:7px;
-
 }
 
 .marketlens-chart{
-
   height:170px;
-
   margin-top:15px;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:10px;
-
-  padding:
-    15px;
-
+  padding:15px;
   display:flex;
-
   align-items:flex-end;
-
   gap:8px;
-
 }
 
 .chart-bar{
-
   flex:1;
-
   background:#dddfff;
-
-  border-radius:
-    4px 4px 0 0;
-
+  border-radius:4px 4px 0 0;
 }
 
-.chart-bar:last-child{
-
-  background:var(--primary);
-
-}
-
-
-/*
-  SIDE CARDS
-*/
+.chart-bar:last-child{background:var(--primary)}
 
 .marketlens-side{
-
   display:grid;
-
   gap:15px;
-
 }
 
-.marketlens-card{
-
-  padding:22px;
-
-}
+.marketlens-card{padding:22px}
 
 .marketlens-card h3{
-
   font-size:12px;
-
-  margin:
-    0 0 9px;
-
+  margin:0 0 9px;
 }
 
 .marketlens-card p{
-
   color:#858998;
-
   font-size:9px;
-
   line-height:1.7;
-
   margin:0;
-
 }
-
-
-/*
-  CARD PRO
-*/
 
 .marketlens-lock{
-
-  background:
-    linear-gradient(
-      145deg,
-      #17182a,
-      #29285a
-    );
-
+  background:linear-gradient(145deg,#17182a,#29285a);
   color:#fff;
-
-  border-color:
-    rgba(117,111,255,.25);
-
+  border-color:rgba(117,111,255,.25);
 }
 
-.marketlens-lock h3{
-
-  color:#fff;
-
-}
-
-.marketlens-lock p{
-
-  color:#aaaebe;
-
-}
+.marketlens-lock h3{color:#fff}
+.marketlens-lock p{color:#aaaebe}
 
 .pro-discount{
-
   margin-top:15px;
-
   padding:12px;
-
-  border:
-    1px solid rgba(255,255,255,.1);
-
-  background:
-    rgba(255,255,255,.05);
-
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);
   border-radius:9px;
-
   color:#aeb0c0;
-
   font-size:8px;
-
   line-height:1.6;
-
 }
 
 .pro-discount strong{
-
   display:block;
-
   color:#aaa6ff;
-
   font-size:9px;
-
   margin-bottom:4px;
-
 }
 
 .marketlens-lock button{
-
   margin-top:12px;
-
   width:100%;
-
   border:0;
-
   background:#fff;
-
   color:#25263a;
-
   border-radius:8px;
-
   padding:10px;
-
   font-size:9px;
-
   font-weight:800;
-
   cursor:pointer;
-
 }
 
-.marketlens-lock button:hover{
-
-  background:#f0efff;
-
-}
-
-
-/*
-  NUOVO PULSANTE:
-  apre la pagina completa MarketLens
-*/
+.marketlens-lock button:hover{background:#f0efff}
 
 .marketlens-explore{
-
   display:inline-flex;
-
   align-items:center;
-
   justify-content:center;
-
   gap:8px;
-
   margin-top:20px;
-
-  padding:
-    12px 17px;
-
+  padding:12px 17px;
   border-radius:8px;
-
   background:var(--primary);
-
   color:#fff;
-
   font-size:10px;
-
   font-weight:800;
-
-  box-shadow:
-    0 6px 18px rgba(91,85,247,.2);
-
+  box-shadow:0 6px 18px rgba(91,85,247,.2);
   transition:.2s ease;
-
 }
 
 .marketlens-explore:hover{
-
   background:#4c46e5;
-
-  transform:
-    translateY(-1px);
-
+  transform:translateY(-1px);
 }
 
-
-/* =====================================================
-   PRICING
-===================================================== */
-
+/* PRICING */
 .pricing{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(2,minmax(0,1fr));
-
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:15px;
-
 }
 
 .price{
-
   background:#fff;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:15px;
-
   padding:25px;
-
   position:relative;
-
 }
 
 .price.featured{
-
-  border-color:
-    #aaa6ff;
-
-  transform:
-    translateY(-4px);
-
-  box-shadow:
-    0 15px 40px rgba(91,85,247,.1);
-
+  border-color:#aaa6ff;
+  transform:translateY(-4px);
+  box-shadow:0 15px 40px rgba(91,85,247,.1);
 }
 
 .popular{
-
   position:absolute;
-
   right:18px;
-
   top:18px;
-
   background:#ecebff;
-
   color:var(--primary);
-
   font-size:8px;
-
   font-weight:800;
-
   padding:5px 7px;
-
   border-radius:5px;
-
 }
 
 .price h3{
-
   font-size:14px;
-
   margin:0;
-
 }
 
 .price-desc{
-
   font-size:9px;
-
   color:#9296a4;
-
   min-height:30px;
-
   line-height:1.5;
-
 }
 
 .price-number{
-
   font-size:34px;
-
   font-weight:800;
-
   letter-spacing:-.06em;
-
-  margin:
-    18px 0 3px;
-
+  margin:18px 0 3px;
 }
 
 .price-number small{
-
   font-size:10px;
-
   font-weight:500;
-
   color:#9296a4;
-
 }
 
 .price-note{
-
   font-size:8px;
-
   color:#a1a4b0;
-
   margin-bottom:18px;
-
 }
 
 .price ul{
-
   list-style:none;
-
   padding:0;
-
-  margin:
-    0 0 22px;
-
-  border-top:
-    1px solid var(--line);
-
+  margin:0 0 22px;
+  border-top:1px solid var(--line);
 }
 
 .price li{
-
   font-size:9px;
-
   padding:9px 0;
-
-  border-bottom:
-    1px solid #f0f1f4;
-
+  border-bottom:1px solid #f0f1f4;
 }
 
 .price li:before{
-
   content:"✓";
-
   color:var(--green);
-
   font-weight:800;
-
   margin-right:7px;
-
 }
 
 .price button{
-
   width:100%;
-
   padding:10px;
-
   border-radius:7px;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   background:#fff;
-
   font-size:10px;
-
   font-weight:700;
-
   color:#4b4f5f;
-
   cursor:pointer;
-
 }
 
 .price.featured button{
-
   background:var(--primary);
-
   color:#fff;
-
   border-color:var(--primary);
-
 }
 
-
-/*
-  VANTAGGIO MARKETLENS NEL PRO
-*/
-
 .marketlens-benefit{
-
-  margin:
-    15px 0;
-
+  margin:15px 0;
   padding:12px;
-
   border-radius:9px;
-
   background:#f5f4ff;
-
-  border:
-    1px solid #e6e3ff;
-
+  border:1px solid #e6e3ff;
   color:#73778a;
-
   font-size:8px;
-
   line-height:1.6;
-
 }
 
 .marketlens-benefit strong{
-
   display:block;
-
   color:var(--primary);
-
   font-size:9px;
-
   margin-bottom:4px;
-
 }
 
-
-/* =====================================================
-   FAQ
-===================================================== */
-
+/* FAQ */
 .faq{
-
   max-width:780px;
-
   margin:auto;
-
 }
 
-.faq-item{
-
-  border-top:
-    1px solid var(--line);
-
-}
-
-.faq-item:last-child{
-
-  border-bottom:
-    1px solid var(--line);
-
-}
+.faq-item{border-top:1px solid var(--line)}
+.faq-item:last-child{border-bottom:1px solid var(--line)}
 
 .faq-q{
-
   width:100%;
-
   border:0;
-
   background:none;
-
   text-align:left;
-
   padding:17px 0;
-
   font-size:11px;
-
   font-weight:700;
-
   display:flex;
-
   justify-content:space-between;
-
   cursor:pointer;
-
   color:var(--text);
-
 }
 
-.faq-q span{
-
-  transition:.2s;
-
-}
+.faq-q span{transition:.2s}
 
 .faq-a{
-
   display:none;
-
   color:#858998;
-
   font-size:10px;
-
   line-height:1.7;
-
-  padding:
-    0 0 17px;
-
+  padding:0 0 17px;
   max-width:680px;
-
 }
 
-.faq-item.open .faq-a{
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q span{transform:rotate(45deg)}
 
-  display:block;
-
-}
-
-.faq-item.open .faq-q span{
-
-  transform:
-    rotate(45deg);
-
-}
-
-
-/* =====================================================
-   FINAL CTA
-===================================================== */
-
+/* FINAL CTA */
 .final-cta{
-
-  padding:
-    90px 0;
-
+  padding:90px 0;
   text-align:center;
-
 }
 
 .final-box{
-
-  background:
-    linear-gradient(
-      145deg,
-      #191a2a,
-      #29285a
-    );
-
+  background:linear-gradient(145deg,#191a2a,#29285a);
   color:#fff;
-
   border-radius:20px;
-
-  padding:
-    60px 25px;
-
+  padding:60px 25px;
   position:relative;
-
   overflow:hidden;
-
 }
 
 .final-box:before{
-
   content:"";
-
   position:absolute;
-
   width:300px;
-
   height:300px;
-
   background:#756fff;
-
   filter:blur(100px);
-
   opacity:.2;
-
   left:50%;
-
   top:-190px;
-
-  transform:
-    translateX(-50%);
-
+  transform:translateX(-50%);
 }
 
-.final-box > *{
-
-  position:relative;
-
-}
+.final-box > *{position:relative}
 
 .final-box h2{
-
   font-size:40px;
-
   letter-spacing:-.055em;
-
-  margin:
-    0 0 12px;
-
+  margin:0 0 12px;
 }
 
 .final-box p{
-
   color:#b3b5c5;
-
   font-size:11px;
-
-  margin:
-    0 auto 24px;
-
+  margin:0 auto 24px;
 }
 
 .final-box button{
-
   background:#fff;
-
   color:#25263a;
-
   border:0;
-
   border-radius:8px;
-
-  padding:
-    12px 18px;
-
+  padding:12px 18px;
   font-size:10px;
-
   font-weight:800;
-
   cursor:pointer;
-
 }
 
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
+/* FOOTER */
 footer{
-
-  border-top:
-    1px solid var(--line);
-
-  padding:
-    28px 0 45px;
-
+  border-top:1px solid var(--line);
+  padding:28px 0 45px;
   color:#9296a4;
-
   font-size:9px;
-
 }
 
 .foot{
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
 }
 
 .foot-brand{
-
   color:#333644;
-
   font-weight:800;
-
   font-size:12px;
-
 }
 
 .foot-links{
-
   display:flex;
-
   gap:18px;
-
 }
 
-
-/* =====================================================
-   LOGIN MODAL
-===================================================== */
-
+/* LOGIN MODAL */
 .modal-bg{
-
   position:fixed;
-
   inset:0;
-
-  background:
-    rgba(12,13,21,.5);
-
+  background:rgba(12,13,21,.5);
   z-index:200;
-
   display:none;
-
   align-items:center;
-
   justify-content:center;
-
   padding:20px;
-
 }
 
-.modal-bg.show{
-
-  display:flex;
-
-}
+.modal-bg.show{display:flex}
 
 .modal{
-
   background:#fff;
-
-  width:
-    min(420px,100%);
-
+  width:min(420px,100%);
   border-radius:15px;
-
   padding:25px;
-
   position:relative;
-
-  box-shadow:
-    0 30px 90px rgba(0,0,0,.22);
-
+  box-shadow:0 30px 90px rgba(0,0,0,.22);
 }
 
 .close{
-
   position:absolute;
-
   right:14px;
-
   top:10px;
-
   border:0;
-
   background:none;
-
   font-size:20px;
-
   color:#9a9dab;
-
   cursor:pointer;
-
 }
 
 .modal h2{
-
-  margin:
-    0 0 5px;
-
+  margin:0 0 5px;
   font-size:20px;
-
 }
 
 .modal p{
-
   font-size:10px;
-
   color:#9094a2;
-
 }
 
-.field{
-
-  margin-top:13px;
-
-}
+.field{margin-top:13px}
 
 .field label{
-
   display:block;
-
   font-size:9px;
-
   font-weight:700;
-
   margin-bottom:6px;
-
 }
 
 .field input{
-
   width:100%;
-
   padding:10px;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:7px;
-
   outline:0;
-
 }
 
 .field input:focus{
-
   border-color:#aaa6ff;
-
-  box-shadow:
-    0 0 0 3px #f0efff;
-
+  box-shadow:0 0 0 3px #f0efff;
 }
 
 .modal-submit{
-
   width:100%;
-
   margin-top:16px;
-
   padding:11px;
-
   border:0;
-
   border-radius:7px;
-
   background:var(--primary);
-
   color:#fff;
-
   font-weight:700;
-
   font-size:10px;
-
   cursor:pointer;
-
 }
 
 .signup-only{display:none}
 .modal.signup-mode .signup-only{display:block}
+
 .modal-switch{
   margin-top:14px;
   text-align:center;
   font-size:10px;
   color:#858999;
 }
+
 .modal-switch button{
   border:0;
   background:transparent;
@@ -2375,6 +1198,7 @@ footer{
   cursor:pointer;
   padding:2px 4px;
 }
+
 .auth-error{
   display:none;
   margin-top:12px;
@@ -2385,1995 +1209,564 @@ footer{
   font-size:9px;
   line-height:1.45;
 }
+
 .auth-error.show{display:block}
 .modal-submit:disabled{opacity:.62;cursor:wait}
 
-
-/* =====================================================
-   TOAST
-===================================================== */
-
+/* TOAST */
 .toast{
-
   position:fixed;
-
   right:20px;
-
   bottom:20px;
-
   background:#171925;
-
   color:#fff;
-
-  padding:
-    11px 15px;
-
+  padding:11px 15px;
   border-radius:9px;
-
   font-size:10px;
-
   opacity:0;
-
-  transform:
-    translateY(15px);
-
+  transform:translateY(15px);
   transition:.2s;
-
   z-index:300;
-
 }
 
 .toast.show{
-
   opacity:1;
-
   transform:none;
-
 }
 
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
+/* RESPONSIVE */
 @media(max-width:900px){
-
-  .nav-links{
-
-    gap:13px;
-
-  }
-
-  .marketlens-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .marketlens-header{
-
-    flex-direction:column;
-
-    align-items:flex-start;
-
-  }
-
-  .dark-grid{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .feature-grid,
-  .pricing{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .price.featured{
-
-    transform:none;
-
-  }
-
+  .nav-links{gap:13px}
+  .marketlens-grid{grid-template-columns:1fr}
+  .marketlens-header{flex-direction:column;align-items:flex-start}
+  .dark-grid{grid-template-columns:1fr}
+  .feature-grid,.pricing{grid-template-columns:1fr}
+  .price.featured{transform:none}
 }
 
 @media(max-width:800px){
-
-  .nav-links{
-
-    display:none;
-
-  }
-
-  .hero{
-
-    padding:
-      65px 0 55px;
-
-  }
-
-  .hero h1{
-
-    font-size:45px;
-
-  }
-
-  .stats{
-
-    grid-template-columns:
-      1fr 1fr;
-
-    margin-bottom:55px;
-
-  }
-
-  .stat:nth-child(2){
-
-    border-right:0;
-
-  }
-
-  .stat:nth-child(-n+2){
-
-    border-bottom:
-      1px solid var(--line);
-
-  }
-
-  .steps{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .step:nth-child(2){
-
-    border-right:0;
-
-  }
-
-  .step:nth-child(-n+2){
-
-    border-bottom:
-      1px solid var(--line);
-
-  }
-
-  .demo-window{
-
-    grid-template-columns:
-      90px 1fr;
-
-  }
-
-  .demo-main{
-
-    padding:12px;
-
-  }
-
-  .mini-stats{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-  .demo-lower{
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .dark-copy h2,
-  .section-head h2,
-  .final-box h2{
-
-    font-size:31px;
-
-  }
-
-  .marketlens-header h2{
-
-    font-size:34px;
-
-  }
-
-  .marketlens-metrics{
-
-    grid-template-columns:
-      1fr;
-
-  }
-
-  .foot{
-
-    flex-direction:column;
-
-    gap:15px;
-
-  }
-
+  .nav-links{display:none}
+  .hero{padding:65px 0 55px}
+  .hero h1{font-size:45px}
+  .stats{grid-template-columns:1fr 1fr;margin-bottom:55px}
+  .stat:nth-child(2){border-right:0}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:1fr 1fr}
+  .step:nth-child(2){border-right:0}
+  .step:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .demo-window{grid-template-columns:90px 1fr}
+  .demo-main{padding:12px}
+  .mini-stats{grid-template-columns:1fr 1fr}
+  .demo-lower{grid-template-columns:1fr}
+  .dark-copy h2,.section-head h2,.final-box h2{font-size:31px}
+  .marketlens-header h2{font-size:34px}
+  .marketlens-metrics{grid-template-columns:1fr}
+  .foot{flex-direction:column;gap:15px}
 }
 
 @media(max-width:520px){
-
-  .wrap{
-
-    width:
-      min(
-        100% - 28px,
-        1120px
-      );
-
-  }
-
-  .nav-inner{
-
-    width:
-      calc(100% - 28px);
-
-  }
-
-  .nav-cta{
-
-    padding:
-      8px 10px;
-
-  }
-
-  .hero h1{
-
-    font-size:38px;
-
-  }
-
-  .hero-sub{
-
-    font-size:12px;
-
-  }
-
-  .hero-buttons{
-
-    flex-direction:column;
-
-    align-items:center;
-
-  }
-
-  .hero-buttons button{
-
-    width:100%;
-
-    max-width:280px;
-
-  }
-
-  .demo-wrap{
-
-    margin-top:30px;
-
-  }
-
-  .demo-window{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .demo-side{
-
-    display:none;
-
-  }
-
-  .steps{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .step{
-
-    border-right:0!important;
-
-    border-bottom:
-      1px solid var(--line);
-
-  }
-
-  .step:last-child{
-
-    border-bottom:0;
-
-  }
-
-  .stats{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .stat{
-
-    border-right:0!important;
-
-    border-bottom:
-      1px solid var(--line);
-
-  }
-
-  .stat:last-child{
-
-    border-bottom:0;
-
-  }
-
-  .marketlens-search{
-
-    flex-direction:column;
-
-  }
-
-  .marketlens-search button{
-
-    height:38px;
-
-  }
-
-  .marketlens-header h2{
-
-    font-size:31px;
-
-  }
-
-  .foot-links{
-
-    gap:12px;
-
-  }
-
+  .wrap{width:min(100% - 28px,1120px)}
+  .nav-inner{width:calc(100% - 28px)}
+  .nav-cta{padding:8px 10px}
+  .hero h1{font-size:38px}
+  .hero-sub{font-size:12px}
+  .hero-buttons{flex-direction:column;align-items:center}
+  .hero-buttons button{width:100%;max-width:280px}
+  .demo-wrap{margin-top:30px}
+  .demo-window{grid-template-columns:1fr}
+  .demo-side{display:none}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:0!important;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:0}
+  .stats{grid-template-columns:1fr}
+  .stat{border-right:0!important;border-bottom:1px solid var(--line)}
+  .stat:last-child{border-bottom:0}
+  .marketlens-search{flex-direction:column}
+  .marketlens-search button{height:38px}
+  .marketlens-header h2{font-size:31px}
+  .foot-links{gap:12px}
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
-
 <header class="nav">
-
   <div class="nav-inner">
-
-    <a
-      class="brand"
-      href="#"
-    >
-
+    <a class="brand" href="#">
       <span class="brand-mark"></span>
-
       FlowPilot
-
     </a>
 
-
     <nav class="nav-links">
-
-      <a href="#funzioni">
-        Funzioni
-      </a>
-
-      <a href="#ai">
-        AI
-      </a>
-
-      <a href="#come-funziona">
-        Come funziona
-      </a>
-
-
-      <!--
-        IMPORTANTE:
-
-        Questo NON apre marketlens.html.
-
-        Porta alla sezione MarketLens
-        della homepage.
-      -->
-
-      <a
-        href="#marketlens"
-        class="marketlens-link"
-      >
-        MarketLens
-      </a>
-
-
-      <a href="#pricing">
-        Prezzi
-      </a>
-
-      <a href="#faq">
-        FAQ
-      </a>
-
+      <a href="#funzioni">Funzioni</a>
+      <a href="#ai">AI</a>
+      <a href="#come-funziona">Come funziona</a>
+      <a href="#marketlens" class="marketlens-link">MarketLens</a>
+      <a href="#pricing">Prezzi</a>
+      <a href="#faq">FAQ</a>
     </nav>
 
-
     <div class="nav-actions">
-
-      <button
-        class="login"
-        id="loginBtn"
-      >
-        Accedi
-      </button>
-
-      <button
-        class="nav-cta"
-        onclick="go('pricing')"
-      >
-        Inizia ora →
-      </button>
-
+      <button class="login" id="loginBtn">Sign in</button>
+      <button class="nav-cta" id="signupBtn">Sign up</button>
     </div>
-
   </div>
-
 </header>
 
-
-<!-- =====================================================
-     TICKER
-===================================================== -->
-
 <div class="ticker">
-
   <div class="ticker-track">
-
-    <span>
-      FLOWPILOT
-      <b>AI WORKFLOW INTELLIGENCE</b>
-    </span>
-
-    <span>
-      AUTOMAZIONI INTELLIGENTI
-    </span>
-
-    <span>
-      MARKETLENS — MARKET INTELLIGENCE
-    </span>
-
-    <span>
-      PIÙ CONTROLLO.
-      MENO LAVORO MANUALE.
-    </span>
-
-    <span>
-      FLOWPILOT
-      <b>AI WORKFLOW INTELLIGENCE</b>
-    </span>
-
-    <span>
-      MARKETLENS — MARKET INTELLIGENCE
-    </span>
-
+    <span>FLOWPILOT <b>AI WORKFLOW INTELLIGENCE</b></span>
+    <span>AUTOMAZIONI INTELLIGENTI</span>
+    <span>MARKETLENS — MARKET INTELLIGENCE</span>
+    <span>PIÙ CONTROLLO. MENO LAVORO MANUALE.</span>
+    <span>FLOWPILOT <b>AI WORKFLOW INTELLIGENCE</b></span>
+    <span>MARKETLENS — MARKET INTELLIGENCE</span>
   </div>
-
 </div>
-
 
 <main>
 
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
 <section class="hero wrap">
-
-  <div class="eyebrow">
-    AI workflow intelligence
-  </div>
-
+  <div class="eyebrow">AI workflow intelligence</div>
 
   <h1>
-
     Il lavoro della tua azienda.
-
     <br>
-
-    <span class="accent">
-      Finalmente sotto controllo.
-    </span>
-
+    <span class="accent">Finalmente sotto controllo.</span>
   </h1>
 
-
   <p class="hero-sub">
-
     FlowPilot collega persone, task, processi e automazioni
     in un unico sistema. L'AI individua cosa rallenta il team
     e trasforma il lavoro ripetitivo in workflow automatici.
-
   </p>
 
-
   <div class="hero-buttons">
-
-    <button
-      class="hero-cta"
-      onclick="go('pricing')"
-    >
-      Inizia gratuitamente →
-    </button>
-
-
-    <button
-      class="hero-cta secondary"
-      onclick="go('come-funziona')"
-    >
-      Scopri come funziona
-    </button>
-
+    <button class="hero-cta" onclick="go('pricing')">Inizia gratuitamente →</button>
+    <button class="hero-cta secondary" onclick="go('come-funziona')">Scopri come funziona</button>
   </div>
 
-
   <div class="demo-wrap">
-
     <div class="demo">
-
       <div class="demo-bar">
-
         <span class="dot"></span>
         <span class="dot"></span>
         <span class="dot"></span>
-
-        <span style="margin-left:8px">
-          app.flowpilot.ai / overview
-        </span>
-
+        <span style="margin-left:8px">app.flowpilot.ai / overview</span>
       </div>
 
-
       <div class="demo-window">
-
-
         <aside class="demo-side">
-
-          <div class="demo-brand">
-            ✦ FlowPilot
-          </div>
-
-          <div class="demo-nav active">
-            ◈ Overview
-          </div>
-
-          <div class="demo-nav">
-            ✓ Tasks
-          </div>
-
-          <div class="demo-nav">
-            ▦ Projects
-          </div>
-
-          <div class="demo-nav">
-            ✦ Automations
-          </div>
-
-          <div class="demo-nav">
-            ⌁ Analytics
-          </div>
-
+          <div class="demo-brand">✦ FlowPilot</div>
+          <div class="demo-nav active">◈ Overview</div>
+          <div class="demo-nav">✓ Tasks</div>
+          <div class="demo-nav">▦ Projects</div>
+          <div class="demo-nav">✦ Automations</div>
+          <div class="demo-nav">⌁ Analytics</div>
         </aside>
 
-
         <div class="demo-main">
-
           <div class="demo-main-top">
-
-            <div class="mini-title">
-              Good morning, team.
-            </div>
-
-            <button class="mini-btn">
-              + New task
-            </button>
-
+            <div class="mini-title">Good morning, team.</div>
+            <button class="mini-btn">+ New task</button>
           </div>
-
 
           <div class="mini-stats">
-
-            <div class="mini-stat">
-              <span>OPEN TASKS</span>
-              <strong>24</strong>
-            </div>
-
-            <div class="mini-stat">
-              <span>COMPLETED</span>
-              <strong>68</strong>
-            </div>
-
-            <div class="mini-stat">
-              <span>AUTOMATIONS</span>
-              <strong>14</strong>
-            </div>
-
-            <div class="mini-stat">
-              <span>TIME SAVED</span>
-              <strong>11.4h</strong>
-            </div>
-
+            <div class="mini-stat"><span>OPEN TASKS</span><strong>24</strong></div>
+            <div class="mini-stat"><span>COMPLETED</span><strong>68</strong></div>
+            <div class="mini-stat"><span>AUTOMATIONS</span><strong>14</strong></div>
+            <div class="mini-stat"><span>TIME SAVED</span><strong>11.4h</strong></div>
           </div>
 
-
           <div class="demo-lower">
-
             <div class="mini-card">
-
-              <h4>
-                Today's focus
-              </h4>
-
+              <h4>Today's focus</h4>
               <div class="mini-line w1"></div>
               <div class="mini-line w2"></div>
               <div class="mini-line w3"></div>
               <div class="mini-line w1"></div>
-
             </div>
-
 
             <div class="mini-card ai-card">
-
-              <h4>
-                ✦ FlowPilot AI
-              </h4>
-
-              <p>
-                Abbiamo trovato 3 processi ripetitivi
-                che possono essere automatizzati.
-              </p>
-
-              <p
-                style="
-                  color:#fff;
-                  font-weight:700;
-                "
-              >
-                ≈ 4.5 ore risparmiate / settimana
-              </p>
-
+              <h4>✦ FlowPilot AI</h4>
+              <p>Abbiamo trovato 3 processi ripetitivi che possono essere automatizzati.</p>
+              <p style="color:#fff;font-weight:700;">≈ 4.5 ore risparmiate / settimana</p>
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     STATS
-===================================================== -->
-
 <div class="wrap stats">
-
-  <div class="stat">
-
-    <strong>
-      1 dashboard
-    </strong>
-
-    <span>
-      per tutta l'operatività
-    </span>
-
-  </div>
-
-
-  <div class="stat">
-
-    <strong>
-      AI-native
-    </strong>
-
-    <span>
-      automazioni suggerite dall'AI
-    </span>
-
-  </div>
-
-
-  <div class="stat">
-
-    <strong>
-      24/7
-    </strong>
-
-    <span>
-      workflow sempre attivi
-    </span>
-
-  </div>
-
-
-  <div class="stat">
-
-    <strong>
-      100%
-    </strong>
-
-    <span>
-      visibilità sul lavoro
-    </span>
-
-  </div>
-
+  <div class="stat"><strong>1 dashboard</strong><span>per tutta l'operatività</span></div>
+  <div class="stat"><strong>AI-native</strong><span>automazioni suggerite dall'AI</span></div>
+  <div class="stat"><strong>24/7</strong><span>workflow sempre attivi</span></div>
+  <div class="stat"><strong>100%</strong><span>visibilità sul lavoro</span></div>
 </div>
 
-
-<!-- =====================================================
-     FUNZIONI
-===================================================== -->
-
-<section
-  class="section"
-  id="funzioni"
->
-
+<section class="section" id="funzioni">
   <div class="wrap">
-
     <div class="section-head">
-
-      <div class="section-label">
-        Tutto in un unico posto
-      </div>
-
-      <h2>
-        Non gestire il lavoro.
-        <br>
-        Fallo scorrere.
-      </h2>
-
+      <div class="section-label">Tutto in un unico posto</div>
+      <h2>Non gestire il lavoro.<br>Fallo scorrere.</h2>
       <p>
-
         FlowPilot riunisce la parte operativa dell'azienda
         e rende visibili le attività che contano, quelle ferme
         e quelle che possono essere automatizzate.
-
       </p>
-
     </div>
-
 
     <div class="feature-grid">
-
-
       <article class="feature">
-
-        <div class="feature-icon">
-          ✓
-        </div>
-
-        <h3>
-          Task e priorità
-        </h3>
-
-        <p>
-
-          Organizza il lavoro per progetto,
-          responsabile, scadenza e priorità.
-          Ogni persona sa cosa deve fare
-          e cosa viene prima.
-
-        </p>
-
+        <div class="feature-icon">✓</div>
+        <h3>Task e priorità</h3>
+        <p>Organizza il lavoro per progetto, responsabile, scadenza e priorità. Ogni persona sa cosa deve fare e cosa viene prima.</p>
       </article>
 
-
       <article class="feature">
-
-        <div class="feature-icon">
-          ↻
-        </div>
-
-        <h3>
-          Workflow automatici
-        </h3>
-
-        <p>
-
-          Trasforma processi ripetitivi
-          in automazioni: trigger, azioni,
-          notifiche e assegnazioni senza
-          interventi manuali.
-
-        </p>
-
+        <div class="feature-icon">↻</div>
+        <h3>Workflow automatici</h3>
+        <p>Trasforma processi ripetitivi in automazioni: trigger, azioni, notifiche e assegnazioni senza interventi manuali.</p>
       </article>
 
-
       <article class="feature">
-
-        <div class="feature-icon">
-          ⌁
-        </div>
-
-        <h3>
-          Controllo e analytics
-        </h3>
-
-        <p>
-
-          Scopri dove il team perde tempo,
-          quali progetti rallentano e quanto
-          lavoro viene realmente completato.
-
-        </p>
-
+        <div class="feature-icon">⌁</div>
+        <h3>Controllo e analytics</h3>
+        <p>Scopri dove il team perde tempo, quali progetti rallentano e quanto lavoro viene realmente completato.</p>
       </article>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     AI
-===================================================== -->
-
-<section
-  class="section dark-section"
-  id="ai"
->
-
+<section class="section dark-section" id="ai">
   <div class="wrap dark-grid">
-
-
     <div class="dark-copy">
-
-      <div class="section-label">
-        Il copilota dell'azienda
-      </div>
-
-      <h2>
-
-        L'AI non si limita a rispondere.
-
-        <br>
-
-        Trova cosa automatizzare.
-
-      </h2>
-
+      <div class="section-label">Il copilota dell'azienda</div>
+      <h2>L'AI non si limita a rispondere.<br>Trova cosa automatizzare.</h2>
       <p>
-
-        FlowPilot osserva i pattern del lavoro
-        e suggerisce workflow utili. Può individuare
-        attività ricorrenti, colli di bottiglia e passaggi
+        FlowPilot osserva i pattern del lavoro e suggerisce workflow utili.
+        Può individuare attività ricorrenti, colli di bottiglia e passaggi
         che non richiedono una persona.
-
       </p>
-
-      <button
-        class="hero-cta"
-        onclick="showToast('Demo AI pronta per essere collegata al motore di automazione.')"
-      >
+      <button class="hero-cta" onclick="showToast('Demo AI pronta per essere collegata al motore di automazione.')">
         Scopri FlowPilot AI →
       </button>
-
     </div>
-
 
     <div class="ai-models">
-
-
       <div class="model">
-
-        <div class="model-icon">
-          ◷
-        </div>
-
+        <div class="model-icon">◷</div>
         <div>
-
-          <strong>
-            Gestione degli arretrati
-          </strong>
-
-          <span>
-            Individua task in ritardo e attiva reminder
-            intelligenti in base a priorità e responsabile.
-          </span>
-
+          <strong>Gestione degli arretrati</strong>
+          <span>Individua task in ritardo e attiva reminder intelligenti in base a priorità e responsabile.</span>
         </div>
-
       </div>
 
-
       <div class="model">
-
-        <div class="model-icon">
-          ⌁
-        </div>
-
+        <div class="model-icon">⌁</div>
         <div>
-
-          <strong>
-            AI workflow suggestions
-          </strong>
-
-          <span>
-            Analizza i processi e propone nuove automazioni
-            con una stima del tempo che possono far risparmiare.
-          </span>
-
+          <strong>AI workflow suggestions</strong>
+          <span>Analizza i processi e propone nuove automazioni con una stima del tempo che possono far risparmiare.</span>
         </div>
-
       </div>
 
-
       <div class="model">
-
-        <div class="model-icon">
-          ✦
-        </div>
-
+        <div class="model-icon">✦</div>
         <div>
-
-          <strong>
-            Priorità intelligenti
-          </strong>
-
-          <span>
-            Evidenzia il lavoro che richiede attenzione
-            e aiuta il team a concentrarsi sulle attività
-            ad alto valore.
-          </span>
-
+          <strong>Priorità intelligenti</strong>
+          <span>Evidenzia il lavoro che richiede attenzione e aiuta il team a concentrarsi sulle attività ad alto valore.</span>
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     COME FUNZIONA
-===================================================== -->
-
-<section
-  class="section"
-  id="come-funziona"
->
-
+<section class="section" id="come-funziona">
   <div class="wrap">
-
     <div class="section-head">
-
-      <div class="section-label">
-        Come funziona
-      </div>
-
-      <h2>
-        Dalla confusione a un workflow.
-      </h2>
-
-      <p>
-
-        Nessuna configurazione complessa.
-        Parti dal lavoro che fai già oggi
-        e lascia che FlowPilot lo trasformi.
-
-      </p>
-
+      <div class="section-label">Come funziona</div>
+      <h2>Dalla confusione a un workflow.</h2>
+      <p>Nessuna configurazione complessa. Parti dal lavoro che fai già oggi e lascia che FlowPilot lo trasformi.</p>
     </div>
-
 
     <div class="steps">
-
-
       <div class="step">
-
-        <div class="num">
-          01
-        </div>
-
-        <h3>
-          Collega il team
-        </h3>
-
-        <p>
-
-          Crea il workspace e porta progetti,
-          persone e attività in un unico ambiente.
-
-        </p>
-
+        <div class="num">01</div>
+        <h3>Collega il team</h3>
+        <p>Crea il workspace e porta progetti, persone e attività in un unico ambiente.</p>
       </div>
 
-
       <div class="step">
-
-        <div class="num">
-          02
-        </div>
-
-        <h3>
-          Definisci il processo
-        </h3>
-
-        <p>
-
-          Descrivi come viene svolto oggi
-          un processo, anche se è ancora manuale.
-
-        </p>
-
+        <div class="num">02</div>
+        <h3>Definisci il processo</h3>
+        <p>Descrivi come viene svolto oggi un processo, anche se è ancora manuale.</p>
       </div>
 
-
       <div class="step">
-
-        <div class="num">
-          03
-        </div>
-
-        <h3>
-          FlowPilot lo ottimizza
-        </h3>
-
-        <p>
-
-          L'AI individua passaggi ripetitivi
-          e propone un workflow automatico.
-
-        </p>
-
+        <div class="num">03</div>
+        <h3>FlowPilot lo ottimizza</h3>
+        <p>L'AI individua passaggi ripetitivi e propone un workflow automatico.</p>
       </div>
 
-
       <div class="step">
-
-        <div class="num">
-          04
-        </div>
-
-        <h3>
-          Lascia che scorra
-        </h3>
-
-        <p>
-
-          Il workflow lavora in background
-          mentre il team si concentra sulle attività
-          ad alto valore.
-
-        </p>
-
+        <div class="num">04</div>
+        <h3>Lascia che scorra</h3>
+        <p>Il workflow lavora in background mentre il team si concentra sulle attività ad alto valore.</p>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     MARKETLENS INTEGRATO
-===================================================== -->
-
-<section
-  class="marketlens-section"
-  id="marketlens"
->
-
+<section class="marketlens-section" id="marketlens">
   <div class="wrap">
-
-
     <div class="marketlens-header">
-
-
       <div>
-
-        <div class="section-label">
-          Integrato in FlowPilot
-        </div>
-
-
-        <h2>
-
-          MarketLens.
-
-          <br>
-
-          Capisci il mercato prima di agire.
-
-        </h2>
-
-
+        <div class="section-label">Integrato in FlowPilot</div>
+        <h2>MarketLens.<br>Capisci il mercato prima di agire.</h2>
         <p>
-
-          MarketLens porta l'intelligence di mercato
-          direttamente dentro FlowPilot. Analizza competitor,
-          trend, opportunità e segnali di mercato senza
-          uscire dalla piattaforma.
-
+          MarketLens porta l'intelligence di mercato direttamente dentro FlowPilot.
+          Analizza competitor, trend, opportunità e segnali di mercato senza uscire dalla piattaforma.
         </p>
-
-
-        <!--
-          QUESTO è il nuovo punto di ingresso.
-
-          La navbar porta qui.
-          Questo pulsante apre la pagina completa.
-        -->
-
-        <a
-          href="marketlens.html"
-          class="marketlens-explore"
-        >
-          Esplora MarketLens →
-        </a>
-
+        <a href="marketlens.html" class="marketlens-explore">Esplora MarketLens →</a>
       </div>
 
-
-      <div class="marketlens-badge">
-        MARKET INTELLIGENCE
-      </div>
-
+      <div class="marketlens-badge">MARKET INTELLIGENCE</div>
     </div>
-
 
     <div class="marketlens-grid">
-
-
-      <!-- =================================================
-           MARKETLENS DASHBOARD
-      ================================================= -->
-
       <div class="marketlens-main">
-
-
         <div class="marketlens-top">
-
           <div>
-
-            <div class="marketlens-title">
-              MarketLens Overview
-            </div>
-
-            <div class="marketlens-subtitle">
-              Analisi di mercato collegata al workspace FlowPilot
-            </div>
-
+            <div class="marketlens-title">MarketLens Overview</div>
+            <div class="marketlens-subtitle">Analisi di mercato collegata al workspace FlowPilot</div>
           </div>
-
-
-          <span class="marketlens-badge">
-            LIVE DEMO
-          </span>
-
+          <span class="marketlens-badge">LIVE DEMO</span>
         </div>
-
 
         <div class="marketlens-search">
-
-          <input
-            id="marketQuery"
-            type="text"
-            placeholder="Es. mercato SaaS italiano..."
-          >
-
-          <button
-            onclick="runMarketAnalysis()"
-          >
-            Analizza
-          </button>
-
+          <input id="marketQuery" type="text" placeholder="Es. mercato SaaS italiano...">
+          <button onclick="runMarketAnalysis()">Analizza</button>
         </div>
-
 
         <div class="marketlens-metrics">
-
-
           <div class="marketlens-metric">
-
-            <span>
-              Market Opportunity
-            </span>
-
-            <strong>
-              82/100
-            </strong>
-
-            <small>
-              ↑ 14.2%
-            </small>
-
+            <span>Market Opportunity</span>
+            <strong>82/100</strong>
+            <small>↑ 14.2%</small>
           </div>
 
-
           <div class="marketlens-metric">
-
-            <span>
-              Competition
-            </span>
-
-            <strong>
-              Medium
-            </strong>
-
-            <small>
-              ✓ Stable
-            </small>
-
+            <span>Competition</span>
+            <strong>Medium</strong>
+            <small>✓ Stable</small>
           </div>
 
-
           <div class="marketlens-metric">
-
-            <span>
-              Growth
-            </span>
-
-            <strong>
-              +18.7%
-            </strong>
-
-            <small>
-              ↑ Positive
-            </small>
-
+            <span>Growth</span>
+            <strong>+18.7%</strong>
+            <small>↑ Positive</small>
           </div>
-
         </div>
 
-
-        <div
-          class="marketlens-chart"
-          id="marketChart"
-        >
-
-          <div
-            class="chart-bar"
-            style="height:35%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:45%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:42%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:58%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:51%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:69%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:63%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:78%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:72%"
-          ></div>
-
-          <div
-            class="chart-bar"
-            style="height:88%"
-          ></div>
-
+        <div class="marketlens-chart" id="marketChart">
+          <div class="chart-bar" style="height:35%"></div>
+          <div class="chart-bar" style="height:45%"></div>
+          <div class="chart-bar" style="height:42%"></div>
+          <div class="chart-bar" style="height:58%"></div>
+          <div class="chart-bar" style="height:51%"></div>
+          <div class="chart-bar" style="height:69%"></div>
+          <div class="chart-bar" style="height:63%"></div>
+          <div class="chart-bar" style="height:78%"></div>
+          <div class="chart-bar" style="height:72%"></div>
+          <div class="chart-bar" style="height:88%"></div>
         </div>
-
       </div>
-
-
-      <!-- =================================================
-           MARKETLENS SIDE
-      ================================================= -->
 
       <div class="marketlens-side">
-
-
         <div class="marketlens-card">
-
-          <h3>
-            Market opportunities
-          </h3>
-
-          <p>
-
-            MarketLens individua automaticamente
-            segmenti interessanti, trend emergenti
-            e aree in cui la concorrenza è più debole.
-
-          </p>
-
+          <h3>Market opportunities</h3>
+          <p>MarketLens individua automaticamente segmenti interessanti, trend emergenti e aree in cui la concorrenza è più debole.</p>
         </div>
 
-
         <div class="marketlens-card">
-
-          <h3>
-            Competitor intelligence
-          </h3>
-
-          <p>
-
-            Confronta competitor, posizionamento,
-            pricing, caratteristiche e segnali
-            rilevanti del mercato.
-
-          </p>
-
+          <h3>Competitor intelligence</h3>
+          <p>Confronta competitor, posizionamento, pricing, caratteristiche e segnali rilevanti del mercato.</p>
         </div>
-
 
         <div class="marketlens-card marketlens-lock">
-
-          <h3>
-            ✦ Vantaggio FlowPilot Pro
-          </h3>
-
-          <p>
-
-            Gli utenti con piano Pro possono utilizzare
-            una versione base delle funzionalità MarketLens
-            direttamente dal proprio workspace.
-
-          </p>
-
+          <h3>✦ Vantaggio FlowPilot Pro</h3>
+          <p>Gli utenti con piano Pro possono utilizzare una versione base delle funzionalità MarketLens direttamente dal proprio workspace.</p>
 
           <div class="pro-discount">
-
-            <strong>
-              5% DI SCONTO
-            </strong>
-
-            Sul piano Business di MarketLens
-            per gli utenti FlowPilot Pro.
-
+            <strong>5% DI SCONTO</strong>
+            Sul piano Business di MarketLens per gli utenti FlowPilot Pro.
           </div>
 
-
-          <button
-            onclick="activateMarketLens()"
-          >
-            Attiva MarketLens →
-          </button>
-
+          <button onclick="activateMarketLens()">Attiva MarketLens →</button>
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     PRICING
-===================================================== -->
-
-<section
-  class="section"
-  id="pricing"
->
-
+<section class="section" id="pricing">
   <div class="wrap">
-
-
     <div class="section-head">
-
-      <div class="section-label">
-        Prezzi
-      </div>
-
-      <h2>
-        Un piano per ogni fase.
-      </h2>
-
-      <p>
-
-        Inizia piccolo.
-        Quando il tuo team cresce,
-        FlowPilot cresce con lui.
-
-      </p>
-
+      <div class="section-label">Prezzi</div>
+      <h2>Un piano per ogni fase.</h2>
+      <p>Inizia piccolo. Quando il tuo team cresce, FlowPilot cresce con lui.</p>
     </div>
-
 
     <div class="pricing">
-
-
-      <!-- STARTER -->
-
       <article class="price">
+        <h3>Starter</h3>
+        <p class="price-desc">Per piccoli team che vogliono organizzare il lavoro.</p>
 
-        <h3>
-          Starter
-        </h3>
-
-        <p class="price-desc">
-          Per piccoli team che vogliono organizzare il lavoro.
-        </p>
-
-        <div class="price-number">
-
-          €19,99
-
-          <small>
-            / mese
-          </small>
-
-        </div>
-
-        <div class="price-note">
-          Tutto il necessario per partire
-        </div>
-
+        <div class="price-number">€19,99 <small>/ mese</small></div>
+        <div class="price-note">Tutto il necessario per partire</div>
 
         <ul>
-
-          <li>
-            Fino a 3 membri
-          </li>
-
-          <li>
-            Task e progetti
-          </li>
-
-          <li>
-            Dashboard operativa
-          </li>
-
-          <li>
-            Automazioni base
-          </li>
-
+          <li>Fino a 3 membri</li>
+          <li>Task e progetti</li>
+          <li>Dashboard operativa</li>
+          <li>Automazioni base</li>
         </ul>
 
-
-        <button
-          onclick="startPlan('starter')"
-        >
-          Scegli Starter →
-        </button>
-
+        <button onclick="startPlan('starter')">Scegli Starter →</button>
       </article>
-
-
-      <!-- PRO -->
 
       <article class="price featured">
+        <span class="popular">PIÙ SCELTO</span>
+        <h3>Pro</h3>
+        <p class="price-desc">Per aziende che vogliono automatizzare davvero.</p>
 
-        <span class="popular">
-          PIÙ SCELTO
-        </span>
-
-
-        <h3>
-          Pro
-        </h3>
-
-
-        <p class="price-desc">
-          Per aziende che vogliono automatizzare davvero.
-        </p>
-
-
-        <div class="price-number">
-
-          €49,99
-
-          <small>
-            / mese
-          </small>
-
-        </div>
-
-
-        <div class="price-note">
-          Tutto ciò che serve per il team
-        </div>
-
+        <div class="price-number">€49,99 <small>/ mese</small></div>
+        <div class="price-note">Tutto ciò che serve per il team</div>
 
         <ul>
-
-          <li>
-            Membri illimitati
-          </li>
-
-          <li>
-            AI workflow suggestions
-          </li>
-
-          <li>
-            Automazioni avanzate
-          </li>
-
-          <li>
-            Analytics e KPI
-          </li>
-
-          <li>
-            Priorità AI
-          </li>
-
+          <li>Membri illimitati</li>
+          <li>AI workflow suggestions</li>
+          <li>Automazioni avanzate</li>
+          <li>Analytics e KPI</li>
+          <li>Priorità AI</li>
         </ul>
 
-
         <div class="marketlens-benefit">
-
-          <strong>
-            ✦ Incluso con MarketLens
-          </strong>
-
-          Accesso alle funzionalità base
-          di MarketLens + 5% di sconto
-          sul piano Business MarketLens.
-
+          <strong>✦ Incluso con MarketLens</strong>
+          Accesso alle funzionalità base di MarketLens + 5% di sconto sul piano Business MarketLens.
         </div>
 
-
-        <button
-          onclick="startPlan('pro')"
-        >
-          Inizia con Pro →
-        </button>
-
+        <button onclick="startPlan('pro')">Inizia con Pro →</button>
       </article>
-
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     FAQ
-===================================================== -->
-
-<section
-  class="section"
-  id="faq"
->
-
+<section class="section" id="faq">
   <div class="wrap">
-
-
     <div class="section-head">
-
-      <div class="section-label">
-        FAQ
-      </div>
-
-      <h2>
-        Domande frequenti.
-      </h2>
-
-      <p>
-        Tutto quello che devi sapere prima di iniziare.
-      </p>
-
+      <div class="section-label">FAQ</div>
+      <h2>Domande frequenti.</h2>
+      <p>Tutto quello che devi sapere prima di iniziare.</p>
     </div>
-
 
     <div class="faq">
-
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          Cos'è FlowPilot?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          FlowPilot è una piattaforma AI per gestire
-          il lavoro aziendale, coordinare task e progetti
-          e trasformare processi ripetitivi in workflow automatici.
-
-        </div>
-
+        <button class="faq-q">Cos'è FlowPilot?<span>＋</span></button>
+        <div class="faq-a">FlowPilot è una piattaforma AI per gestire il lavoro aziendale, coordinare task e progetti e trasformare processi ripetitivi in workflow automatici.</div>
       </div>
 
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          FlowPilot sostituisce i software che usiamo già?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          L'obiettivo è diventare il layer operativo
-          che coordina il lavoro. Le integrazioni con gli
-          strumenti esistenti possono essere aggiunte senza
-          obbligare il team a cambiare tutto.
-
-        </div>
-
+        <button class="faq-q">FlowPilot sostituisce i software che usiamo già?<span>＋</span></button>
+        <div class="faq-a">L'obiettivo è diventare il layer operativo che coordina il lavoro. Le integrazioni con gli strumenti esistenti possono essere aggiunte senza obbligare il team a cambiare tutto.</div>
       </div>
 
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          Come funziona l'AI?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          L'AI analizza attività e processi disponibili
-          nel workspace e può suggerire automazioni,
-          priorità e interventi. Le automazioni vengono
-          poi eseguite secondo le regole definite dal team.
-
-        </div>
-
+        <button class="faq-q">Come funziona l'AI?<span>＋</span></button>
+        <div class="faq-a">L'AI analizza attività e processi disponibili nel workspace e può suggerire automazioni, priorità e interventi. Le automazioni vengono poi eseguite secondo le regole definite dal team.</div>
       </div>
 
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          Cos'è MarketLens?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          MarketLens è lo strumento di market intelligence
-          integrato nell'ecosistema FlowPilot. Permette di
-          analizzare mercati, competitor, trend e opportunità.
-
-        </div>
-
+        <button class="faq-q">Cos'è MarketLens?<span>＋</span></button>
+        <div class="faq-a">MarketLens è lo strumento di market intelligence integrato nell'ecosistema FlowPilot. Permette di analizzare mercati, competitor, trend e opportunità.</div>
       </div>
 
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          Cosa ottengono gli utenti FlowPilot Pro?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          Gli utenti FlowPilot Pro possono utilizzare
-          una versione base delle funzionalità MarketLens
-          e hanno diritto al 5% di sconto sul piano
-          Business di MarketLens.
-
-        </div>
-
+        <button class="faq-q">Cosa ottengono gli utenti FlowPilot Pro?<span>＋</span></button>
+        <div class="faq-a">Gli utenti FlowPilot Pro possono utilizzare una versione base delle funzionalità MarketLens e hanno diritto al 5% di sconto sul piano Business di MarketLens.</div>
       </div>
 
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          Posso cambiare piano?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          Sì. Puoi gestire, cambiare o annullare
-          l'abbonamento dal portale pagamenti accessibile
-          direttamente dalla dashboard.
-
-        </div>
-
+        <button class="faq-q">Posso cambiare piano?<span>＋</span></button>
+        <div class="faq-a">Sì. Puoi gestire, cambiare o annullare l'abbonamento dal portale pagamenti accessibile direttamente dalla dashboard.</div>
       </div>
 
-
       <div class="faq-item">
-
-        <button class="faq-q">
-
-          I miei dati sono controllabili?
-
-          <span>
-            ＋
-          </span>
-
-        </button>
-
-        <div class="faq-a">
-
-          Sì. Autenticazione, dati e permessi sono gestiti
-          con policy di sicurezza per account; lo stato del
-          piano viene verificato dal server prima di consentire le operazioni.
-
-        </div>
-
+        <button class="faq-q">I miei dati sono controllabili?<span>＋</span></button>
+        <div class="faq-a">Sì. Autenticazione, dati e permessi sono gestiti con policy di sicurezza per account; lo stato del piano viene verificato dal server prima di consentire le operazioni.</div>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
-
-<!-- =====================================================
-     FINAL CTA
-===================================================== -->
-
 <section class="final-cta">
-
   <div class="wrap">
-
     <div class="final-box">
-
-      <div
-        class="section-label"
-        style="color:#a9a6ff"
-      >
-        Il prossimo passo
-      </div>
-
-
-      <h2>
-
-        Fai lavorare il tuo sistema.
-
-        <br>
-
-        Non il tuo team.
-
-      </h2>
-
-
-      <p>
-
-        Organizza.
-        Automatizza.
-        Misura.
-        Tutto da un unico posto.
-
-      </p>
-
-
-      <button
-        onclick="go('pricing')"
-      >
-        Inizia con FlowPilot →
-      </button>
-
+      <div class="section-label" style="color:#a9a6ff">Il prossimo passo</div>
+      <h2>Fai lavorare il tuo sistema.<br>Non il tuo team.</h2>
+      <p>Organizza. Automatizza. Misura. Tutto da un unico posto.</p>
+      <button onclick="go('pricing')">Inizia con FlowPilot →</button>
     </div>
-
   </div>
-
 </section>
 
 </main>
 
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
 <footer>
-
   <div class="wrap foot">
-
-    <div class="foot-brand">
-      ✦ FlowPilot
-    </div>
+    <div class="foot-brand">✦ FlowPilot</div>
 
     <div class="foot-links">
-
-      <a href="#funzioni">
-        Funzioni
-      </a>
-
-      <a href="#marketlens">
-        MarketLens
-      </a>
-
-      <a href="#pricing">
-        Prezzi
-      </a>
-
-      <a href="#faq">
-        FAQ
-      </a>
-
-      <span>
-        © 2026 FlowPilot
-      </span>
-
+      <a href="#funzioni">Funzioni</a>
+      <a href="#marketlens">MarketLens</a>
+      <a href="#pricing">Prezzi</a>
+      <a href="#faq">FAQ</a>
+      <span>© 2026 FlowPilot</span>
     </div>
-
   </div>
-
 </footer>
 
-
-<!-- =====================================================
-     LOGIN MODAL
-===================================================== -->
-
-<div
-  class="modal-bg"
-  id="loginModal"
->
-
+<div class="modal-bg" id="loginModal">
   <div class="modal" id="authCard">
+    <button class="close" id="closeModal">×</button>
 
-    <button
-      class="close"
-      id="closeModal"
-    >
-      ×
-    </button>
-
-
-    <h2 id="authTitle">
-      Accedi a FlowPilot
-    </h2>
-
-
-    <p id="authSubtitle">
-      Accedi al tuo workspace aziendale.
-    </p>
-
+    <h2 id="authTitle">Accedi a FlowPilot</h2>
+    <p id="authSubtitle">Accedi al tuo workspace aziendale.</p>
 
     <div class="field">
-
-      <label>
-        Email
-      </label>
-
-      <input
-        id="loginEmail"
-        type="email"
-        placeholder="nome@azienda.com"
-      >
-
+      <label>Email</label>
+      <input id="loginEmail" type="email" placeholder="nome@azienda.com">
     </div>
 
     <div class="field signup-only">
-
-      <label>
-        Nome e cognome
-      </label>
-
-      <input
-        id="signupName"
-        type="text"
-        placeholder="Mario Rossi"
-        autocomplete="name"
-      >
-
+      <label>Nome e cognome</label>
+      <input id="signupName" type="text" placeholder="Mario Rossi" autocomplete="name">
     </div>
 
     <div class="field signup-only">
-
-      <label>
-        Azienda
-      </label>
-
-      <input
-        id="signupCompany"
-        type="text"
-        placeholder="Nome azienda"
-        autocomplete="organization"
-      >
-
+      <label>Azienda</label>
+      <input id="signupCompany" type="text" placeholder="Nome azienda" autocomplete="organization">
     </div>
-
 
     <div class="field">
-
-      <label>
-        Password
-      </label>
-
-      <input
-        id="loginPassword"
-        type="password"
-        placeholder="••••••••"
-      >
-
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="••••••••">
     </div>
 
-
-    <button
-      class="modal-submit"
-      id="modalSubmit"
-    >
-      Accedi →
-    </button>
+    <button class="modal-submit" id="modalSubmit">Accedi →</button>
 
     <div class="auth-error" id="authError"></div>
 
@@ -4381,30 +1774,15 @@ footer{
       <span id="authSwitchText">Non hai un account?</span>
       <button id="authSwitch" type="button">Sign up</button>
     </div>
-
   </div>
-
 </div>
 
-
-<!-- =====================================================
-     TOAST
-===================================================== -->
-
-<div
-  class="toast"
-  id="toast"
-></div>
-
+<div class="toast" id="toast"></div>
 
 <script>
-
-/* =====================================================
-   STATE
-===================================================== */
-
 const SUPABASE_URL = "https://qahjmbgnhpfvqymtkdtc.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_T9RVsQ4qifGJGUFZPj_TRg_bEBPVo4p";
+
 const flowpilot = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
@@ -4414,103 +1792,40 @@ let currentFlowPilotPlan = "none";
 let authMode = "login";
 let pendingPlan = sessionStorage.getItem("flowpilot_pending_plan");
 
-
-/* =====================================================
-   SCROLL
-===================================================== */
-
 function go(id){
-
-  const element =
-    document.getElementById(id);
-
-  if(!element){
-    return;
-  }
+  const element = document.getElementById(id);
+  if(!element) return;
 
   element.scrollIntoView({
     behavior:"smooth",
     block:"start"
   });
-
 }
-
-
-/* =====================================================
-   TOAST
-===================================================== */
 
 function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.textContent =
-    message;
-
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
   toast.classList.add("show");
 
-  clearTimeout(
-    window.flowPilotToastTimer
-  );
+  clearTimeout(window.flowPilotToastTimer);
 
-  window.flowPilotToastTimer =
-    setTimeout(()=>{
-
-      toast.classList.remove("show");
-
-    },2600);
-
+  window.flowPilotToastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2600);
 }
 
-
-/* =====================================================
-   FAQ
-===================================================== */
-
-document
-  .querySelectorAll(".faq-q")
-  .forEach(question=>{
-
-    question.addEventListener(
-      "click",
-      ()=>{
-
-        const item =
-          question.parentElement;
-
-        item.classList.toggle("open");
-
-      }
-    );
-
+document.querySelectorAll(".faq-q").forEach(question=>{
+  question.addEventListener("click", ()=>{
+    const item = question.parentElement;
+    item.classList.toggle("open");
   });
+});
 
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-const modal =
-  document.getElementById(
-    "loginModal"
-  );
-
-const loginBtn =
-  document.getElementById(
-    "loginBtn"
-  );
-
-const closeModal =
-  document.getElementById(
-    "closeModal"
-  );
-
-const modalSubmit =
-  document.getElementById(
-    "modalSubmit"
-  );
-
+const modal = document.getElementById("loginModal");
+const loginBtn = document.getElementById("loginBtn");
+const signupBtn = document.getElementById("signupBtn");
+const closeModal = document.getElementById("closeModal");
+const modalSubmit = document.getElementById("modalSubmit");
 const authCard = document.getElementById("authCard");
 const authTitle = document.getElementById("authTitle");
 const authSubtitle = document.getElementById("authSubtitle");
@@ -4520,15 +1835,31 @@ const authError = document.getElementById("authError");
 
 function setAuthMode(mode){
   authMode = mode;
+
   const signup = mode === "signup";
+
   authCard.classList.toggle("signup-mode", signup);
-  authTitle.textContent = signup ? "Crea il tuo account" : "Accedi a FlowPilot";
+
+  authTitle.textContent = signup
+    ? "Crea il tuo account"
+    : "Accedi a FlowPilot";
+
   authSubtitle.textContent = signup
     ? "Crea il workspace e scegli il piano più adatto."
     : "Accedi al tuo workspace aziendale.";
-  modalSubmit.textContent = signup ? "Crea account →" : "Accedi →";
-  authSwitchText.textContent = signup ? "Hai già un account?" : "Non hai un account?";
-  authSwitch.textContent = signup ? "Accedi" : "Sign up";
+
+  modalSubmit.textContent = signup
+    ? "Crea account →"
+    : "Accedi →";
+
+  authSwitchText.textContent = signup
+    ? "Hai già un account?"
+    : "Non hai un account?";
+
+  authSwitch.textContent = signup
+    ? "Accedi"
+    : "Sign up";
+
   authError.classList.remove("show");
 }
 
@@ -4549,71 +1880,54 @@ function displayAuthError(message){
   authError.classList.add("show");
 }
 
-
 loginBtn.onclick = ()=>{
   if(loginBtn.dataset.authenticated === "true"){
     window.location.href = "dashboard.html";
     return;
   }
+
   openAuth("login");
 };
 
-authSwitch.onclick = ()=> setAuthMode(authMode === "login" ? "signup" : "login");
-
-
-closeModal.onclick = ()=>{
-
-  modal.classList.remove("show");
-
+signupBtn.onclick = ()=>{
+  openAuth("signup");
 };
 
+authSwitch.onclick = ()=>{
+  setAuthMode(
+    authMode === "login"
+      ? "signup"
+      : "login"
+  );
+};
 
-modal.addEventListener(
-  "click",
-  e=>{
+closeModal.onclick = ()=>{
+  modal.classList.remove("show");
+};
 
-    if(e.target === modal){
-
-      modal.classList.remove("show");
-
-    }
-
+modal.addEventListener("click", e=>{
+  if(e.target === modal){
+    modal.classList.remove("show");
   }
-);
-
+});
 
 modalSubmit.onclick = async ()=>{
-
-  const email =
-    document
-      .getElementById("loginEmail")
-      .value
-      .trim();
-
-  const password =
-    document
-      .getElementById("loginPassword")
-      .value
-      .trim();
-
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
 
   const fullName = document.getElementById("signupName").value.trim();
   const companyName = document.getElementById("signupCompany").value.trim();
 
   if(!email || !password || (authMode === "signup" && (!fullName || !companyName))){
-
-    showToast(
-      "Inserisci email e password."
-    );
-
+    showToast("Compila tutti i campi richiesti.");
     return;
-
   }
-
 
   authError.classList.remove("show");
   modalSubmit.disabled = true;
-  modalSubmit.textContent = authMode === "signup" ? "Creazione..." : "Accesso...";
+  modalSubmit.textContent = authMode === "signup"
+    ? "Creazione..."
+    : "Accesso...";
 
   try{
     if(authMode === "signup"){
@@ -4621,38 +1935,54 @@ modalSubmit.onclick = async ()=>{
         email,
         password,
         options:{
-          data:{ full_name:fullName, company_name:companyName },
+          data:{
+            full_name:fullName,
+            company_name:companyName
+          },
           emailRedirectTo:`${window.location.origin}/dashboard.html`
         }
       });
+
       if(error) throw error;
+
       if(!data.session){
-        showToast("Controlla la tua email per confermare l'account.");
+        showToast("Account creato. Se la conferma email è attiva, controlla la tua email.");
         modal.classList.remove("show");
         return;
       }
     }else{
-      const { error } = await flowpilot.auth.signInWithPassword({ email, password });
+      const { error } = await flowpilot.auth.signInWithPassword({
+        email,
+        password
+      });
+
       if(error) throw error;
     }
 
     modal.classList.remove("show");
+
     if(pendingPlan){
       await beginCheckout(pendingPlan);
     }else{
       window.location.href = "dashboard.html";
     }
+
   }catch(error){
-    displayAuthError(error.message || "Accesso non riuscito.");
+    displayAuthError(
+      error.message || "Accesso non riuscito."
+    );
   }finally{
     modalSubmit.disabled = false;
-    modalSubmit.textContent = authMode === "signup" ? "Crea account →" : "Accedi →";
-  }
 
+    modalSubmit.textContent = authMode === "signup"
+      ? "Crea account →"
+      : "Accedi →";
+  }
 };
 
 async function beginCheckout(plan){
   const { data:{ session } } = await flowpilot.auth.getSession();
+
   if(!session){
     pendingPlan = plan;
     sessionStorage.setItem("flowpilot_pending_plan", plan);
@@ -4661,13 +1991,19 @@ async function beginCheckout(plan){
   }
 
   showToast("Apertura del pagamento sicuro...");
+
   const { data, error } = await flowpilot.functions.invoke("create-checkout", {
     body:{ plan }
   });
+
   if(error || !data?.url){
-    showToast(data?.error || "Pagamento non disponibile. Riprova tra poco.");
+    showToast(
+      data?.error ||
+      "Pagamento non disponibile. Riprova tra poco."
+    );
     return;
   }
+
   sessionStorage.removeItem("flowpilot_pending_plan");
   window.location.href = data.url;
 }
@@ -4678,211 +2014,91 @@ function startPlan(plan){
   beginCheckout(plan);
 }
 
-
-/* =====================================================
-   MARKETLENS
-===================================================== */
-
 function activateMarketLens(){
-
-  if(
-    currentFlowPilotPlan !== "pro"
-  ){
-
-    showToast(
-      "MarketLens base è disponibile con FlowPilot Pro."
-    );
-
+  if(currentFlowPilotPlan !== "pro"){
+    showToast("MarketLens base è disponibile con FlowPilot Pro.");
     go("pricing");
-
     return;
-
   }
 
-
-  /*
-    L'utente Pro può accedere
-    alla versione base.
-  */
-
-  showToast(
-    "MarketLens attivato. Accesso Pro disponibile."
-  );
-
+  showToast("MarketLens attivato. Accesso Pro disponibile.");
 }
 
-
-/* =====================================================
-   MARKETLENS ANALYSIS DEMO
-===================================================== */
-
 function runMarketAnalysis(){
-
-  const input =
-    document.getElementById(
-      "marketQuery"
-    );
-
-  const query =
-    input.value.trim();
-
+  const input = document.getElementById("marketQuery");
+  const query = input.value.trim();
 
   if(!query){
-
-    showToast(
-      "Inserisci un mercato da analizzare."
-    );
-
+    showToast("Inserisci un mercato da analizzare.");
     input.focus();
-
     return;
-
   }
 
-
-  if(
-    currentFlowPilotPlan !== "pro"
-  ){
-
-    showToast(
-      "Questa funzionalità MarketLens richiede FlowPilot Pro."
-    );
-
+  if(currentFlowPilotPlan !== "pro"){
+    showToast("Questa funzionalità MarketLens richiede FlowPilot Pro.");
     go("pricing");
-
     return;
-
   }
-
 
   showToast(
     "Analisi MarketLens avviata per: " +
     query
   );
-
 }
-
-
-/* =====================================================
-   FLOWPILOT PLAN
-===================================================== */
 
 function selectFlowPilotPlan(plan){
   startPlan(plan);
 }
 
-
-/* =====================================================
-   MARKETLENS BENEFIT
-===================================================== */
-
 function checkMarketLensAccess(){
+  const benefit = document.querySelector(".pro-discount");
+  if(!benefit) return;
 
-  const benefit =
-    document.querySelector(
-      ".pro-discount"
-    );
-
-
-  if(!benefit){
-    return;
-  }
-
-
-  if(
-    currentFlowPilotPlan === "pro"
-  ){
-
+  if(currentFlowPilotPlan === "pro"){
     benefit.innerHTML = `
-
-      <strong>
-        5% DI SCONTO ATTIVO
-      </strong>
-
+      <strong>5% DI SCONTO ATTIVO</strong>
       Utente FlowPilot Pro:
       il vantaggio Business MarketLens
       è disponibile.
-
     `;
-
   }
-
 }
 
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener("click", e=>{
+    const id = a.getAttribute("href").slice(1);
 
-/* =====================================================
-   ANCHOR LINKS
-===================================================== */
-
-document
-  .querySelectorAll(
-    'a[href^="#"]'
-  )
-  .forEach(a=>{
-
-    a.addEventListener(
-      "click",
-      e=>{
-
-        const id =
-          a
-            .getAttribute("href")
-            .slice(1);
-
-
-        if(
-          document.getElementById(id)
-        ){
-
-          e.preventDefault();
-
-          go(id);
-
-        }
-
-      }
-    );
-
-  });
-
-
-/* =====================================================
-   ESC
-===================================================== */
-
-document.addEventListener(
-  "keydown",
-  e=>{
-
-    if(e.key === "Escape"){
-
-      modal.classList.remove(
-        "show"
-      );
-
+    if(document.getElementById(id)){
+      e.preventDefault();
+      go(id);
     }
+  });
+});
 
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape"){
+    modal.classList.remove("show");
   }
-);
-
-
-/* =====================================================
-   INITIALIZATION
-===================================================== */
+});
 
 async function initializeAuth(){
   const { data:{ session } } = await flowpilot.auth.getSession();
+
   if(!session) return;
 
   loginBtn.textContent = "Dashboard";
   loginBtn.dataset.authenticated = "true";
+  signupBtn.style.display = "none";
 
   const { data:subscription } = await flowpilot
     .from("subscriptions")
     .select("plan,status")
     .maybeSingle();
 
-  if(subscription && ["active","trialing"].includes(subscription.status)){
+  if(
+    subscription &&
+    ["active","trialing"].includes(subscription.status)
+  ){
     currentFlowPilotPlan = subscription.plan;
     checkMarketLensAccess();
   }
@@ -4890,10 +2106,7 @@ async function initializeAuth(){
 
 checkMarketLensAccess();
 initializeAuth();
-
 </script>
 
-
 </body>
-
 </html>
