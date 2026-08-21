@@ -1,0 +1,51 @@
+name: Integrate standalone Market Intelligence
+
+on:
+  push:
+    paths:
+      - '.github/workflows/integrate-market-intelligence-standalone.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch homepage and dashboard
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          # Homepage
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('<a href="#market-intelligence">Market Intelligence</a>','<a href="market-intelligence.html">Market Intelligence</a>')
+          s=s.replace("Market Intelligence vive dentro FlowPilot. I dati interni dell'azienda possono essere letti insieme a competitor, crescita, trend, forecast e opportunità esterne.","Market Intelligence può essere usata dentro FlowPilot oppure come servizio autonomo. Analizza competitor, crescita, trend, forecast e opportunità senza richiedere un abbonamento FlowPilot.")
+          marker='<div class="intel-grid">'
+          if marker in s and 'Apri Market Intelligence' not in s:
+              s=s.replace(marker,'<div style="display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin:26px 0 8px"><a class="btn btn-primary" href="market-intelligence.html">Apri Market Intelligence →</a><a class="btn btn-secondary" href="#pricing">Usa con FlowPilot</a></div>'+marker,1)
+          s=s.replace('<li>Market Intelligence Base</li>','<li>Market Intelligence integrata</li>')
+          s=s.replace('Add-on acquistabile direttamente nel workspace per analisi di mercato approfondite, ricerca web, competitor, trend, CAGR, forecast e fonti.','Disponibile anche separatamente, senza piano FlowPilot. Nel workspace sblocca analisi approfondite, ricerca web, competitor, trend, CAGR, forecast e fonti per il team.')
+          p.write_text(s,encoding='utf-8')
+
+          # Dashboard: personal Pro should also work inside FlowPilot, while workspace Pro remains team-wide.
+          p=Path('dashboard.html')
+          s=p.read_text(encoding='utf-8')
+          old='''async function loadMarketIntelligence(){if(!state.workspace)return;const {data}=await db.from("market_intelligence_entitlements").select("plan,status,current_period_end").eq("workspace_id",state.workspace.id).maybeSingle();state.marketIntelligence=data||{plan:"base",status:"included"};const pro=marketPro();$("marketPlan").textContent=pro?"Market Intelligence Pro":"Market Intelligence Base";$("marketTierText").textContent=pro?"Market Intelligence Pro è attivo per tutto il workspace: ricerca web, fonti e report approfonditi sono sbloccati.":"Market Intelligence Base è incluso in FlowPilot: analisi preliminari. Pro sblocca ricerca web, fonti e report approfonditi.";$("marketUpgradeTitle").textContent=pro?"Market Intelligence Pro attivo":"Market Intelligence Base incluso";$("marketUpgradeText").textContent=pro?"L'add-on Pro è disponibile per tutti i membri del workspace.":"Pro aggiunge market size, CAGR, forecast, segmenti, competitor, driver, rischi, raccomandazioni e fonti web.";$("marketUpgradeBtn").style.display=pro?"none":"inline-block";$("marketBillingBtn").style.display=state.workspace.owner_id===state.user.id?"inline-block":"none";if(!pro&&state.workspace.owner_id!==state.user.id){$("marketUpgradeBtn").disabled=true;$("marketUpgradeBtn").textContent="Attivabile dal proprietario"}}'''
+          new='''async function loadMarketIntelligence(){if(!state.workspace)return;const [w,u]=await Promise.all([db.from("market_intelligence_entitlements").select("plan,status,current_period_end").eq("workspace_id",state.workspace.id).maybeSingle(),db.from("market_intelligence_user_entitlements").select("plan,status,current_period_end").eq("user_id",state.user.id).maybeSingle()]);const isPro=x=>x?.plan==="pro"&&["active","trialing"].includes(String(x?.status||"")),workspacePro=isPro(w.data),personalPro=isPro(u.data);state.marketIntelligence=workspacePro?w.data:personalPro?u.data:(w.data||{plan:"base",status:"included"});state.marketIntelligenceSource=workspacePro?"workspace":personalPro?"personal":"base";const pro=marketPro();$("marketPlan").textContent=pro?"Market Intelligence Pro":"Market Intelligence Base";if(workspacePro){$("marketTierText").textContent="Market Intelligence Pro è attivo per tutto il workspace: ricerca web, fonti e report approfonditi sono sbloccati.";$("marketUpgradeTitle").textContent="Market Intelligence Pro attivo";$("marketUpgradeText").textContent="L'add-on Pro è disponibile per tutti i membri del workspace.";$("marketUpgradeBtn").style.display="none"}else if(personalPro){$("marketTierText").textContent="Il tuo Market Intelligence Pro personale è attivo anche dentro FlowPilot. Gli altri membri del workspace restano sul livello Base finché il proprietario non attiva Pro per il team.";$("marketUpgradeTitle").textContent="Market Intelligence Pro personale attivo";$("marketUpgradeText").textContent="Puoi usare ricerca web, fonti e report approfonditi con il tuo account. Il proprietario può estendere Pro a tutto il workspace.";$("marketUpgradeBtn").style.display=state.workspace.owner_id===state.user.id?"inline-block":"none";$("marketUpgradeBtn").disabled=false;$("marketUpgradeBtn").textContent="Attiva Pro per tutto il team"}else{$("marketTierText").textContent="Market Intelligence Base è integrato in FlowPilot. Puoi anche acquistare Market Intelligence Pro separatamente, senza piano FlowPilot.";$("marketUpgradeTitle").textContent="Market Intelligence Base";$("marketUpgradeText").textContent="Pro aggiunge market size, CAGR, forecast, segmenti, competitor, driver, rischi, raccomandazioni e fonti web.";$("marketUpgradeBtn").style.display="inline-block";$("marketUpgradeBtn").textContent="Attiva Pro · €11,99/mese";if(state.workspace.owner_id!==state.user.id){$("marketUpgradeBtn").disabled=true;$("marketUpgradeBtn").textContent="Attivabile dal proprietario"}}$("marketBillingBtn").style.display=state.workspace.owner_id===state.user.id?"inline-block":"none"}'''
+          if old not in s:
+              raise SystemExit('loadMarketIntelligence block not found')
+          s=s.replace(old,new,1)
+          s=s.replace('if(marketPro())return toast("Market Intelligence Pro è già attivo.");','if(state.marketIntelligenceSource==="workspace")return toast("Market Intelligence Pro è già attivo per il workspace.");',1)
+          s=s.replace('if(marketPro()){toast("Market Intelligence Pro è attivo per tutto il team.");showView("market");break}','if(state.marketIntelligenceSource==="workspace"){toast("Market Intelligence Pro è attivo per tutto il team.");showView("market");break}',1)
+          p.write_text(s,encoding='utf-8')
+      - name: Commit changes
+        run: |
+          git config user.name "FlowPilot Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html dashboard.html
+          git commit -m "Support standalone and integrated Market Intelligence"
+          git push
