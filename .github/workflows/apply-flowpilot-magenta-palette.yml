@@ -1,0 +1,104 @@
+name: Apply FlowPilot magenta palette
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-flowpilot-magenta-palette.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  palette:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply magenta palette across product pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          files=[Path('index.html'),Path('dashboard.html'),Path('market-intelligence.html'),Path('invite.html'),Path('reset-password.html')]
+
+          palette={
+            # previous cream/tan surfaces -> light tints derived from the new palette
+            '#fbf2e1':'#FFF7FA','#fff9ef':'#FFFFFF','#f1e0c3':'#FCE7EF','#f3e4cc':'#F9DFE9','#f4e8d3':'#FBEAF0',
+            '#f4e5cc':'#F8DCE7','#eeddbf':'#F7D1E0','#ead7b7':'#F5CBD9','#e1cba7':'#EFC1D2','#dec69d':'#ECC1D0',
+            '#d2b68a':'#E5B6C9','#b89562':'#C97091','#c7aa7d':'#D893AC','#e8d5b6':'#F4CEDC','#e7d4b4':'#F3CAD9',
+            '#efe2cb':'#F9DFE8','#f0dfc4':'#F8D6E2','#f3e4cc':'#F9DFE9','#f0e2ca':'#F7D6E2','#e7d8bf':'#F5D4E0',
+            '#d9c8aa':'#F0C8D7','#dccbae':'#F2CADA','#e3d3b8':'#F3D0DC','#c7b28d':'#DCA1B6','#d7c6a8':'#EBC2D1',
+
+            # dark green family -> burgundy family from supplied palette
+            '#063432':'#510926','#073b39':'#510926','#0b4745':'#5B0A2B','#0e5350':'#6B0E34','#104542':'#6B0E34',
+            '#124e4c':'#840941','#1c5a57':'#840941','#2a6663':'#960C44','#39706d':'#9B0D47','#174f4c':'#6B0E34',
+            '#285e5b':'#840941','#526e68':'#7E5062','#496a64':'#765065','#58736d':'#7A5866','#5a746e':'#7B5B68',
+            '#687d77':'#806673','#6c817a':'#846A76','#71847d':'#876D79','#73877f':'#8B707C','#788a84':'#8E7580',
+            '#7d8d87':'#927983','#d2b68a':'#E5B6C9',
+
+            # old semantic accents -> new palette
+            '#9a7442':'#B21253','#8b683d':'#9B0D47','#76533e':'#840941',
+
+            # any remaining old purple values
+            '#625bf6':'#E00056','#5b55f7':'#E00056','#756fff':'#C60C58','#8a84ff':'#B21253','#2a6a66':'#B21253',
+            '#514bdd':'#E00056','#514bd4':'#E00056','#5b55e8':'#E00056','#5c56dd':'#E00056','#5d57d9':'#E00056',
+          }
+
+          rgba={
+            'rgba(11,71,69,':'rgba(91,10,43,',
+            'rgba(7,59,57,':'rgba(81,9,38,',
+            'rgba(210,182,138,':'rgba(224,0,86,',
+            'rgba(251,242,225,':'rgba(255,247,250,',
+          }
+
+          overrides={
+            'index.html': '''
+:root{--bg:#FFF7FA;--surface:#FFFFFF;--surface-2:#FCE7EF;--text:#510926;--muted:#806673;--line:#E5B6C9;--line-strong:#C97091;--purple:#E00056;--purple-2:#C60C58;--purple-soft:#F7D1E0;--dark:#510926;--dark-2:#6B0E34;--green:#960C44;--orange:#B21253;--red:#E00056;--shadow:0 24px 70px rgba(91,10,43,.11);--shadow-lg:0 40px 110px rgba(81,9,38,.16)}
+body{background:#FFF7FA;color:#510926}.nav{background:rgba(255,247,250,.9)}.logo,.mini-logo{background:linear-gradient(135deg,#E00056,#960C44)}.btn-primary{background:#E00056;color:#fff;box-shadow:0 8px 22px rgba(224,0,86,.24)}.btn-primary:hover{background:#C60C58}.btn-dark{background:#510926}.section.white{background:#fff}.section.dark,.final-box{background:linear-gradient(145deg,#510926,#840941)}.flow-core,.luna-box,.integration-core{background:linear-gradient(145deg,#510926,#840941)}.gradient{background:linear-gradient(110deg,#E00056,#B21253);-webkit-background-clip:text;background-clip:text;color:transparent}.product-shell{background:#510926;border-color:#840941}.product-side{background:#510926}.side-item.active{background:#840941}.visual-card.darkish{background:#510926;border-color:#960C44}.msg.ai{background:#6B0E34;border-color:#960C44}.chat-actions span{background:#840941}.action-result,.addon,.decision{background:#FCE7EF;border-color:#E5B6C9;color:#840941}.price.featured{border-color:#E00056;box-shadow:0 0 0 3px #F7D1E0,var(--shadow)}
+''',
+            'dashboard.html': '''
+:root{--bg:#FFF7FA;--card:#FFFFFF;--text:#510926;--muted:#806673;--line:#E5B6C9;--p:#E00056;--p2:#C60C58;--dark:#510926;--green:#960C44;--red:#E00056;--orange:#B21253;--shadow:0 14px 42px rgba(91,10,43,.08)}
+body{background:#FFF7FA;color:#510926}.sidebar{background:#510926}.mark{background:linear-gradient(135deg,#E00056,#960C44)}.nav-btn:hover,.nav-btn.active{background:#6B0E34}.topbar{background:rgba(255,247,250,.94)}.card{background:#fff;border-color:#E5B6C9}.btn.primary{background:#E00056;border-color:#E00056;color:#fff}.btn.primary:hover{background:#C60C58}.briefing,.market-hero{background:linear-gradient(145deg,#510926,#840941)}.plan-pill,.luna-pill{background:#F7D1E0;color:#840941}.market-pill{background:#F5CBD9;color:#840941}.progress span,.seat-bar span{background:linear-gradient(90deg,#E00056,#B21253)}.msg.user{background:#E00056}.loader{background:#FFF7FA}.spinner{border-color:#F1CFDC;border-top-color:#E00056}.paywall{background:rgba(255,247,250,.96)}
+''',
+            'market-intelligence.html': '''
+:root{--bg:#FFF7FA;--card:#FFFFFF;--text:#510926;--muted:#806673;--line:#E5B6C9;--p:#E00056;--p2:#C60C58;--soft:#F7D1E0;--dark:#510926;--green:#960C44;--orange:#B21253;--red:#E00056;--shadow:0 22px 60px rgba(91,10,43,.10)}
+body{background:#FFF7FA;color:#510926}.nav{background:rgba(255,247,250,.94)}.mark{background:linear-gradient(135deg,#E00056,#960C44)}.primary{background:#E00056;color:#fff}.primary:hover{background:#C60C58}.secondary,.panel,.searchbox,.metric,.block,.history-item{background:#fff;border-color:#E5B6C9}.accountbar{background:linear-gradient(145deg,#510926,#840941)}.pill{background:#F7D1E0;color:#840941}.success{background:#F7D1E0;color:#840941}.notice{border-color:#E5B6C9}
+''',
+            'invite.html': '''
+:root{--bg:#FFF7FA;--card:#FFFFFF;--text:#510926;--muted:#806673;--line:#E5B6C9;--primary:#E00056;--primary2:#C60C58;--shadow:0 24px 70px rgba(91,10,43,.12)}
+body{background:radial-gradient(circle at 50% 10%,rgba(224,0,86,.10),transparent 34%),#FFF7FA;color:#510926}.mark{background:linear-gradient(135deg,#E00056,#960C44)}.card{background:#fff;border-color:#E5B6C9}.hero{background:linear-gradient(145deg,#510926,#840941)}.label{color:#F7D1E0}.primary{background:#E00056;color:#fff}.secondary{background:#fff;color:#510926;border-color:#E5B6C9}.info,.success{background:#FCE7EF;border-color:#E5B6C9;color:#840941}.spinner{border-color:#F1CFDC;border-top-color:#E00056}.icon{background:#F7D1E0;color:#840941}
+''',
+            'reset-password.html': '''
+:root{--bg:#FFF7FA;--text:#510926;--muted:#806673;--line:#E5B6C9;--primary:#E00056;--primary2:#C60C58;--shadow:0 24px 70px rgba(91,10,43,.12)}
+body{background:radial-gradient(circle at 50% 10%,rgba(224,0,86,.10),transparent 34%),#FFF7FA;color:#510926}.mark{background:linear-gradient(135deg,#E00056,#960C44)}.card{background:#fff;border-color:#E5B6C9}.hero{background:linear-gradient(145deg,#510926,#840941)}.label{color:#F7D1E0}.primary{background:#E00056;color:#fff}.secondary{background:#fff;color:#510926;border-color:#E5B6C9}.info{background:#FCE7EF;border-color:#E5B6C9;color:#840941}.spinner{border-color:#F1CFDC;border-top-color:#E00056}.icon{background:#F7D1E0;color:#840941}
+'''
+          }
+
+          hex_re=re.compile(r'#[0-9a-fA-F]{6}\b')
+          marker='/* FLOWPILOT_MAGENTA_PALETTE_2026 */'
+          for p in files:
+            s=p.read_text(encoding='utf-8')
+            s=hex_re.sub(lambda m: palette.get(m.group(0).lower(),m.group(0)),s)
+            for old,new in rgba.items(): s=s.replace(old,new)
+            if marker not in s and '</style>' in s:
+              s=s.replace('</style>',marker+overrides[p.name]+'</style>',1)
+            p.write_text(s,encoding='utf-8')
+
+          legacy=Path('marketlens.html')
+          if legacy.exists():
+            s=legacy.read_text(encoding='utf-8')
+            if '<style>' not in s:
+              s=s.replace('</head>','<style>body{background:#FFF7FA;color:#510926}</style></head>',1)
+            else:
+              s=s.replace('</style>','body{background:#FFF7FA;color:#510926}</style>',1)
+            legacy.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit palette update
+        run: |
+          git config user.name "FlowPilot Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html dashboard.html market-intelligence.html invite.html reset-password.html marketlens.html
+          git commit -m "Try FlowPilot magenta burgundy palette" || exit 0
+          git push
