@@ -1,0 +1,50 @@
+name: Apply Market Intelligence plan switching v2
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-market-intelligence-plan-switching-v2.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply plan switching
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p=Path('market-intelligence.html'); s=p.read_text(encoding='utf-8')
+          a='$("upgradeBtn").style.display=plan==="base"?"block":"none";$("businessBtn").style.display=plan==="business"?"none":"block";$("businessBtn").textContent=plan==="pro"&&personal?"Gestisci / passa a Business →":"Attiva Business →";'
+          b='$("upgradeBtn").style.display=(plan==="base"||(plan==="business"&&personal))?"block":"none";$("upgradeBtn").textContent=plan==="business"&&personal?"Passa a Pro →":"Attiva Pro →";$("businessBtn").style.display=plan==="business"?"none":"block";$("businessBtn").textContent=plan==="pro"&&personal?"Passa a Business →":"Attiva Business →";'
+          if a not in s: raise SystemExit('standalone controls not found')
+          s=s.replace(a,b,1)
+          a='async function upgrade(plan="pro"){if(!user){authOpen("signup");return}if(entSource==="personal"&&active()&&ent?.plan!==plan){toast("Apriamo la gestione del piano per completare il cambio.");return billing()}const btn=plan==="business"?$("businessBtn"):$("upgradeBtn");btn.disabled=true;'
+          b='async function changePlan(plan){const label=plan==="business"?"Business (€24,99/mese)":"Pro (€14,99/mese)";if(!confirm(`Vuoi passare a Market Intelligence ${label}? Stripe calcolerà automaticamente l’eventuale conguaglio del periodo corrente.`))return;const btn=plan==="business"?$("businessBtn"):$("upgradeBtn");btn.disabled=true;const {data,error}=await db.functions.invoke("market-intelligence-change-plan",{body:{plan}});btn.disabled=false;if(error||data?.error){if(data?.pending){toast("Cambio piano in attesa del pagamento. Controlla il metodo di pagamento.");return billing()}return toast("Non è stato possibile cambiare piano.")}toast(`Market Intelligence ${plan==="business"?"Business":"Pro"} è attivo.`);await loadAccount()}\nasync function upgrade(plan="pro"){if(!user){authOpen("signup");return}if(entSource==="personal"&&active()&&ent?.plan!==plan)return changePlan(plan);const btn=plan==="business"?$("businessBtn"):$("upgradeBtn");btn.disabled=true;'
+          if a not in s: raise SystemExit('standalone upgrade prefix not found')
+          s=s.replace(a,b,1)
+          s=s.replace('else if(data?.error==="manage_existing_subscription"){toast("Gestisci il piano dal portale pagamenti.");return billing()}', 'else if(data?.error==="manage_existing_subscription")return changePlan(plan)',1)
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('dashboard.html'); s=p.read_text(encoding='utf-8')
+          a='$("marketUpgradeBtn").disabled=!isOwner;$("marketBusinessBtn").disabled=!isOwner;$("marketUpgradeBtn").style.display=plan==="base"?"inline-block":"none";$("marketBusinessBtn").style.display=plan==="business"?"none":"inline-block";'
+          b='$("marketUpgradeBtn").disabled=!isOwner;$("marketBusinessBtn").disabled=!isOwner;const workspaceTier=state.marketIntelligenceSource==="workspace";$("marketUpgradeBtn").style.display=(plan==="base"||(plan==="business"&&workspaceTier))?"inline-block":"none";$("marketBusinessBtn").style.display=plan==="business"?"none":"inline-block";$("marketUpgradeBtn").textContent=plan==="business"&&workspaceTier?"Passa a Pro · €14,99/mese":(isOwner?"Pro · €14,99/mese":"Attivabile dal proprietario");'
+          if a not in s: raise SystemExit('dashboard controls not found')
+          s=s.replace(a,b,1)
+          a='async function startMI(plan="pro"){if(state.workspace.owner_id!==state.user.id)return toast("Solo il proprietario può attivare un piano Market Intelligence.");if(state.marketIntelligenceSource==="workspace"&&marketPaid()){toast("Apriamo la gestione del piano per completare il cambio.");return portal()}const btn=plan==="business"?$("marketBusinessBtn"):$("marketUpgradeBtn");btn.disabled=true;'
+          b='async function changeWorkspaceMIPlan(plan){const label=plan==="business"?"Business (€24,99/mese)":"Pro (€14,99/mese)";if(!confirm(`Vuoi passare il workspace a Market Intelligence ${label}? Stripe calcolerà automaticamente l’eventuale conguaglio del periodo corrente.`))return;const btn=plan==="business"?$("marketBusinessBtn"):$("marketUpgradeBtn");btn.disabled=true;const {data,error}=await db.functions.invoke("market-intelligence-change-plan",{body:{workspace_id:state.workspace.id,plan}});btn.disabled=false;if(error||data?.error){if(data?.pending){toast("Cambio piano in attesa del pagamento. Controlla il metodo di pagamento.");return portal()}return toast("Non è stato possibile cambiare piano.")}toast(`Market Intelligence ${plan==="business"?"Business":"Pro"} è attivo per il team.`);await loadMarketIntelligence()}\nasync function startMI(plan="pro"){if(state.workspace.owner_id!==state.user.id)return toast("Solo il proprietario può attivare un piano Market Intelligence.");if(state.marketIntelligenceSource==="workspace"&&marketPaid()&&state.marketIntelligence?.plan!==plan)return changeWorkspaceMIPlan(plan);if(state.marketIntelligenceSource==="workspace"&&state.marketIntelligence?.plan===plan)return toast(`Market Intelligence ${plan==="business"?"Business":"Pro"} è già attivo.`);const btn=plan==="business"?$("marketBusinessBtn"):$("marketUpgradeBtn");btn.disabled=true;'
+          if a not in s: raise SystemExit('dashboard start prefix not found')
+          s=s.replace(a,b,1)
+          s=s.replace('if(data?.error==="manage_existing_subscription"){toast("Gestisci il cambio piano dal portale pagamenti.");return portal()}', 'if(data?.error==="manage_existing_subscription")return changeWorkspaceMIPlan(plan)',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "FlowPilot Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add market-intelligence.html dashboard.html
+          git commit -m "Enable direct Market Intelligence plan switching" || exit 0
+          git push
