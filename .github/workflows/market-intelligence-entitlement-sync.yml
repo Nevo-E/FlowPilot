@@ -1,0 +1,48 @@
+name: Sync Market Intelligence entitlement in standalone UI
+
+on:
+  push:
+    paths:
+      - '.github/workflows/market-intelligence-entitlement-sync.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch standalone entitlement handling
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('market-intelligence.html')
+          s = p.read_text(encoding='utf-8')
+
+          s = s.replace(
+            'let user=null,ent=null,mode="signin",pendingQuery="";',
+            'let user=null,ent=null,entSource="base",mode="signin",pendingQuery="";'
+          )
+
+          new_load = '''async function loadAccount(){const {data:{session}}=await db.auth.getSession();user=session?.user||null;if(!user){ent=null;entSource="base";$("accountBar").classList.add("hidden");$("signinBtn").classList.remove("hidden");$("signupBtn").classList.remove("hidden");$("logoutBtn").classList.add("hidden");$("usageText").textContent="Accedi per iniziare una ricerca di mercato.";return}$("accountBar").classList.remove("hidden");$("accountEmail").textContent=user.email;$("signinBtn").classList.add("hidden");$("signupBtn").classList.add("hidden");$("logoutBtn").classList.remove("hidden");const [{data:personal},{data:workspaceRows}]=await Promise.all([db.from("market_intelligence_user_entitlements").select("plan,status,current_period_end").eq("user_id",user.id).maybeSingle(),db.from("market_intelligence_entitlements").select("workspace_id,plan,status,current_period_end").eq("plan","pro").in("status",["active","trialing"]).limit(1)]);const isPro=x=>x?.plan==="pro"&&["active","trialing"].includes(String(x?.status||"")),personalPro=isPro(personal),workspacePro=(workspaceRows||[]).find(isPro)||null;ent=personalPro?personal:workspacePro||personal||{plan:"base",status:"included"};entSource=personalPro?"personal":workspacePro?"workspace":"base";$("planPill").textContent=active()?"PRO":"BASE";$("upgradeBtn").style.display=active()?"none":"block";$("billingBtn").classList.toggle("hidden",!(active()&&entSource==="personal"));$("planNote").className="notice "+(active()?"success":"");$("planNote").textContent=entSource==="workspace"?"Market Intelligence Pro è già incluso nel tuo workspace FlowPilot ed è valido anche qui.":entSource==="personal"?"Pro è attivo sul tuo account personale e può essere usato anche senza FlowPilot.":"Puoi acquistare Pro anche senza alcun abbonamento FlowPilot.";await loadHistory();if(!active()){const start=new Date();start.setUTCDate(1);start.setUTCHours(0,0,0,0);const {count}=await db.from("market_intelligence_runs").select("id",{count:"exact",head:true}).eq("user_id",user.id).is("workspace_id",null).gte("created_at",start.toISOString());$("usageText").textContent=`Piano Base · ${Math.max(0,3-(count||0))} analisi gratuite rimaste questo mese.`}else $("usageText").textContent=entSource==="workspace"?"Piano Pro · incluso nel tuo workspace FlowPilot. Ricerca web, fonti e report approfonditi sono sbloccati.":"Piano Pro · ricerca web, fonti e report approfonditi sbloccati."}'''
+
+          s, n = re.subn(r'async function loadAccount\(\)\{.*?\}\nasync function loadHistory\(\)\{', new_load + '\nasync function loadHistory(){', s, count=1, flags=re.S)
+          if n != 1:
+            raise SystemExit('loadAccount replacement failed')
+
+          s = s.replace('await db.auth.signOut();ent=null;await loadAccount()', 'await db.auth.signOut();ent=null;entSource="base";await loadAccount()')
+
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add market-intelligence.html
+          git commit -m "Recognize FlowPilot workspace Market Intelligence Pro in standalone extension" || exit 0
+          git push
