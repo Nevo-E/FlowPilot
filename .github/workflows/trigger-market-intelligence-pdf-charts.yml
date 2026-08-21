@@ -23,3 +23,5 @@ jobs:
           git add .github/workflows/apply-market-intelligence-pdf-charts.yml
           git commit -m "Trigger Market Intelligence PDF charts patch"
           git push
+
+# run 2
