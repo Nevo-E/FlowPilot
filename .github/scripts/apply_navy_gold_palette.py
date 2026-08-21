@@ -1,0 +1,48 @@
+from pathlib import Path
+import re
+
+files=[Path('index.html'),Path('dashboard.html'),Path('market-intelligence.html'),Path('invite.html'),Path('reset-password.html')]
+
+palette={
+  '#fff7fa':'#F6F1E8','#ffffff':'#FBF8F2','#fce7ef':'#F1E6D2','#f9dfe9':'#EAD8B9','#fbeaf0':'#F2E9DB',
+  '#f8dce7':'#EBDABD','#f7d1e0':'#E1C9A1','#f5cbd9':'#E5CFAB','#efc1d2':'#DEC49A','#ecc1d0':'#DDC39A',
+  '#e5b6c9':'#D7BE95','#c97091':'#B08D57','#d893ac':'#C7A873','#f4cedc':'#E6D4B6','#f3cad9':'#E3CEAC',
+  '#f9dfe8':'#EBD9BA','#f8d6e2':'#E5CEAA','#f7d6e2':'#E5CEAA','#f5d4e0':'#E6D2B2','#f0c8d7':'#DFC59C',
+  '#f2cada':'#E3CCAA','#f3d0dc':'#E8D6BA','#dca1b6':'#C4A16A','#ebc2d1':'#D8BF97','#f1cfdc':'#E4D1B0',
+  '#e00056':'#B08D57','#c60c58':'#9D7B48','#b21253':'#B08D57','#9b0d47':'#8C6B3C','#960c44':'#B08D57',
+  '#840941':'#1F2A3A','#6b0e34':'#1F2A3A','#5b0a2b':'#0F1722','#510926':'#0F1722',
+  '#7e5062':'#5B6470','#765065':'#65707C','#7a5866':'#68727D','#7b5b68':'#6A747E','#806673':'#6E7780',
+  '#846a76':'#717A82','#876d79':'#737C84','#8b707c':'#767F86','#8e7580':'#798188','#927983':'#7B8389',
+}
+rgba={
+  'rgba(91,10,43,':'rgba(15,23,34,',
+  'rgba(81,9,38,':'rgba(15,23,34,',
+  'rgba(224,0,86,':'rgba(176,141,87,',
+  'rgba(255,247,250,':'rgba(246,241,232,',
+}
+overrides={
+'index.html':'''\n:root{--bg:#F6F1E8;--surface:#FBF8F2;--surface-2:#E1C9A1;--text:#0F1722;--muted:#68727D;--line:#D7BE95;--line-strong:#B08D57;--purple:#B08D57;--purple-2:#E1C9A1;--purple-soft:#EAD8B9;--dark:#0F1722;--dark-2:#1F2A3A;--green:#B08D57;--orange:#B08D57;--red:#8C6B3C;--shadow:0 24px 70px rgba(15,23,34,.11);--shadow-lg:0 40px 110px rgba(15,23,34,.16)}body{background:#F6F1E8;color:#0F1722}.nav{background:rgba(246,241,232,.92);border-bottom-color:#D7BE95}.logo,.mini-logo{background:linear-gradient(135deg,#B08D57,#8C6B3C)}.btn-primary{background:#0F1722;color:#F6F1E8;box-shadow:0 8px 22px rgba(15,23,34,.18)}.btn-primary:hover{background:#1F2A3A}.btn-secondary,.mobile-menu{background:#FBF8F2;color:#0F1722;border-color:#D7BE95}.btn-dark{background:#0F1722;color:#F6F1E8}.section.white{background:#FBF8F2}.section.dark,.final-box{background:linear-gradient(145deg,#0F1722,#1F2A3A);color:#F6F1E8}.flow-core,.luna-box,.integration-core{background:linear-gradient(145deg,#0F1722,#1F2A3A)}.gradient{background:linear-gradient(110deg,#B08D57,#E1C9A1);-webkit-background-clip:text;background-clip:text;color:transparent}.product-shell{background:#0F1722;border-color:#1F2A3A}.product-side{background:#0F1722}.side-item.active{background:#1F2A3A}.visual-card.darkish{background:#0F1722;border-color:#B08D57}.msg.ai{background:#1F2A3A;border-color:#B08D57}.chat-actions span{background:#1F2A3A}.action-result,.addon,.decision{background:#F1E6D2;border-color:#D7BE95;color:#0F1722}.price.featured{border-color:#B08D57;box-shadow:0 0 0 3px #EAD8B9,var(--shadow)}.eyebrow,.kicker{color:#B08D57}.eyebrow-dot{background:#B08D57;box-shadow:0 0 0 5px #EAD8B9}\n''',
+'dashboard.html':'''\n:root{--bg:#F6F1E8;--card:#FBF8F2;--text:#0F1722;--muted:#68727D;--line:#D7BE95;--p:#B08D57;--p2:#E1C9A1;--dark:#0F1722;--green:#B08D57;--red:#8C6B3C;--orange:#B08D57;--shadow:0 14px 42px rgba(15,23,34,.08)}body{background:#F6F1E8;color:#0F1722}.sidebar{background:#0F1722}.mark{background:linear-gradient(135deg,#B08D57,#8C6B3C)}.nav-btn:hover,.nav-btn.active{background:#1F2A3A}.topbar{background:rgba(246,241,232,.94);border-bottom-color:#D7BE95}.card{background:#FBF8F2;border-color:#D7BE95}.btn{background:#FBF8F2;border-color:#D7BE95;color:#0F1722}.btn.primary{background:#0F1722;border-color:#0F1722;color:#F6F1E8}.btn.primary:hover{background:#1F2A3A}.briefing,.market-hero{background:linear-gradient(145deg,#0F1722,#1F2A3A)}.plan-pill,.luna-pill{background:#E1C9A1;color:#0F1722}.market-pill{background:#EAD8B9;color:#0F1722}.progress span,.seat-bar span{background:linear-gradient(90deg,#B08D57,#E1C9A1)}.msg.user{background:#B08D57;color:#0F1722}.loader{background:#F6F1E8}.spinner{border-color:#E1C9A1;border-top-color:#0F1722}.paywall{background:rgba(246,241,232,.96)}.health{border-color:rgba(246,241,232,.14)}.kicker{color:#E1C9A1}.market-search input{border-color:rgba(225,201,161,.35)}\n''',
+'market-intelligence.html':'''\n:root{--bg:#F6F1E8;--card:#FBF8F2;--text:#0F1722;--muted:#68727D;--line:#D7BE95;--p:#B08D57;--p2:#E1C9A1;--soft:#EAD8B9;--dark:#0F1722;--green:#B08D57;--orange:#B08D57;--red:#8C6B3C;--shadow:0 22px 60px rgba(15,23,34,.10)}body{background:#F6F1E8;color:#0F1722}.nav{background:rgba(246,241,232,.94);border-bottom-color:#D7BE95}.mark{background:linear-gradient(135deg,#B08D57,#8C6B3C)}.primary{background:#0F1722;color:#F6F1E8}.primary:hover{background:#1F2A3A}.secondary,.panel,.searchbox,.metric,.block,.history-item{background:#FBF8F2;border-color:#D7BE95}.accountbar{background:linear-gradient(145deg,#0F1722,#1F2A3A)}.pill{background:#E1C9A1;color:#0F1722}.success{background:#EAD8B9;color:#0F1722}.notice{border-color:#D7BE95}.eyebrow{color:#B08D57}.hero:before{background:#E1C9A1}\n''',
+'invite.html':'''\n:root{--bg:#F6F1E8;--card:#FBF8F2;--text:#0F1722;--muted:#68727D;--line:#D7BE95;--primary:#B08D57;--primary2:#E1C9A1;--shadow:0 24px 70px rgba(15,23,34,.12)}body{background:radial-gradient(circle at 50% 10%,rgba(225,201,161,.22),transparent 34%),#F6F1E8;color:#0F1722}.mark{background:linear-gradient(135deg,#B08D57,#8C6B3C)}.card{background:#FBF8F2;border-color:#D7BE95}.hero{background:linear-gradient(145deg,#0F1722,#1F2A3A);color:#F6F1E8}.label{color:#E1C9A1}.primary{background:#0F1722;color:#F6F1E8}.secondary{background:#FBF8F2;color:#0F1722;border-color:#D7BE95}.info,.success{background:#F1E6D2;border-color:#D7BE95;color:#0F1722}.spinner{border-color:#E1C9A1;border-top-color:#0F1722}.icon{background:#E1C9A1;color:#0F1722}\n''',
+'reset-password.html':'''\n:root{--bg:#F6F1E8;--text:#0F1722;--muted:#68727D;--line:#D7BE95;--primary:#B08D57;--primary2:#E1C9A1;--shadow:0 24px 70px rgba(15,23,34,.12)}body{background:radial-gradient(circle at 50% 10%,rgba(225,201,161,.22),transparent 34%),#F6F1E8;color:#0F1722}.mark{background:linear-gradient(135deg,#B08D57,#8C6B3C)}.card{background:#FBF8F2;border-color:#D7BE95}.hero{background:linear-gradient(145deg,#0F1722,#1F2A3A);color:#F6F1E8}.label{color:#E1C9A1}.primary{background:#0F1722;color:#F6F1E8}.secondary{background:#FBF8F2;color:#0F1722;border-color:#D7BE95}.info{background:#F1E6D2;border-color:#D7BE95;color:#0F1722}.spinner{border-color:#E1C9A1;border-top-color:#0F1722}.icon{background:#E1C9A1;color:#0F1722}\n'''
+}
+
+hex_re=re.compile(r'#[0-9a-fA-F]{6}\b')
+marker='/* FLOWPILOT_NAVY_GOLD_PALETTE_2026 */'
+for p in files:
+  s=p.read_text(encoding='utf-8')
+  s=hex_re.sub(lambda m: palette.get(m.group(0).lower(),m.group(0)),s)
+  for old,new in rgba.items(): s=s.replace(old,new)
+  if marker not in s and '</style>' in s:
+    s=s.replace('</style>',marker+overrides[p.name]+'</style>',1)
+  p.write_text(s,encoding='utf-8')
+
+legacy=Path('marketlens.html')
+if legacy.exists():
+  s=legacy.read_text(encoding='utf-8')
+  if '<style>' not in s:
+    s=s.replace('</head>','<style>body{background:#F6F1E8;color:#0F1722}</style></head>',1)
+  else:
+    s=s.replace('</style>','body{background:#F6F1E8;color:#0F1722}</style>',1)
+  legacy.write_text(s,encoding='utf-8')
