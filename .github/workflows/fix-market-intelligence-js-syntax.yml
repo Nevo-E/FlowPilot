@@ -1,0 +1,45 @@
+name: Fix Market Intelligence JS syntax
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-market-intelligence-js-syntax.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Fix and validate JS
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          fixes={
+            'market-intelligence.html':[
+              ('else if(data?.error==="manage_existing_subscription")return changePlan(plan)else toast("Impossibile aprire il pagamento.");', 'else if(data?.error==="manage_existing_subscription"){return changePlan(plan)}else toast("Impossibile aprire il pagamento.");')
+            ],
+            'dashboard.html':[
+              ('if(data?.error==="manage_existing_subscription")return changeWorkspaceMIPlan(plan)return toast("Impossibile aprire il pagamento.")', 'if(data?.error==="manage_existing_subscription"){return changeWorkspaceMIPlan(plan)}return toast("Impossibile aprire il pagamento.")')
+            ]
+          }
+          for fn,repls in fixes.items():
+            p=Path(fn); s=p.read_text(encoding='utf-8')
+            for a,b in repls:
+              if a not in s: raise SystemExit(f'{fn}: target not found')
+              s=s.replace(a,b,1)
+            p.write_text(s,encoding='utf-8')
+            scripts=re.findall(r'<script>(.*?)</script>',s,flags=re.S)
+            Path('/tmp/'+fn+'.js').write_text('\n'.join(scripts),encoding='utf-8')
+          PY
+          node --check /tmp/market-intelligence.html.js
+          node --check /tmp/dashboard.html.js
+      - name: Commit
+        run: |
+          git config user.name "FlowPilot Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add market-intelligence.html dashboard.html
+          git commit -m "Fix Market Intelligence plan switching syntax" || exit 0
+          git push
