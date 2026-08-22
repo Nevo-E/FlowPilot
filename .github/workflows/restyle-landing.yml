@@ -1,0 +1,96 @@
+name: FlowPilot Landing Restyle
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.restyle-landing-trigger'
+
+permissions:
+  contents: write
+
+jobs:
+  restyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Apply premium landing restyle
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('index.html')
+          s = path.read_text(encoding='utf-8')
+          marker = 'FLOWPILOT_PREMIUM_LANDING_2026'
+          if marker in s:
+              raise SystemExit('Restyle already applied')
+
+          css = r'''
+/* FLOWPILOT_PREMIUM_LANDING_2026 */
+:root{--shadow:0 16px 44px rgba(15,23,34,.07);--shadow-lg:0 34px 90px rgba(15,23,34,.14)}
+*{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,system-ui,sans-serif;letter-spacing:-.012em;background:radial-gradient(circle at 80% 3%,rgba(225,201,161,.18),transparent 25%),radial-gradient(circle at 10% 42%,rgba(176,141,87,.055),transparent 27%),#F6F1E8}
+.container{width:min(1280px,calc(100% - 56px))}
+.nav{background:rgba(246,241,232,.76);border-bottom:1px solid rgba(215,190,149,.56);backdrop-filter:saturate(150%) blur(26px);-webkit-backdrop-filter:saturate(150%) blur(26px);box-shadow:0 1px 0 rgba(255,255,255,.48)}
+.nav-inner{width:min(1320px,calc(100% - 52px));height:76px}.brand{font-size:20px;letter-spacing:-.045em}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(145deg,#C9A76D,#8C6B3C);box-shadow:0 9px 22px rgba(140,107,60,.24),inset 0 1px 0 rgba(255,255,255,.42)}.logo:after{width:9px;height:9px;border-width:1.7px}
+.nav-links{gap:30px;color:#656E77;font-size:12px;font-weight:650}.nav-links a{position:relative;padding:9px 0}.nav-links a:after{content:"";position:absolute;left:50%;right:50%;bottom:3px;height:1.5px;border-radius:2px;background:#B08D57;transition:.2s ease}.nav-links a:hover:after{left:0;right:0}
+.btn{min-height:40px;border-radius:12px;padding:0 17px;font-size:11px;font-weight:720;letter-spacing:-.01em;box-shadow:0 1px 2px rgba(15,23,34,.025);transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}.btn:hover{transform:translateY(-1px)}.btn-primary{background:#0F1722;color:#F6F1E8;border:1px solid #0F1722;box-shadow:0 7px 18px rgba(15,23,34,.15)}.btn-primary:hover{background:#1F2A3A;box-shadow:0 10px 24px rgba(15,23,34,.18)}.btn-secondary{background:rgba(251,248,242,.72);border:1px solid rgba(176,141,87,.52);backdrop-filter:blur(12px)}.btn-secondary:hover{background:#FBF8F2;border-color:#B08D57}.btn-ghost{border:1px solid transparent}.btn-ghost:hover{background:rgba(251,248,242,.6);border-color:rgba(176,141,87,.28)}
+.hero{padding:112px 0 104px}.hero:before{width:900px;height:520px;background:#D7BE95;filter:blur(170px);opacity:.16;top:-170px}.hero-grid{grid-template-columns:minmax(0,1.02fr) minmax(470px,.98fr);gap:76px}.eyebrow{margin-bottom:22px;padding:8px 11px 8px 9px;border:1px solid rgba(176,141,87,.28);border-radius:999px;background:rgba(251,248,242,.56);backdrop-filter:blur(10px);font-size:9px;letter-spacing:.11em}.eyebrow-dot{width:20px;height:20px;border-radius:7px;background:linear-gradient(145deg,#C9A76D,#8C6B3C);box-shadow:inset 0 1px 0 rgba(255,255,255,.42),0 4px 12px rgba(140,107,60,.18);position:relative}.eyebrow-dot:after{content:"";position:absolute;width:6px;height:6px;border:1.4px solid #FFF7EA;border-radius:2px;left:6px;top:6px;transform:rotate(45deg)}
+.hero h1{font-size:clamp(54px,6.3vw,84px);line-height:.965;letter-spacing:-.067em;margin-bottom:27px}.gradient{background:linear-gradient(110deg,#8C6B3C,#C7A873 50%,#E1C9A1);-webkit-background-clip:text;background-clip:text;color:transparent}.hero-copy{font-size:17px;line-height:1.72;color:#68727D;max-width:680px}.hero-actions{gap:10px;margin-top:33px}.hero-note{gap:9px;margin-top:24px}.hero-note span{display:inline-flex;align-items:center;min-height:31px;padding:0 11px;border-radius:999px;background:rgba(251,248,242,.6);border:1px solid rgba(215,190,149,.48);font-size:9px;color:#66707A;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}.hero-note span:before{content:"";width:6px;height:6px;border-radius:2px;background:#B08D57;box-shadow:0 0 0 3px rgba(176,141,87,.12);margin-right:8px}
+.product-shell{position:relative;border:1px solid rgba(215,190,149,.58);border-radius:30px;padding:10px;background:linear-gradient(145deg,#0F1722,#192536);box-shadow:0 36px 95px rgba(15,23,34,.19),inset 0 1px 0 rgba(255,255,255,.08);transform:perspective(1300px) rotateY(-1.5deg) rotateX(.4deg)}.product-shell:after{content:"";position:absolute;inset:-1px;border-radius:30px;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}.product-topbar{height:39px;color:#A79B87}.dots i{width:6px;height:6px;background:#5D6570}.product{border-radius:20px;border-color:rgba(215,190,149,.52);box-shadow:inset 0 1px 0 rgba(255,255,255,.62)}.product-side{background:linear-gradient(180deg,#0F1722,#121E2C);padding:21px 12px}.product-brand{font-size:11px}.mini-logo{width:23px;height:23px;border-radius:8px;background:linear-gradient(145deg,#C6A46A,#8C6B3C)}.mini-logo:after{content:"";width:7px;height:7px;border:1.3px solid #FFF7EA;border-radius:2px;transform:rotate(45deg)}.side-item{display:flex;align-items:center;gap:8px;min-height:31px;padding:6px 8px;border-radius:9px}.side-item.active{background:rgba(225,201,161,.12);box-shadow:inset 0 0 0 1px rgba(225,201,161,.08)}.mock-ui-icon{width:21px;height:21px;flex:0 0 21px;display:grid;place-items:center;border-radius:7px;background:rgba(225,201,161,.08);color:#D7BE95}.mock-ui-icon svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.side-item.active .mock-ui-icon{background:rgba(176,141,87,.23);color:#FFF7EA}
+.product-main{padding:24px}.mock-title strong{font-size:20px}.health-pill{border-radius:999px;padding:8px 11px;background:#EFE1C8}.metric{border-color:rgba(215,190,149,.55);border-radius:13px;padding:13px;background:rgba(255,255,255,.32)}.metric strong{font-size:18px}.brief-card{border-color:rgba(215,190,149,.55);border-radius:15px;padding:15px}.brief-ico{width:29px;height:29px;border-radius:10px;background:linear-gradient(145deg,#EAD8B9,#D7BE95);box-shadow:inset 0 1px 0 rgba(255,255,255,.64);font-size:0}.brief-ico svg{width:16px;height:16px;fill:none;stroke:#0F1722;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.luna-box{border:1px solid rgba(225,201,161,.14);border-radius:15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.section{padding:118px 0}.section.white{background:rgba(251,248,242,.78);border-color:rgba(215,190,149,.48)}.section.dark{background:radial-gradient(circle at 72% 0,rgba(176,141,87,.14),transparent 28%),linear-gradient(145deg,#0F1722,#172332 60%,#1F2A3A)}.section-head{max-width:820px;margin-bottom:54px}.kicker{font-size:9px;letter-spacing:.11em}.section-head h2,.split-copy h2{font-size:clamp(38px,4.8vw,60px);line-height:1;letter-spacing:-.062em}.section-head p,.split-copy>p{font-size:14px;line-height:1.78}.split{gap:82px}
+.system-board,.visual-card,.action-card,.intel-box,.cap,.price,.faq-item{border-color:rgba(176,141,87,.5);background:rgba(251,248,242,.82);box-shadow:0 1px 1px rgba(15,23,34,.02),0 16px 44px rgba(15,23,34,.055);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.system-board{border-radius:27px;padding:33px}.source{border-color:rgba(176,141,87,.42);border-radius:14px;background:rgba(255,255,255,.32);padding:18px 8px}.flow-core,.integration-core{border:1px solid rgba(225,201,161,.16);border-radius:18px;box-shadow:0 16px 35px rgba(15,23,34,.16),inset 0 1px 0 rgba(255,255,255,.06)}.output{border:1px solid rgba(176,141,87,.16);border-radius:12px;background:#EAD8B9}
+.visual-card{border-radius:24px;padding:24px}.visual-card.darkish{background:linear-gradient(145deg,#121E2C,#1F2A3A);border-color:rgba(176,141,87,.7)}.stat,.issue{border-color:rgba(176,141,87,.44);border-radius:13px;background:rgba(255,255,255,.28)}.point-ico,.cap-ico{width:40px;height:40px;border-radius:13px;background:linear-gradient(145deg,#EFE2CC,#DCC49D);box-shadow:inset 0 1px 0 rgba(255,255,255,.65);font-size:0;color:#0F1722}.point-ico svg,.cap-ico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.point{gap:14px}.point b{font-size:13px}.point p{font-size:11px}
+.msg{border-radius:17px;padding:14px 16px;font-size:10px}.msg.ai{background:rgba(31,42,58,.92);border-color:rgba(176,141,87,.7);border-bottom-left-radius:6px}.msg.user{background:linear-gradient(145deg,#E7D2AE,#CBA86D);border-bottom-right-radius:6px}.chat-actions span{border-radius:999px;padding:8px 10px;background:rgba(246,241,232,.08);border:1px solid rgba(225,201,161,.12)}
+.action-grid,.cap-grid{gap:17px}.action-card,.cap{border-radius:21px;padding:25px}.action-card{transition:transform .2s ease,box-shadow .2s ease}.action-card:hover,.cap:hover{transform:translateY(-3px);box-shadow:0 20px 52px rgba(15,23,34,.08)}.action-result,.addon,.decision{border-radius:13px;background:linear-gradient(145deg,#F2E8D7,#E9D8BA)}.workflow{gap:12px}.node{border-radius:15px;border-color:rgba(225,201,161,.22);background:rgba(246,241,232,.055);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}.detected{border-radius:15px;background:rgba(176,141,87,.09);border-color:rgba(225,201,161,.18);color:#E7D7BD}
+.intel-grid{gap:24px}.intel-box{border-radius:22px;padding:26px}.intel-item{border:1px solid rgba(215,190,149,.32);border-radius:11px;background:rgba(255,255,255,.3)}.intel-plus{width:60px;height:60px;border-radius:19px;background:linear-gradient(145deg,#263548,#0F1722);box-shadow:0 12px 28px rgba(15,23,34,.18),inset 0 1px 0 rgba(255,255,255,.08)}
+.integration-row{gap:12px}.integration{height:78px;border-radius:16px;border-color:rgba(176,141,87,.46);background:rgba(251,248,242,.78);box-shadow:0 10px 28px rgba(15,23,34,.04);transition:.18s ease}.integration:hover{transform:translateY(-2px);border-color:#B08D57;box-shadow:0 15px 34px rgba(15,23,34,.07)}
+.pricing{gap:20px;max-width:980px}.price{border-radius:25px;padding:31px}.price.featured{border-color:#B08D57;box-shadow:0 0 0 1px #B08D57,0 24px 65px rgba(15,23,34,.11)}.recommended{border-radius:999px;padding:7px 10px;background:linear-gradient(145deg,#EAD8B9,#D7BE95)}.price-amount{font-size:46px}.price li{font-size:11px}.price li:before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;background:#B08D57;box-shadow:0 0 0 3px rgba(176,141,87,.11);margin-right:10px}
+.faq{gap:11px}.faq-item{border-radius:17px;overflow:hidden}.faq-q{padding:20px 21px;font-size:12px}.faq-q span:last-child{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#EFE2CC;color:#8C6B3C;font-size:17px}.faq-a p{padding:0 21px 21px;font-size:11px}.final{padding:110px 0}.final-box{border-radius:32px;padding:76px 36px;background:radial-gradient(circle at 50% -10%,rgba(225,201,161,.20),transparent 35%),linear-gradient(145deg,#0F1722,#1F2A3A);border:1px solid rgba(176,141,87,.38);box-shadow:0 30px 80px rgba(15,23,34,.18)}.final-box:before{background:#B08D57;opacity:.15}.footer{border-color:rgba(176,141,87,.36);padding:34px 0 40px}
+.modal{background:rgba(15,23,34,.44);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px)}.auth-card{border:1px solid rgba(176,141,87,.48);border-radius:25px;padding:29px;background:rgba(251,248,242,.97);box-shadow:0 35px 100px rgba(15,23,34,.25)}.close{width:32px;height:32px;border-radius:50%}.tabs{border-radius:12px;padding:4px}.tab{border-radius:9px}.form-field input{height:46px;border-radius:12px;background:#FBF8F2}.form-field input:focus{border-color:#B08D57;box-shadow:0 0 0 4px rgba(176,141,87,.10)}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:55px}.product-shell{max-width:780px;transform:none}.container{width:min(100% - 36px,1280px)}}
+@media(max-width:700px){.nav-inner{width:min(100% - 26px,1320px)}.hero{padding:74px 0 66px}.hero h1{font-size:clamp(42px,11.6vw,54px)}.section{padding:82px 0}.system-board{padding:22px}.final-box{padding:54px 22px}.hero-note span{width:auto}}
+'''
+          s = s.replace('</style>', css + '\n</style>', 1)
+
+          script = r'''
+<script id="flowpilot-premium-icons">
+(()=>{
+const icons={
+brief:'<svg viewBox="0 0 24 24"><rect x="4.5" y="5" width="15" height="14" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/></svg>',
+luna:'<svg viewBox="0 0 24 24"><path d="m12 3 1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6L12 3Z"/></svg>',
+actions:'<svg viewBox="0 0 24 24"><path d="M7 4.5 18 12 7 19.5Z"/></svg>',
+task:'<svg viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="15" rx="4"/><path d="m8 12 2.4 2.4L16 9"/></svg>',
+project:'<svg viewBox="0 0 24 24"><path d="M4 7.5h6l1.5 2H20v9.5H4z"/><path d="M4 7.5V5h6l1.5 2.5"/></svg>',
+auto:'<svg viewBox="0 0 24 24"><path d="M6.2 8A7 7 0 0 1 18 6.8L20 9M20 5.5V9h-3.5M17.8 16A7 7 0 0 1 6 17.2L4 15M4 18.5V15h3.5"/></svg>',
+dept:'<svg viewBox="0 0 24 24"><path d="M4 20h16M6.5 20V9.5L12 5l5.5 4.5V20M9 20v-5h6v5"/></svg>',
+team:'<svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.8 19c.6-3.1 2.4-4.8 5.2-4.8s4.6 1.7 5.2 4.8M14.5 15c2.8-.4 4.8 1 5.7 4"/></svg>',
+analytics:'<svg viewBox="0 0 24 24"><path d="M5 19V11M10 19V6M15 19v-4M20 19V9M3.5 19.5h18"/></svg>',
+market:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.4 2.4 3.5 5.2 3.5 8.5S14.4 18.1 12 20.5C9.6 18.1 8.5 15.3 8.5 12S9.6 5.9 12 3.5Z"/></svg>',
+integrate:'<svg viewBox="0 0 24 24"><path d="M9.2 14.8 6.8 17.2a3.4 3.4 0 0 1-4.8-4.8l3.3-3.3a3.4 3.4 0 0 1 4.8 0M14.8 9.2l2.4-2.4a3.4 3.4 0 0 1 4.8 4.8l-3.3 3.3a3.4 3.4 0 0 1-4.8 0M8.5 15.5l7-7"/></svg>',
+alert:'<svg viewBox="0 0 24 24"><path d="M12 4 3.8 19h16.4L12 4Z"/><path d="M12 9v4.5M12 17h.01"/></svg>',
+trend:'<svg viewBox="0 0 24 24"><path d="m4 16 5-5 3.5 3.5L20 7M15.5 7H20v4.5"/></svg>'};
+function pick(label){label=label.toLowerCase();if(label.includes('daily'))return icons.brief;if(label.includes('luna'))return icons.luna;if(label.includes('azioni'))return icons.actions;if(label.includes('task'))return icons.task;if(label.includes('progett'))return icons.project;if(label.includes('autom'))return icons.auto;if(label.includes('repart'))return icons.dept;if(label.includes('team'))return icons.team;if(label.includes('analytic'))return icons.analytics;if(label.includes('market')||label.includes('mercato'))return icons.market;if(label.includes('integr'))return icons.integrate;if(label.includes('risch')||label.includes('prior'))return icons.alert;if(label.includes('opportun'))return icons.trend;return icons.luna}
+document.querySelectorAll('.side-item').forEach(el=>{const label=el.textContent.replace(/^[^A-Za-zÀ-ÿ]+/,'').trim();el.innerHTML='<span class="mock-ui-icon">'+pick(label)+'</span><span>'+label+'</span>'});
+document.querySelectorAll('.point-ico,.cap-ico').forEach(el=>{const box=el.parentElement;const label=(box?.querySelector('b,h3')?.textContent||el.textContent).trim();el.innerHTML=pick(label)});
+document.querySelectorAll('.brief-row').forEach((row,i)=>{const el=row.querySelector('.brief-ico');if(el)el.innerHTML=i===0?icons.alert:i===1?icons.auto:icons.trend});
+})();
+</script>
+'''
+          s = s.replace('</body>', script + '\n</body>', 1)
+          path.write_text(s, encoding='utf-8')
+      - name: Validate
+        run: |
+          grep -q 'FLOWPILOT_PREMIUM_LANDING_2026' index.html
+          grep -q 'flowpilot-premium-icons' index.html
+          git diff --check
+      - name: Commit to main
+        run: |
+          git config user.name "FlowPilot UI Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add index.html
+          git commit -m "Restyle FlowPilot landing with premium design"
+          git push origin main
