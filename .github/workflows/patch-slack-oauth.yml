@@ -1,0 +1,57 @@
+name: Patch Slack OAuth
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-slack-oauth.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch Slack integration
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('dashboard.html')
+          s=p.read_text()
+          pat=r'function renderIntegrations\(\)\{.*?\}\nasync function connectGoogleCalendar'
+          repl='''function renderIntegrations(){$("integrationGrid").innerHTML=integrations.map(([p,i,n])=>{const row=state.integrations.find(x=>x.provider===p),c=row?.status==="connected",canManage=!!state.team?.can_manage;if(p==="google"){const actions=c?`<div class="row-actions"><button class="btn small primary" onclick="syncGoogleCalendar()">Sincronizza</button>${canManage?`<button class="btn small danger" onclick="disconnectGoogleCalendar()">Disconnetti</button>`:""}</div>`:(canManage?`<button class="btn small primary" onclick="connectGoogleCalendar()">Connetti</button>`:`<button class="btn small" disabled>Solo owner/admin</button>`);return `<div class="card integration-card"><div style="font-size:20px;color:var(--p);font-weight:800">${i}</div><h3>${n}</h3><p>${c?`Connesso${row?.display_name?" · "+esc(row.display_name):""}`:"Non connesso"}</p>${actions}</div>`}if(p==="slack"){const actions=c?(canManage?`<button class="btn small danger" onclick="disconnectSlack()">Disconnetti</button>`:`<button class="btn small" disabled>Connesso</button>`):(canManage?`<button class="btn small primary" onclick="connectSlack()">Connetti</button>`:`<button class="btn small" disabled>Solo owner/admin</button>`);return `<div class="card integration-card"><div style="font-size:20px;color:var(--p);font-weight:800">${i}</div><h3>${n}</h3><p>${c?`Connesso${row?.display_name?" · "+esc(row.display_name):""}`:"Non connesso"}</p>${actions}</div>`}return `<div class="card integration-card"><div style="font-size:20px;color:var(--p);font-weight:800">${i}</div><h3>${n}</h3><p>${c?"Connesso":"Da configurare"}</p><button class="btn small" onclick="toast('${c?n+" è già connesso":"Configurazione OAuth necessaria"}')">${c?"Connesso":"Configura"}</button></div>`}).join("")}
+async function connectGoogleCalendar'''
+          ns,n=re.subn(pat,repl,s,flags=re.S)
+          if n!=1:
+              raise SystemExit(f'renderIntegrations patch count={n}')
+          anchor='window.disconnectGoogleCalendar=disconnectGoogleCalendar;\nfunction renderAll()'
+          extra='''window.disconnectGoogleCalendar=disconnectGoogleCalendar;
+async function connectSlack(){if(!state.workspace)return toast("Workspace non disponibile.");const returnUrl=new URL(location.href);returnUrl.searchParams.delete("integration");returnUrl.searchParams.delete("status");returnUrl.searchParams.delete("error");const {data,error}=await db.functions.invoke("integrations-manage",{body:{action:"start",workspace_id:state.workspace.id,provider:"slack",return_to:returnUrl.toString()}});if(error||data?.error){const code=data?.error||"oauth_start_failed";if(code==="slack_not_configured")return toast("Credenziali Slack non configurate lato server.");if(code==="integration_admin_required")return toast("Solo owner o admin può collegare Slack.");if(code==="paid_plan_required")return toast("Serve un piano FlowPilot attivo.");return toast("Impossibile avviare Slack.")}if(!data?.auth_url)return toast("URL Slack non disponibile.");location.href=data.auth_url}window.connectSlack=connectSlack;
+async function disconnectSlack(){if(!confirm("Disconnettere Slack?"))return;const {data,error}=await db.functions.invoke("integrations-manage",{body:{action:"disconnect",workspace_id:state.workspace.id,provider:"slack"}});if(error||data?.error)return toast("Disconnessione Slack non riuscita.");toast("Slack disconnesso.");await loadData()}window.disconnectSlack=disconnectSlack;
+function renderAll()'''
+          if anchor not in ns:
+              raise SystemExit('Slack insertion anchor not found')
+          ns=ns.replace(anchor,extra,1)
+          p.write_text(ns)
+          PY
+      - name: Check dashboard JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path('dashboard.html').read_text()
+          blocks=re.findall(r'<script>(.*?)</script>',s,re.S)
+          if not blocks: raise SystemExit('No inline script found')
+          Path('/tmp/dashboard.js').write_text(blocks[-1])
+          PY
+          node --check /tmp/dashboard.js
+      - name: Commit patch and remove workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/patch-slack-oauth.yml
+          git add dashboard.html
+          git commit -m 'Connect Slack OAuth without affecting dashboard loading'
+          git push origin main
