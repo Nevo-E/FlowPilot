@@ -38,7 +38,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm .github/workflows/patch-google-drive.yml .github/scripts/patch_google_drive.py
+          git rm -f .github/workflows/patch-google-drive.yml .github/scripts/patch_google_drive.py
           git add dashboard.html
           git commit -m 'Connect Google Drive Picker and sync'
           git push origin main
