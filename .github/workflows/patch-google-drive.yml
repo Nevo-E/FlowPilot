@@ -14,7 +14,14 @@ jobs:
         with:
           ref: main
       - name: Patch Drive integration
-        run: python3 .github/scripts/patch_google_drive.py
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('.github/scripts/patch_google_drive.py')
+          s=p.read_text().replace('re.subn(pat, repl, s, flags=re.S)', 're.subn(pat, lambda m: repl, s, flags=re.S)')
+          p.write_text(s)
+          PY
+          python3 .github/scripts/patch_google_drive.py
       - name: Check dashboard JavaScript syntax
         run: |
           python3 - <<'PY'
