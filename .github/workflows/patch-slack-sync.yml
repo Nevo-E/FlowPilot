@@ -1,0 +1,50 @@
+name: Patch Slack Sync
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/patch-slack-sync.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch Slack sync controls
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('dashboard.html')
+          s=p.read_text()
+          old='if(p==="slack"){const actions=c?(canManage?`<button class="btn small danger" onclick="disconnectSlack()">Disconnetti</button>`:`<button class="btn small" disabled>Connesso</button>`):(canManage?`<button class="btn small primary" onclick="connectSlack()">Connetti</button>`:`<button class="btn small" disabled>Solo owner/admin</button>`);'
+          new='if(p==="slack"){const actions=c?`<div class="row-actions"><button class="btn small primary" onclick="syncSlack()">Sincronizza</button>${canManage?`<button class="btn small danger" onclick="disconnectSlack()">Disconnetti</button>`:""}</div>`:(canManage?`<button class="btn small primary" onclick="connectSlack()">Connetti</button>`:`<button class="btn small" disabled>Solo owner/admin</button>`);'
+          if old not in s: raise SystemExit('Slack render anchor not found')
+          s=s.replace(old,new,1)
+          anchor='window.connectSlack=connectSlack;\nasync function disconnectSlack()'
+          extra='window.connectSlack=connectSlack;\nasync function syncSlack(){const {data,error}=await db.functions.invoke("sync-slack",{body:{workspace_id:state.workspace.id}});if(error||data?.error){if(data?.error==="reauthorization_required")return toast("Ricollega Slack.");if(data?.error==="slack_not_connected")return toast("Collega prima Slack.");return toast("Sincronizzazione Slack non riuscita.")}if(data?.channels_joined===0)toast("Slack connesso: aggiungi FlowPilot ai canali da leggere.");else toast(`${data?.messages_upserted||0} messaggi Slack sincronizzati.`);await loadData()}window.syncSlack=syncSlack;\nasync function disconnectSlack()'
+          if anchor not in s: raise SystemExit('Slack function anchor not found')
+          s=s.replace(anchor,extra,1)
+          p.write_text(s)
+          PY
+      - name: Check dashboard JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          s=Path('dashboard.html').read_text()
+          blocks=re.findall(r'<script>(.*?)</script>',s,re.S)
+          if not blocks: raise SystemExit('No inline script found')
+          Path('/tmp/dashboard.js').write_text(blocks[-1])
+          PY
+          node --check /tmp/dashboard.js
+      - name: Commit patch and remove workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/patch-slack-sync.yml
+          git add dashboard.html
+          git commit -m 'Add Slack synchronization to FlowPilot'
+          git push origin main
